@@ -1,0 +1,447 @@
+swagger: '2.0'
+
+info:
+  version: "0.0.1"
+  title: service-hml-fhir-converter-api
+  description: Hml and Fhir conversion service
+
+schemes:
+  - https
+
+basePath: /v1
+
+produces:
+  - application/json
+
+paths:
+  /fhir:
+    patch:
+      operationId: convert
+      parameters:
+        -
+          in: body
+          name: xml
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          schema:
+            type: boolean
+        500:
+          schema:
+            $ref: '#/definitions/Error'
+          title: ErrorException
+    post:
+      operationId: convertFhirFileToHml
+      consumes: multipart/form-data
+      parameters:
+        -
+          in: formData
+          name: file
+          required: true
+          type: file
+          schema:
+            type: formData
+      responses:
+        200:
+          schema:
+            type: boolean
+        500:
+          schema:
+            $ref: '#/definitions/Error'
+          title: ErrorException
+
+models:
+  Address:
+    properties:
+      street1: {type: string}
+      street2: {type: string}
+      street3: {type: string}
+      zip: {type: integer, format: int32}
+      state: {type: string}
+      city: {type: string}
+      country: {type: string}
+    type: object
+  AlleleDatabase:
+    allOf:
+    - $ref: '#/definitions/StructureDefinition'
+    - type: object
+  AlleleName:
+    allOf:
+    - $ref: '#/definitions/StructureDefinition'
+    - type: object
+      properties:
+        allele: { type: string }
+  BackboneElement:
+    properties:
+      chromosome: {$ref: Chromosome}
+      genomeBuild: {type: string}
+      referenceSequenceId: {$ref: ReferenceSequence} 
+      referenceSeqPointer: {$ref: '#/definitions/Sequence'}
+      referenceSeqString: {type: string}
+      strand: {type: integer, format: int32 }
+      windowStart: {type: integer, format: int32}
+      windowEnd: {type: integer, format: int32}
+  Category:
+    properties:
+    type: object
+  Chromosome:
+    properties:
+    type: object
+  Code:
+    propeties:
+      name: {type: string}
+    type: object
+  Collection:
+    properties:
+      method: {type: string}
+      bodySize: {type: string}
+  Contact:
+    propeties:
+    type: object
+  Device:
+    propeties:
+    type: object
+  DiagnosticReport:
+    allOf:
+    - $ref: Observation
+    - type: object
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
+  ExtensionContext:
+    properties:
+    type: object
+  FhirDefinedType:
+    properties:
+      locus: {type: string}
+      fhirType: {type: string}
+      method: {type: string}
+    type: object
+  FhirMessage:
+    properties:
+      organization: {$ref: Organization}
+      patients: {$ref: Patients}
+      id: {type: string}
+    type: object
+  GeneticsPhaseSet:
+    allOf:
+    - $ref: '#/definitions/Observation'
+    - type: object
+      properties:
+        phasingGroup: {type: string}
+        phaseSet: {type: string}
+  GenotypingResultsHaploid:
+    allOf:
+    - $ref: '#/definitions/StructureDefinition'
+    - type: object
+  GenotypingResultsMethod:
+    allOf:
+    - $ref: '#/definitions/StructureDefinition'
+    - type: object
+      properties:
+        testId: {type: string}
+        testIdSource: {type: string}
+  Glstring:
+    allOf:
+    - $ref: '#/definitions/StructureDefinition'
+    - type: object
+      properties:
+        uri: {type: string}
+        value: {type: string}
+  Haploid:
+    allOf:
+    - $ref: '#/definitions/StructureDefinition'
+    - type: object
+      properties:
+        locus: {type: string}
+        method: {type: string}
+        haploidType: {type: string}
+  Identifier:
+    properties:
+      system: {type: string}
+      value: {type: string}
+    type: object
+  Jurisdiction: 
+    properties:
+    type: object
+  MaritalStatus:
+    type: string
+    enum:
+      - DIVORCED
+      - WIDOWED
+      - MARRIED
+      - SINGLE
+      - OTHER
+      - SEPARATED
+  Method:
+    properties:
+    type: object
+  Observation:
+    properties:
+      identifier: {$ref: Identifier}
+      basedOn: {$ref: Reference}
+      status: {$ref: Status}
+      category: {$ref: Category}
+      code: {$ref: Code}
+      subject: {type: string}
+      context: {type: string}
+      effective: {type: string, format: date-time}
+      issued: {type: string, format: date-time}
+      performer: {$ref: Practitioner}
+      value: {type: object}
+      dataAbsentReason: {type: object}
+      interpretation: {type: object}
+      comment: {type: string}
+      bodySite: {type: object}
+      method: {type: object}
+      specimen: {$ref: Specimen}
+      device: {$ref: Device}
+      diagnosticReport: {$ref: DiagnosticReport}
+      glstrings: {$ref: Glstrings}
+      haploids: {$ref: Haploids}
+      geneticsAlleleName: {type: string}
+      geneticsGene: {type: string}
+      sbtNgss: {$ref: SbtNgss}
+      sequences: {$ref: Sequences}
+      geneticsPhaseSet: {$ref: GeneticsPhaseSet}
+      gentoypingResultsMethod: {$ref: GenotypingResultsMethod}
+      genotypingResultsHaploids: {$ref: GenotypingResultsHaploids}
+    type: object
+  Organization:
+    properties:
+      identifier: {$ref: Identifier}
+    type: object
+  Patient:
+    properties:
+      identifier: {$ref: Identifier}
+      active: {type: boolean}
+      name: {type: string}
+      telecom: {type: string}
+      gender: {type: string}
+      birthDate: {type: string, format: date-time}
+      deceased: {type: boolean}
+      address: {$ref: Address}
+      maritalStatus: {$ref: MaritalStatus}
+      multipleBirth: {type: boolean}
+      photo: {type: string, format: byte}
+      generalPractitioner: {$ref: Practitioner}
+      managingOrganization: {$ref: Organization}
+      specimens: {$ref: Specimens}
+      diagnosticReport: {$ref: DiagnosticReport}
+    type: object
+  Practitioner:
+    properties:
+    type: object
+  Quality:
+    properties:
+      code: {$ref: Type}
+      standardSequence: {$ref Sequence}
+      start: {type: integer, format: int32}
+      end: {type: integer, format: int32}
+      score: {$ref: Score}
+      method: {$ref: Method}
+      truthTP: {type: number}
+      queryTP: {type: number}
+      truthFN: {type: number}
+      queryFP: {type: number}
+      gtFP: {type: number}
+      precision: {type: number}
+      recall: {type: number}
+      fScore: {type: number}
+    type: object
+  Reference:
+    properties:
+    type: object
+  ReferenceSequence:
+    properties:
+      identifier: {$ref: Identifier}
+    type: object
+  Repository:
+    properties:
+      type: {$ref: Type}
+      uri: {type: string}
+      name: {type: string}
+      datasetId: {type: string}
+      variantsetId: {type: string}
+      readsetId: {type: string}
+    type: object
+  Request: 
+    properties:
+    type: object
+  SbtNgs:
+    allOf:
+    - $ref: '#/definitions/Observation'
+    - type: object
+      properties:
+        locus: {type: string}
+  Score:
+    properties:
+      value: {type: string}
+    type: object
+  Sequence:
+    properties:
+      identifier: {$ref: Identifier}
+      type: {$ref: Code}
+      coordinateSystem: {type: integer, format: int32}
+      patient: {$ref: Patient}
+      specimen: {$ref: Specimen}
+      device: {$ref: Device}
+      performer: {$ref: Organization}
+      quantity: {type: integer, format: int32}
+      referenceSeq: {$ref: BackboneElement}
+      variant: {$ref: Variant}
+      observedSeq: {type: string}
+      quality: {$ref: Quality}
+      readCoverage: {type: integer, fomrat: int32}
+      repository: {$ref: Repository}
+      pointer: {$ref: Sequence}
+    type: object
+  Specimen: 
+    properties:
+      identifier: {$ref: Identifier}
+      collection: {$ref: Collection}
+      accessionIdentifier: {type: string}
+      status: {$ref: Status}
+      receivedTime: {type: string, format: date-time}
+      parent: {$ref: Specimen}
+      request: {$ref: Request}
+      note: {type: string}
+      type: {$ref: Type}
+      observations: {$ref: Observations}
+    type: object
+  Sso:
+    allOf:
+    - $ref: '#/definitions/Observation'
+    - type: object
+      properties:
+        locus: {type: string}
+  Ssp:
+    allOf:
+    - $ref: '#/definitions/Observation'
+    - type: object
+      properties:
+        locus: {type: string}
+  Status:
+    type: string
+    enum:
+  StructureDefinition:
+    properties:
+      url: {type: string, format: url}
+      identifier: {type: string}
+      version: {type: string}
+      name: {type: string}
+      title: {type: string}
+      status: {type: string}
+      experimental: {type: boolean}
+      date: {type: string, format: date-time}
+      publisher: {type: string}
+      contact: {$ref: Contact}
+      description: {type: string}
+      useContext: {$ref: UsageContext}
+      jurisdiction: {$ref: Jurisdiction}
+      purpose: {type: string}
+      copyright: {type: string}
+      keyword: {type: string}
+      fhirVersion: {type: string}
+      kind: {$ref: StructureDefinitionKind}
+      abstracted: {type: boolean}
+      contextType: {$ref: ExtensionContext}
+      context: {type: string}
+      contextVariant: {type: string}
+      type: {$ref: FhirDefinedType}
+      baseDefinition: {type: string, format: url}
+      derivation: {$ref: TypeDerivationRule}
+    type: object
+  StructureDefinitionKind:
+    properties:
+    type: object
+  Type:
+    properties:
+      specimenType: {type: string}
+    type: object
+  TypeDerivationRule:
+    properties:
+    type: object
+  UsageContext:
+    properties:
+    type: object
+  Variant:
+    properties:
+      start: {type: integer, format: int32}
+      end: {type: integer, format: int32}
+      observedAllele: {type: string}
+      referenceAllele: {type: string}
+      cigar: {type: string}
+      variantPointer: {$ref: Observation}
+    type: object
+  AlleleDatabases:
+    properties:
+      alleleDatabases: {type: array, items: {$ref: '#/definitions/AlleleDatabase'}}
+    type: object
+  AlleleNames:
+    properties:
+      alleleNames: {type: array, items: {$ref: '#/definitions/AlleleNames'}}
+    type: object
+  GeneticsPhaseSets:
+    properties:
+      geneticsPhaseSets: {type: array, items: {$ref: '#/definitions/GeneticsPhaseSet'}}
+    type: object
+  GenotypingResultsHaploids:
+    properties:
+      genotypingResultsHaploids: {type: array, items: {$ref: '#/definitions/GenotypingResultsHaploid'}}
+    type: object
+  GenotypingResultsMethods:
+    properties:
+      genotypingResultsMethods: {type: array, items: {$ref: '#/definitions/GenotypingResultsMethod'}}
+    type: object
+  Glstrings:
+    properties:
+      glstrings: {type: array, items: {$ref: '#/definitions/Glstring'}}
+    type: object
+  Haploids:
+    properties:
+      haploids: {type: array, items: {$ref: '#/definitions/haploid'}}
+    type: object
+  Observations:
+    properties:
+      observations: {type: array, items: {$ref: '#/definitions/Observation'}}
+    type: object
+  Organizations:
+    properties:
+      organizations: {type: array, items: {$ref: '#/definitions/Organization'}}
+    type: object
+  Patients:
+    properties:
+      patients: {type: array, items: {$ref: '#/definitions/Patient'}}
+    type: object
+  SbtNgss:
+    properties:
+      sbtNgss: {type: array, items: {$ref: '#/definitions/SbtNgs'}}
+    type: object
+  Sequences:
+    properties:
+      sequences: {type: array, items: {$ref: '#/definitions/Sequence'}}
+    type: object
+  Specimens:
+    properties:
+      specimens: {type: array, items: {$ref: '#/definitions/Specimen'}}
+    type: object
+  Ssos:
+    properties:
+      ssos: {type: array, items: {$ref: '#/definitions/Sso'}}
+    type: object
+  Ssps:
+    properties:
+      ssps: {type: array, items: {$ref: '#/definitions/Ssp'}}
+    type: object
+
+

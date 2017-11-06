@@ -1,0 +1,37 @@
+/fhir:
+  patch:
+    operationId: convert
+    parameters:
+      -
+        in: body
+        name: xml
+        required: true
+        schema:
+          type: string
+    responses:
+      200:
+        schema:
+          type: boolean
+      500:
+        schema:
+          $ref: '#/definitions/Error'
+        title: ErrorException
+  post:
+    operationId: convertFhirFileToHml
+    consumes: multipart/form-data
+    parameters:
+      -
+        in: formData
+        name: file
+        required: true
+        type: file
+        schema:
+          type: formData
+    responses:
+      200:
+        schema:
+          type: boolean
+      500:
+        schema:
+          $ref: '#/definitions/Error'
+        title: ErrorException

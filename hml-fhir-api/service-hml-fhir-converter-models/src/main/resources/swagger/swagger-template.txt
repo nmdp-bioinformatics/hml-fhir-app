@@ -1,0 +1,9 @@
+swagger: '2.0'
+
+info:
+  version: "0.0.1"
+  title: service-hml-fhir-converter-api
+  description: Hml and Fhir conversion service
+
+schemes:
+  - https

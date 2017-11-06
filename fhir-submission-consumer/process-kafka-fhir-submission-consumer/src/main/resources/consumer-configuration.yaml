@@ -1,0 +1,25 @@
+consumerGroupPrefix: kafka_fhir_submission_local_
+healthReportingIntervalMs: 5000
+allowedConsumerDelayMs: 60000
+
+consumerDefaults:
+  fetchMinBytes: 65536
+  fetchMaxWaitMs: 1000
+  maxMessagesBeforeCommit: 200
+  maxTimeBeforeCommitMs: 1000
+  autoOffsetReset: earliest
+  maxPartitionFetchBytes: 10485760
+  socketReceiveBufferBytes: 524288
+  maxPollRecords: 10000
+
+kafkaBrokers:
+  - id: sandbox
+    hosts: "localhost:9092,localhost:9093,localhost:9094"
+
+connectors:
+  - id: dev_andrew_submission
+    sourceBroker: sandbox
+    sourceTopic: fhir-submission
+    targetCluster: "sandbox/analytics"
+    targetTable: "%SOURCE%"
+    threads: 1

@@ -1,0 +1,3 @@
+connectionString: "localhost"
+port: 27017
+databaseName: "nmdp_conversion"

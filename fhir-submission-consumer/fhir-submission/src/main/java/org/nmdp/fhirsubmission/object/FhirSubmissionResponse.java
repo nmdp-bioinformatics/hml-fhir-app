@@ -1,0 +1,56 @@
+package org.nmdp.fhirsubmission.object;
+
+/**
+ * Created by Andrew S. Brown, Ph.D., <andrew@nmdp.org>, on 8/29/17.
+ * <p>
+ * fhir-submission
+ * Copyright (c) 2012-2017 National Marrow Donor Program (NMDP)
+ * <p>
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published
+ * by the Free Software Foundation; either version 3 of the License, or (at
+ * your option) any later version.
+ * <p>
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; with out even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+ * License for more details.
+ * <p>
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library;  if not, write to the Free Software Foundation,
+ * Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA.
+ * <p>
+ * > http://www.fsf.org/licensing/licenses/lgpl.html
+ * > http://www.opensource.org/licenses/lgpl-license.php
+ */
+
+public class FhirSubmissionResponse {
+
+    private String id;
+    private String url;
+
+    public FhirSubmissionResponse() {
+
+    }
+
+    public FhirSubmissionResponse(String id, String url) {
+        this.id = id;
+        this.url = url;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+}

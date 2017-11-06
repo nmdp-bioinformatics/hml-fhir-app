@@ -1,0 +1,507 @@
+swagger: '2.0'
+
+info:
+  version: "0.0.1"
+  title: service-hml-fhir-converter-api
+  description: Hml and Fhir conversion service
+
+schemes:
+  - https
+
+paths:
+  /hml:
+    get:
+      operationId: getIndex
+
+definitions:
+  Allele:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {type: string}
+      name: {type: string}
+      present: {type: string}
+    type: object
+  AlleleAssignment:
+    properties:
+      active: {description: Active record, type: boolean}
+      alleleDb: {description: allele database, type: string}
+      alleleVersion: {description: version of the allele, type: string}
+      date: {description: date of assignment, format: date-time, type: string}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      genotypes: {items: {$ref: '#/definitions/Genotype'}, type: array}
+      glString: {$ref: GlString}
+      haploid: {items: {$ref: '#/definitions/Haploid'}, type: array}
+      id: {description: Id of the typing, type: string}
+      properties: {items: {$ref: '#/definitions/Property'}, type: array}
+    type: object
+  Amplification:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {description: Id of the typing, type: string}
+      registeredName: {description: registered name of amplification, type: string}
+      sequence: {$ref: Sequence, description: sequence of amplification}
+    type: object
+  CollectionMethod:
+    properties:
+      active: {description: Active item, type: boolean}
+      dateCreated: {description: Date entry was created, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      description: {description: Description of method, type: string}
+      id: {description: Id of collection method, type: string}
+      name: {description: Name of method, type: string}
+    type: object
+  ConsensusSequence:
+    properties:
+      active: {description: Active record, type: boolean}
+      consensusSequenceBlocks:
+        type: array
+        items:
+          $ref: '#/definitions/ConsensusSequenceBlock'
+        description: block of consensus sequence
+      date: {description: date created, format: date-time, type: string}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {description: Id of the typing, type: string}
+      referenceDatabase:
+        type: array
+        items:
+          $ref: '#/definitions/ReferenceDatabase'
+    type: object
+  ConsensusSequenceBlock:
+    properties:
+      active: {description: Active record, type: boolean}
+      continuity: {type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      description: {type: string}
+      end: {format: int32, type: integer}
+      expectedCopyNumber: {format: int32, type: integer}
+      id: {description: Id of the typing, type: string}
+      phaseSet: {type: string}
+      phasingGroup: {type: string}
+      referenceSequenceId: {description: id of reference sequence, type: string}
+      sequence: {$ref: Sequence}
+      sequenceQuality: {$ref: SequenceQuality}
+      start: {format: int32, type: integer}
+      strand: {type: string}
+      variant: {$ref: Variant}
+    type: object
+  DiploidCombination:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {type: string}
+      locusBlock: {$ref: LocusBlock}
+    type: object
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
+  ExtendedItem:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {description: Id of the extended item, type: string}
+      item: {description: Generic object, type: object}
+    type: object
+  Genotype:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      diploidCombinations:
+        items: {$ref: '#/DiploidCombination'}
+        type: array
+      id: {type: string}
+    type: object
+  GlString:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {type: string}
+      uri: {type: string}
+      value: {type: string}
+    type: object
+  Gssp:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {description: Id of the typing, type: string}
+      primerSequence: {description: sequence of primers used, type: string}
+      primerTarget: {description: intended primer sequence target, type: string}
+      registeredName: {description: registered name of gssp, type: string}
+      sequence: {$ref: Sequence, description: sequence of amplification}
+    type: object
+  Haploid:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {type: string}
+      locus: {type: string}
+      method: {type: string}
+      type: {type: string}
+    type: object
+  Hml:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      hmlId: {$ref: HmlId, description: HmlId object}
+      id: {description: Id of the hml item, type: string}
+      project: {$ref: Project, description: Project object}
+      properties:
+        description: Properteis belonging to this item
+        items: {$ref: '#/definitions/Property'}
+        type: array
+      reportingCenters:
+        description: Repoting centers for this item
+        items: {$ref: '#/definitions/ReportingCenter'}
+        type: array
+      samples:
+        description: Samples used in this item
+        items: {$ref: '#/definitions/Sample'}
+        type: array
+      typingTestNames:
+        description: Typing test names used for this item
+        items: {$ref: '#/definitions/TypingTestName'}
+        type: array
+      version: {$ref: Version, description: Version of Hml}
+    type: object
+  HmlId:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      extension: {description: Extendsion of hml id, type: string}
+      id: {description: Id of the hmlid item, type: string}
+      rootName: {description: Root name of hml, type: string}
+    type: object
+  IupacBases:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {type: string}
+      property: {type: string}
+      value: {type: string}
+    type: object
+  LocusBlock:
+    properties:
+      active: {description: Active record, type: boolean}
+      alleles:
+        items: {$ref: '#/definitions/Allele'}
+        type: array
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {type: string}
+    type: object
+  Project:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      description: {description: Description of HML project, type: string}
+      id: {description: Id of the project item, type: string}
+      name: {description: Name of project, type: string}
+    type: object
+  Property:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      description: {description: Description of property, type: string}
+      extendedItems:
+        description: Array of generic items
+        items: {$ref: '#/definitions/ExtendedItem'}
+        type: array
+      id: {description: Id of property, type: string}
+      name: {description: Display/ Common name of property, type: string}
+      value: {description: Value of property name, type: string}
+    type: object
+  QueryCriteria:
+    type: object
+    properties:
+      propertyName:
+        type: string
+        description: The property name to query
+      queryValue:
+        type: object
+        description: The value to query against
+      exclude:
+        type: boolean
+        description: Allow for positive or negative matching
+      useLike:
+        type: boolean
+        description: Allow for like queries
+  RawRead:
+    properties:
+      active: {description: Active record, type: boolean}
+      adapterTrimmed: {description: adapter was trimmed, type: boolean}
+      availability: {description: availability of reads, type: string}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      format: {description: format of uri, type: string}
+      id: {description: Id of the typing, type: string}
+      paired: {description: paired reads, type: boolean}
+      pooled: {description: pooled sample reads, type: boolean}
+      qualityTrimmed: {description: trimmed quality, type: boolean}
+      uri: {description: data location uri, type: string}
+    type: object
+  ReferenceDatabase:
+    properties:
+      active: {description: Active record, type: boolean}
+      availability: {type: string}
+      curated: {type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      description: {type: string}
+      id: {description: Id of the typing, type: string}
+      name: {type: string}
+      referenceSequence: {$ref: ReferenceSequence}
+      uri: {type: string}
+      version: {type: string}
+    type: object
+  ReferenceSequence:
+    properties:
+      accession: {type: string}
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      description: {type: string}
+      end: {format: int32, type: integer}
+      id: {type: string}
+      name: {type: string}
+      referenceSequenceId: {type: string}
+      start: {format: int32, type: integer}
+      strand: {type: string}
+      uri: {type: string}
+    type: object
+  ReportingCenter:
+    properties:
+      active: {description: Active center, type: boolean}
+      centerId: {description: Id of reporting center, type: string}
+      context: {description: Context of reporting center, type: string}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {description: Id of reporting center, type: string}
+    type: object
+  Sample:
+    properties:
+      active: {description: Active record, type: boolean}
+      centerCode: {description: Center code, type: string}
+      collectionMethods:
+        description: array of center codes
+        items: {$ref: '#/definitions/CollectionMethod'}
+        type: array
+      dateCreated: {description: Date record was created, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {description: Id of sample, type: string}
+      sampleId: {description: user input Id of sample, type: string}
+      properties:
+        description: array of properties
+        items: {$ref: '#/definitions/Property'}
+        type: array
+      typing:
+        description: array of typings
+        items: {$ref: '#/definitions/Typing'}
+        type: array
+    type: object
+  SbtNgs:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {description: Id of the typing, type: string}
+      locus: {description: locus of ngs location, type: string}
+      properties:
+        description: Properteis belonging to this item
+        items: {$ref: '#/definitions/Property'}
+        type: array
+      rawReads:
+        description: raw read data
+        items: {$ref: '#/definitions/RawRead'}
+        type: array
+      testId: {description: id of ngs test, type: string}
+      testIdSource: {description: source of test id, type: string}
+    type: object
+  SbtSanger:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {description: Id of the typing, type: string}
+      locus: {description: gene locus, type: string}
+      properties:
+        description: Properteis belonging to this item
+        items: {$ref: '#/definitions/Property'}
+        type: array
+      testId: {description: id of test, type: string}
+      testIdSource: {description: source of test id, type: string}
+      amplification: {$ref: Amplification, description: amplification}
+      subAmplification: {$ref: SubAmplification, descripton: subAmplification}
+      gssp: {$ref: Gssp, description: Gssp}
+    type: object
+  Sequence:
+    properties:
+      active: {description: Active record, type: boolean}
+      anyAttribute: {type: object}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {type: string}
+      iupacBases:
+        items: {$ref: '#/definitions/IupacBases'}
+        type: array
+      sequence: {type: string}
+    type: object
+  SequenceQuality:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {type: string}
+      qualityScore: {type: string}
+      sequenceEnd: {format: int32, type: integer}
+      sequenceStart: {format: int32, type: integer}
+    type: object
+  Sso:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {description: Id of the typing, type: string}
+      locus: {description: gene locus, type: string}
+      properties:
+        description: Properteis belonging to this item
+        items: {$ref: '#/definitions/Property'}
+        type: array
+      testId: {description: id of test, type: string}
+      testIdSource: {description: source of test id, type: string}
+    type: object
+  Ssp:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {description: Id of the typing, type: string}
+      locus: {description: gene locus, type: string}
+      properties:
+        description: Properteis belonging to this item
+        items: {$ref: '#/definitions/Property'}
+        type: array
+      scores: {description: scores of test id, type: string}
+      testId: {description: id of test, type: string}
+      testIdSource: {description: source of test id, type: string}
+    type: object
+  SubAmplification:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {description: Id of the typing, type: string}
+      registeredName: {description: registered name of sub-amplification, type: string}
+      sequence: {$ref: Sequence, description: sequence of amplification}
+    type: object
+  TypeaheadQuery:
+    type: object
+    properties:
+      criteria:
+        type: array
+        description: Query Criteria
+        items:
+          $ref: '#/definitions/QueryCriteria'
+  Typing:
+    properties:
+      active: {description: Active record, type: boolean}
+      alleleAssignment:
+       description: allele assigned by this typing
+       items: {$ref: '#/definitions/AlleleAssignment'}
+       type: array
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      date: {description: Date of typing, format: date-time, type: string}
+      geneFamily: {description: gene type, type: string}
+      id: {description: Id of the typing, type: string}
+      properties:
+        description: Properteis belonging to this item
+        items: {$ref: '#/definitions/Property'}
+        type: array
+      typingMethod: {$ref: TypingMethod, description: method used to determine typing}
+      referenceDatabase: {$ref: ReferenceDatabase, description: database containing sequence}
+      consensusSequence: {$ref: ConsensusSequence}
+    type: object
+  TypingMethod:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      id: {description: Id of the typing, type: string}
+      sbtSanger: {$ref: SbtSanger, description: method sanger sbt}
+      sbtNgs: {type: array, items: {$ref: '#/definitions/SbtNgs'}, description: method sanger ngs}
+      sso: {$ref: Sso, description: method sso}
+      ssp: {$ref: Ssp, description: method ssp}
+    type: object
+  TypingTestName:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      description: {description: Description of typing test name, type: string}
+      id: {description: Id of testing type name, type: string}
+      name: {description: Display / Common name of typing test, type: string}
+    type: object
+  Variant:
+    properties:
+      active: {description: Active record, type: boolean}
+      alternateBases: {type: string}
+      anyAttribute: {type: object}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      end: {format: int32, type: integer}
+      filter: {type: string}
+      id: {type: string}
+      name: {type: string}
+      qualityScore: {type: string}
+      referenceBases: {type: string}
+      start: {format: int32, type: integer}
+      uri: {type: string}
+      variantEffect: {$ref: VariantEffect}
+      variantId: {type: string}
+    type: object
+  VariantEffect:
+    properties:
+      active: {description: Active record, type: boolean}
+      anyAttribute: {type: object}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      hgvs: {type: string}
+      id: {type: string}
+      term: {type: string}
+      uri: {type: string}
+    type: object
+  Version:
+    properties:
+      active: {description: Active record, type: boolean}
+      dateCreated: {description: Creation date, format: date-time, type: string}
+      dateUpdated: {description: Date updated, format: date-time, type: string}
+      description: {description: Short description of version, type: string}
+      id: {description: Id of the version item, type: string}
+      name: {description: Name of the item, type: string}
+    type: object
+
+
