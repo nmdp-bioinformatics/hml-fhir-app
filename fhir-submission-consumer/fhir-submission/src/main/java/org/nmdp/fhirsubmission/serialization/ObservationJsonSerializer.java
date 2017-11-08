@@ -55,7 +55,6 @@ public class ObservationJsonSerializer implements JsonSerializer<Observation> {
 
     private static final String RESOURCE_VALUE = "Observation";
     private static final String CODE_CODING_SYSTEM_VALUE = "http://loinc.org";
-    private static final String CODE_CODING_CODE_VALUE = "13303-3";
     private static final String STATUS_VALUE = "final";
 
     private static final String BLANK = "";
@@ -82,9 +81,11 @@ public class ObservationJsonSerializer implements JsonSerializer<Observation> {
         obs.addProperty(ISSUED_KEY, LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
         obs.addProperty(VALUE_KEY, glsv);
 
+        String[] alleleCodes = getAlleleCode(glsv).split(",");
+
         codeCoding.addProperty(SYSTEM_KEY, CODE_CODING_SYSTEM_VALUE);
-        codeCoding.addProperty(CODE_KEY, CODE_CODING_CODE_VALUE);
-        codeCoding.addProperty(DISPLAY_KEY, glsv);
+        codeCoding.addProperty(CODE_KEY, alleleCodes[0]);
+        codeCoding.addProperty(DISPLAY_KEY, alleleCodes[1]);
         code.add(CODING_KEY, codeCoding);
 
         if (response != null) {
@@ -97,5 +98,36 @@ public class ObservationJsonSerializer implements JsonSerializer<Observation> {
         obs.add(CODE_KEY, code);
 
         return obs;
+    }
+
+    private String getAlleleCode(String glstring) {
+        String[] alleles = glstring.split("\\*");
+
+        switch (alleles[0]) {
+            case "HLA-A":
+                return "57290-1,HLA-A [Type] by High Resolution";
+            case "HLA-B":
+                return "57291-7,HLA-B [Type] by High Resolution";
+            case "HLA-C":
+                return "77636-9,HLA-C [Type] by High Resolution";
+            case "HLA-DBQ1":
+                return "57299-0,HLA-DBQ1 [Type] by High Resolution";
+            case "HLA-DQA1":
+                return "59019-0,HLA-DQA1 [Type] by High Resolution";
+            case "HLA-DPB1":
+                return "59017-4,HLA-DPB1 [Type] by High Resolution";
+            case "HLA-DPA1":
+                return "59018-2,HLA-DPA1 [Type] by High Resolution";
+            case "HLA-DRB1":
+                return "57293-3H,HLA-DRB1 [Type] by High Resolution";
+            case "HLA-DBR3":
+                return "57294-1,HLA-DRB3 [Type] by High Resolution";
+            case "HLA-DRB4":
+                return "57295-8,HLA-DBR4 [Type] by High Resolution";
+            case "HLA-DRB5":
+                return "57296-6,HLA-DRB5 [Type] by High Resolution";
+            default:
+                return "13303-3,HLA-A+B+C (class I) [Type] [Type] by High Resolution";
+        }
     }
 }
