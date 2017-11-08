@@ -34,11 +34,13 @@ public class BundleSubmission {
     private Map<String, String> specimens;
     private Map<String, String> diangosticReports;
     private Map<String, List<String>> observations;
+    private Map<String, List<String>> sequences;
 
     public BundleSubmission() {
         this.specimens = new HashMap<>();
         this.diangosticReports = new HashMap<>();
         this.observations = new HashMap<>();
+        this.sequences = new HashMap<>();
     }
 
     public String getPatient() {
@@ -86,5 +88,20 @@ public class BundleSubmission {
         List<String> values = this.observations.get(key);
         values.add(value);
         this.observations.put(key, values);
+    }
+
+    public Map<String, List<String>> getSequences() {
+        return sequences;
+    }
+
+    public void setSequences(Map<String, List<String>> sequences) {
+        this.sequences = sequences;
+    }
+
+    public void addSequence(String key, String value) {
+        this.sequences.computeIfAbsent(key, (v) -> new ArrayList<>());
+        List<String> values = this.sequences.get(key);
+        values.add(value);
+        this.sequences.put(key, values);
     }
 }
