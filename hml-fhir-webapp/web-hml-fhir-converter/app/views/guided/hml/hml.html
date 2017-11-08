@@ -1,0 +1,98 @@
+<div class="row">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h4 class="panel-title" data-ng-class="{ 'centered-heading': hmlCtrl.inputSequence > 1 }">{{ hmlCtrl.panelTitle === undefined ? 'HML' : hmlCtrl.panelTitle }}</h4>
+        </div>
+        <div class="panel-body">
+            <div class="row centered-heading">
+                <i id="glyphy" class="glyphicon glyphicon-asterisk" /><label for="glyphy">Current HML Version Selected: {{ hmlCtrl.hml.version.name }}</label>
+            </div>
+            <div class="row centered-heading">
+                <button type="button" class="btn btn-link" data-ng-click="hmlCtrl.changeHmlVersion()">Select different version</button>
+            </div>
+            <div class="form">
+                <form name="hmlForm">
+                    <div class="form-group" data-ng-show="!hmlCtrl.advancedSearchEnabled" data-ng-class="{ 'has-error': hmlForm.projectName.$invalid && hmlCtrl.formSubmitted }">
+                        <label class="control-label">Project Name:</label>
+                        <input id="projectName" name="projectName" type="text" class="form-control input-sm" data-ng-model="hmlCtrl.selectedHmlProjectName"
+                               uib-typeahead="hml.project.name for hml in hmlCtrl.getHmls($viewValue)" placeholder="Project Name"
+                               typeahead-on-select="hmlCtrl.selectHml($item)" typeahead-no-results="projectNameNoResults" autocomplete="off" required />
+                        <span data-ng-show="projectNameNoResults && hmlForm.projectName.$viewValue.length > 0" uib-dropdown uib-dropdown-toggle>
+                            <div class="uib-dropdown-menu">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h5>Querying HML database for project name containing: '{{ hmlForm.projectName.$viewValue }}' returns no results.
+                                            Please use advanced search to search by other criteria, or click
+                                            <a data-ng-click="hmlCtrl.createHml(false)">here</a> to create a new HML project.
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </span>
+                        <div class="help-block" data-ng-show="hmlForm.projectName.$error.required && hmlCtrl.formSubmitted">
+                            <small>Project Name Is Required</small>
+                        </div>
+                    </div>
+                    <div class="form-group centered-heading">
+                        <label for="advancedSearch" class="control-label">Enable Advanced Search:</label>
+                        <input type="checkbox" id="advancedSearch" data-ng-model="hmlCtrl.advancedSearchEnabled" />
+                    </div>
+                    <div data-ng-if="hmlCtrl.advancedSearchEnabled">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h5 class="panel-title">HML Advanced Search Fields</h5>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form">
+                                    <form name="advancedHmlSearchForm">
+                                        <div class="form-group" data-ng-class="{ 'has-error': hmlForm.id.$invalid && hmlCtrl.formSubmitted }">
+                                            <label for="id" class="control-label">ID:</label>
+                                            <input name="id" id="id" class="form-control input-sm" data-ng-model="hmlCtrl.hml.id" placeholder="HML ID" />
+                                            <div class="help-block" data-ng-show="hmlForm.id.$error && hmlCtrl.formSubmitted">
+                                                <small>Input contains invalid text.</small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" data-ng-class="{ 'has-error': hmlForm.name.$invalid && hmlCtrl.formSubmitted }">
+                                            <label for="name" class="control-label">Project Name:</label>
+                                            <input name="name" id="name" class="form-control input-sm" data-ng-model="hmlCtrl.hml.project.name" placeholder="Project Name" />
+                                            <div class="help-block" data-ng-show="hmlForm.name.$error && hmlCtrl.formSubmitted">
+                                                <small>Input contains invalid text.</small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" data-ng-class="{ 'has-error': hmlForm.version.$invalid && hmlCtrl.formSubmitted }">
+                                            <label for="version" class="control-label">Version:</label>
+                                            <select id="version" name="version" class="form-control input-sm" data-ng-options="version as version.name for version in hmlCtrl.versions track by version.id"
+                                                    data-ng-model="hmlCtrl.hml.version"></select>
+                                            <div class="help-block" data-ng-show="hmlForm.version.$error && hmlCtrl.formSubmitted">
+                                                <small>Input contains invalid text.</small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" data-ng-class="{ 'has-error': hmlForm.dateCreated.$invalid && hmlCtrl.formSubmitted }">
+                                            <label for="dateCreated" class="control-label">Date Created:</label>
+                                            <input name="dateCreated" id="dateCreated" class="form-control input-sm" data-ng-model="hmlCtrl.hml.dateCreated" placeholder="Date Created" />
+                                            <div class="help-block" data-ng-show="hmlForm.dateCreated.$error && hmlCtrl.formSubmitted">
+                                                <small>Input contains invalid text.</small>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-ng-show="hmlCtrl.gridOptions.data.length > 0">
+                        <div ui-grid="hmlCtrl.gridOptions" ui-grid-edit ui-grid-cellNav class="modal-grid"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="panel-footer">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-danger panel-button" data-ng-click="hmlCtrl.cancelHml()">Cancel</button>
+                    <button type="button" class="btn btn-info panel-button" data-ng-click="hmlCtrl.createHml(hmlForm)">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <toaster-container toaster-options="{ 'time-out': 1000 }"></toaster-container>
+</div>

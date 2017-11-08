@@ -1,0 +1,74 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="sspAddEditCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">{{ sspAddEditCtrl.edit ? 'Edit' : 'Add' }} Ssp</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ sspAddEditCtrl.edit ? 'Edit' : 'Add' }} Ssp Information</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form">
+                                <form name="sspAddEditCtrl.inputForm">
+                                    <div class="form-group" data-ng-class="{ 'has-error': sspAddEditCtrl.inputForm.locus.$invalid && sspAddEditCtrl.formSubmitted }">
+                                        <label for="locus" class="control-label">Locus:</label>
+                                        <input id="locus" name="name" type="text" class="form-control input-sm"
+                                               data-ng-model="ssoAddEditCtrl.ssp.locus" placeholder="Locus" required />
+                                        <div class="help-block" data-ng-show="sspAddEditCtrl.inputForm.locus.$error.required && sspAddEditCtrl.formSubmitted">
+                                            <small>Locus required</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': sspAddEditCtrl.inputForm.testId.$invalid && sspAddEditCtrl.formSubmitted }">
+                                        <label for="testId" class="control-label">Test ID:</label>
+                                        <input id="testId" name="testId" type="text" class="form-control input-sm"
+                                               data-ng-model="sspAddEditCtrl.ssp.testId" placeholder="Test ID" required />
+                                        <div class="help-block" data-ng-show="sspAddEditCtrl.inputForm.testId.$error.required && sspAddEditCtrl.formSubmitted">
+                                            <small>Test ID Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': sspAddEditCtrl.inputForm.testIdSource.$invalid && sspAddEditCtrl.formSubmitted }">
+                                        <label for="testIdSource" class="control-label">Test ID Source:</label>
+                                        <input id="testIdSource" name="testIdSource" type="text" class="form-control input-sm"
+                                               data-ng-model="sspAddEditCtrl.ssp.testIdSource" placeholder="Test ID Source" required />
+                                        <div class="help-block" data-ng-show="sspAddEditCtrl.inputForm.testIdSource.$error.required && sspAddEditCtrl.formSubmitted">
+                                            <small>Test ID Source Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': sspAddEditCtrl.inputForm.scores.$invalid && sspAddEditCtrl.formSubmitted }">
+                                        <label for="scores" class="control-label">Scores:</label>
+                                        <input id="scores" name="scores" type="text" class="form-control input-sm"
+                                               data-ng-model="sspAddEditCtrl.ssp.scores" placeholder="Scores" required />
+                                        <div class="help-block" data-ng-show="sspAddEditCtrl.inputForm.scores.$error.required && sspAddEditCtrl.formSubmitted">
+                                            <small>Scores Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading" data-ng-click="sspAddEditCtrl.togglePanel('properties')">
+                                            <h5 class="panel-title">Properties</h5>
+                                        </div>
+                                        <div class="panel-body" data-ng-show="sspAddEditCtrl.expandedPanels.properties">
+                                            <dynamic-controller templateurl="{{ sspAddEditCtrl.panelData.properties.templateUrl }}" controller="{{ sspAddEditCtrl.panelData.properties.controller }}"
+                                                controlleras="{{ sspAddEditCtrl.panelData.properties.controllerAs }}"></dynamic-controller>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="ssoAddEditCtrl.add(ssoAddEditCtrl.inputForm)">{{ ssoAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="ssoAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <button type="button" class="close" aria-hidden="true" data-ng-click="reportingCenterTerminologyModalCtrl.cancel()"></button>
+    <h3 class="modal-title">{{ reportingCenterTerminologyModalCtrl.title }}</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading" data-ng-click="reportingCenterTerminologyModalCtrl.togglePanels('reportingCenter')">
+                    <h5 class="panel-title">Reporting Centers</h5>
+                </div>
+                <div class="panel-body" data-ng-show="reportingCenterTerminologyModalCtrl.panels.reportingCenter.show === true">
+                    <div data-ng-if="reportingCenterTerminologyModalCtrl.panels.reportingCenter.show">
+                        <dynamic-controller templateurl="{{ reportingCenterTerminologyModalCtrl.panels.reportingCenter.templateUrl }}"
+                                            controller="{{ reportingCenterTerminologyModalCtrl.panels.reportingCenter.controller }}"
+                                            controlleras="{{ reportingCenterTerminologyModalCtrl.panels.reportingCenter.controllerAs }}"></dynamic-controller>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="reportingCenterTerminologyModalCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

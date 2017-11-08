@@ -1,0 +1,75 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="samplesAddEditCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">{{ samplesAddEditCtrl.edit ? 'Edit' : 'Add' }} Sample</h3>
+</div>
+<div class="modal-body">
+    <toaster-container toaster-options="{ 'close-button': true, 'limit': 1, 'tap-to-dismiss': true, 'toaster-id': 1 }"></toaster-container>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ samplesAddEditCtrl.edit ? 'Edit' : 'Add' }} Sample Information</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form">
+                                <form name="samplesAddEditCtrl.inputForm">
+                                    <div class="form-group" data-ng-class="{ 'has-error': samplesAddEditCtrl.inputForm.centerCode.$invalid && samplesAddEditCtrl.formSubmitted }">
+                                        <label for="centerCode" class="control-label">Center Code:</label>
+                                        <input id="centerCode" name="centerCode" type="text" class="form-control input-sm" data-ng-model="samplesAddEditCtrl.hml.samples[samplesAddEditCtrl.sampleIndex].centerCode" placeholder="Center Code" required />
+                                        <div class="help-block" data-ng-show="samplesAddEditCtrl.inputForm.centerCode.$error.required && samplesAddEditCtrl.formSubmitted">
+                                            <small>Center code is required.</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': samplesAddEditCtrl.inputForm.sampleId.$invalid && samplesAddEditCtrl.formSubmitted }">
+                                        <label for="sampleId" class="control-label">Sample ID:</label>
+                                        <input id="sampleId" name="sampleId" type="text" class="form-control input-sm" data-ng-model="samplesAddEditCtrl.hml.samples[sampleAddEditCtrl.sampleIndex].sampleId" placeholder="Sample ID" required />
+                                        <div class="help-block" data-ng-show="samplesAddEditCtrl.inputForm.sampleId.$error.required && samplesAddEditCtrl.formSubmitted">
+                                            <small>Sample ID is required.</small>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" data-ng-click="samplesAddEditCtrl.togglePanel('collectionMethods')">
+                                    <h5 class="panel-title">Collection Methods</h5>
+                                </div>
+                                <div class="panel-body" data-ng-show="samplesAddEditCtrl.expandedPanels.collectionMethods">
+                                    <dynamic-controller templateurl="{{ samplesAddEditCtrl.panelData.collectionMethods.templateUrl }}" controller="{{ samplesAddEditCtrl.panelData.collectionMethods.controller }}"
+                                        controlleras="{{ samplesAddEditCtrl.panelData.collectionMethods.controllerAs }}"></dynamic-controller>
+                                </div>
+                            </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" data-ng-click="samplesAddEditCtrl.togglePanel('properties')">
+                                    <h5 class="panel-title">Properties</h5>
+                                </div>
+                                <div class="panel-body" data-ng-show="samplesAddEditCtrl.expandedPanels.properties">
+                                    <dynamic-controller templateurl="{{ samplesAddEditCtrl.panelData.properties.templateUrl }}" controller="{{ samplesAddEditCtrl.panelData.properties.controller }}"
+                                        controlleras="{{ samplesAddEditCtrl.panelData.properties.controllerAs }}"></dynamic-controller>
+                                </div>
+                            </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" data-ng-click="samplesAddEditCtrl.togglePanel('typing')">
+                                    <h5 class="panel-title">Typing</h5>
+                                </div>
+                                <div class="panel-body" data-ng-show="samplesAddEditCtrl.expandedPanels.typing">
+                                    <dynamic-controller templateurl="{{ samplesAddEditCtrl.panelData.typing.templateUrl }}" controller="{{ samplesAddEditCtrl.panelData.typing.controller }}"
+                                        controlleras="{{ samplesAddEditCtrl.panelData.typing.controllerAs }}"></dynamic-controller>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="samplesAddEditCtrl.add(samplesAddEditCtrl.inputForm)">{{ samplesAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="samplesAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

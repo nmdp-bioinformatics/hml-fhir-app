@@ -1,0 +1,95 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="referenceSequenceAddEditCtrl.cancel()"></button>
+    <h3 class="modal-title">{{ referenceSequenceAddEditCtrl.edit ? 'Edit' : 'Add' }} Reference Sequence</h3>
+</div>
+<div class="modal-body">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">Reference Sequence</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form">
+                            <form name="referenceSequenceAddEditCtrl.inputForm">
+                                <div class="form-group" data-ng-class="{ 'has-error': referenceSequenceAddEditCtrl.inputForm.referenceSequenceId.$invalid && referenceSequenceAddEditCtrl.formSubmitted }">
+                                    <label for="referenceSequenceId" class="control-label">Reference Sequence ID:</label>
+                                    <input id="referenceSequenceId" name="referenceSequenceId" type="text" class="form-control input-sm" placeholder="ID" required
+                                           data-ng-model="referenceSequenceAddEditCtrl.hml.samples[referenceSequenceAddEditCtrl.sampleIndex].typing.consensusSequence.referenceDatabase.referenceSequence.referenceSequenceId" />
+                                    <div class="help-block" data-ng-show="referenceSequenceAddEditCtrl.inputForm.referenceSequenceId.$error.required && referenceSequenceAddEditCtrl.formSubmitted">
+                                        <small>ID is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': referenceSequenceAddEditCtrl.inputForm.name.$invalid && referenceSequenceAddEditCtrl.formSubmitted }">
+                                    <label for="name" class="control-label">Name:</label>
+                                    <input id="name" name="name" type="text" class="form-control input-sm" placeholder="Name" required
+                                           data-ng-model="referenceSequenceAddEditCtrl.hml.samples[referenceSequenceAddEditCtrl.sampleIndex].typing.consensusSequence.referenceDatabase.referenceSequence.name" />
+                                    <div class="help-block" data-ng-show="referenceSequenceAddEditCtrl.inputForm.name.$error.required && referenceSequenceAddEditCtrl.formSubmitted">
+                                        <small>Name is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': referenceSequenceAddEditCtrl.inputForm.description.$invalid && referenceSequenceAddEditCtrl.formSubmitted }">
+                                    <label for="description" class="control-label">Description:</label>
+                                    <input id="description" name="description" type="text" class="form-control input-sm" placeholder="Description" required
+                                           data-ng-model="referenceSequenceAddEditCtrl.hml.samples[referenceSequenceAddEditCtrl.sampleIndex].typing.consensusSequence.referenceDatabase.referenceSequence.description" />
+                                    <div class="help-block" data-ng-show="referenceSequenceAddEditCtrl.inputForm.description.$error.required && referenceSequenceAddEditCtrl.formSubmitted">
+                                        <small>Description is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': referenceSequenceAddEditCtrl.inputForm.start.$invalid && referenceSequenceAddEditCtrl.formSubmitted }">
+                                    <label for="start" class="control-label">Start:</label>
+                                    <input id="start" name="start" type="number" class="form-control input-sm" min="0" step="1" required
+                                           data-ng-model="referenceSequenceAddEditCtrl.hml.samples[referenceSequenceAddEditCtrl.sampleIndex].typing.consensusSequence.referenceDatabase.referenceSequence.start" />
+                                    <div class="help-block" data-ng-show="referenceSequenceAddEditCtrl.inputForm.start.$error.required && referenceSequenceAddEditCtrl.formSubmitted">
+                                        <small>Starting Position is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': referenceSequenceAddEditCtrl.inputForm.end.$invalid && referenceSequenceAddEditCtrl.formSubmitted }">
+                                    <label for="end" class="control-label">End:</label>
+                                    <input id="end" name="end" type="number" class="form-control input-sm" min="0" step="1" required
+                                           data-ng-model="referenceSequenceAddEditCtrl.hml.samples[referenceSequenceAddEditCtrl.sampleIndex].typing.consensusSequence.referenceDatabase.referenceSequence.end" />
+                                    <div class="help-block" data-ng-show="referenceSequenceAddEditCtrl.inputForm.end.$error.required && referenceSequenceAddEditCtrl.formSubmitted">
+                                        <small>Ending Position is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': referenceSequenceAddEditCtrl.inputForm.accession.$invalid && referenceSequenceAddEditCtrl.formSubmitted }">
+                                    <label for="accession" class="control-label">Accession:</label>
+                                    <input id="accession" name="accession" type="text" class="form-control input-sm" placeholder="Accession" required
+                                           data-ng-model="referenceSequenceAddEditCtrl.hml.samples[referenceSequenceAddEditCtrl.sampleIndex].typing.consensusSequence.referenceDatabase.referenceSequence.accession" />
+                                    <div class="help-block" data-ng-show="referenceSequenceAddEditCtrl.inputForm.accession.$error.required && referenceSequenceAddEditCtrl.formSubmitted">
+                                        <small>Accession is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': referenceSequenceAddEditCtrl.inputForm.strand.$invalid && referenceSequenceAddEditCtrl.formSubmitted }">
+                                    <label for="strand" class="control-label">Strand:</label>
+                                    <input id="strand" name="strand" type="text" class="form-control input-sm" placeholder="Strand" required
+                                           data-ng-model="referenceSequenceAddEditCtrl.hml.samples[referenceSequenceAddEditCtrl.sampleIndex].typing.consensusSequence.referenceDatabase.referenceSequence.strand" />
+                                    <div class="help-block" data-ng-show="referenceSequenceAddEditCtrl.inputForm.strand.$error.required && referenceSequenceAddEditCtrl.formSubmitted">
+                                        <small>Strand is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': referenceSequenceAddEditCtrl.inputForm.uri.$invalid && referenceSequenceAddEditCtrl.formSubmitted }">
+                                    <label for="uri" class="control-label">Uri:</label>
+                                    <input id="uri" name="uri" type="text" class="form-control input-sm" placeholder="Uri" required
+                                           data-ng-model="referenceSequenceAddEditCtrl.hml.samples[referenceSequenceAddEditCtrl.sampleIndex].typing.consensusSequence.referenceDatabase.referenceSequence.uri" />
+                                    <div class="help-block" data-ng-show="referenceSequenceAddEditCtrl.inputForm.uri.$error.required && referenceSequenceAddEditCtrl.formSubmitted">
+                                        <small>Uri is Required</small>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="referenceSequenceAddEditCtrl.add(referenceSequenceAddEditCtrl.inputForm)">{{ referenceSequenceAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="referenceSequenceAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

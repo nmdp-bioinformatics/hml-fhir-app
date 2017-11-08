@@ -1,0 +1,77 @@
+<div class="modal-header">
+    <button type="button" class="close" aria-hidden="true" data-ng-click="fileCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">{{ fileCtrl.title }}</h3>
+</div>
+<div class="modal-body">
+    <div class="row" data-ng-if="fileCtrl.mode === 1">
+        <div class="col-md-12 modal-default-body">
+            <div class="row">
+                <div class="centered-heading">
+                    <h5 class="push-down">Upload valid HML file(s) to begin converting to HL7-Fhir.</h5>
+                    <div class="input-group">
+                        <label class="input-group-btn push-down">
+                        <span class="btn btn-primary upload-container round-edges">
+                           Select Files&hellip;
+                            <input type="file" data-ng-model="fileCtrl.files" onchange="angular.element(this).scope().fileInputChange(this)"
+                                   id="fileUploader" class="stylish-file-input" multiple />
+                        </span>
+                        </label>
+                    </div>
+                    <br/>
+                    <div class="push-up" id="filedrag">Or drop files here.</div>
+                </div>
+                <div class="col-md-12 push-up" data-ng-show="fileCtrl.files.length > 0">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label class="panel-title">File Name</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="panel-title">File Size</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="panel-title">File Type</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="panel-title">Remove</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row" data-ng-repeat="file in fileCtrl.files">
+                                <div class="col-md-3">
+                                    <h5>{{ file.name }}</h5>
+                                </div>
+                                <div class="col-md-3">
+                                    <h5>{{ fileCtrl.parseFileSize(file) }}</h5>
+                                </div>
+                                <div class="col-md-3">
+                                    <h5>{{ ((file.type === '' || file.type === undefined) && file.name.indexOf('.hml')) ? 'application/hml' : file.type }}</h5>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-xs btn-danger file-list-remove-button" data-ng-click="fileCtrl.removeFileFromList(file)">
+                                        <i class="glyphicon glyphicon-remove-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="centered-heading">
+                        <button type="button" class="btn btn-primary btn-sm" data-ng-click="fileCtrl.uploadList()">Upload</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" data-ng-if="fileCtrl.mode === 2">
+        <div class="col-md-12">
+            <h6>INSTRUCTIONS FOR USING THIS FILE PARSING UTILITY</h6>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="fileCtrl.instructions()">{{ fileCtrl.mode === 1 ? 'Instructions' : 'Upload' }}</button>
+    <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="fileCtrl.close()">Close</button>
+</div>

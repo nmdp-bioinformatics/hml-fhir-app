@@ -1,0 +1,112 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="variantAddEditCtrl.cancel()"></button>
+    <h3 class="modal-title">{{ variantAddEditCtrl.edit ? 'Edit' : 'Add' }} Variant</h3>
+</div>
+<div class="modal-body">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">Variant</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form">
+                            <form name="variantAddEditCtrl.inputForm">
+                                <div class="form-group" data-ng-class="{ 'has-error': variantAddEditCtrl.inputForm.variantId.$invalid && variantAddEditCtrl.formSubmitted }">
+                                    <label for="variantId" class="control-label">Variant ID:</label>
+                                    <input id="variantId" name="variantId" type="text" class="form-control input-sm" placeholder="Variant ID" required
+                                           data-ng-model="variantAddEditCtrl.hml.samples[variantAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.variant.variantId" />
+                                    <div class="help-block" data-ng-show="variantAddEditCtrl.inputForm.variantId.$error.required && variantAddEditCtrl.formSubmitted">
+                                        <small>Variant ID is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': variantAddEditCtrl.inputForm.name.$invalid && variantAddEditCtrl.formSubmitted }">
+                                    <label for="name" class="control-label">Name:</label>
+                                    <input id="name" name="name" type="text" class="form-control input-sm" placeholder="Name" required
+                                           data-ng-model="variantAddEditCtrl.hml.samples[variantAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.variant.name" />
+                                    <div class="help-block" data-ng-show="variantAddEditCtrl.inputForm.name.$error.required && variantAddEditCtrl.formSubmitted">
+                                        <small>Name is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': variantAddEditCtrl.inputForm.start.$invalid && variantAddEditCtrl.formSubmitted }">
+                                    <label for="start" class="control-label">Start:</label>
+                                    <input id="start" name="start" type="number" class="form-control input-sm" min="0" step="1" required
+                                           data-ng-model="variantAddEditCtrl.hml.samples[variantAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.variant.start" />
+                                    <div class="help-block" data-ng-show="variantAddEditCtrl.inputForm.start.$error.required && variantAddEditCtrl.formSubmitted">
+                                        <small>Start Position is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': variantAddEditCtrl.inputForm.end.$invalid && variantAddEditCtrl.formSubmitted }">
+                                    <label for="end" class="control-label">End:</label>
+                                    <input id="end" name="end" type="number" class="form-control input-sm" min="0" step="1" required
+                                           data-ng-model="variantAddEditCtrl.hml.samples[variantAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.variant.end" />
+                                    <div class="help-block" data-ng-show="variantAddEditCtrl.inputForm.end.$error.required && variantAddEditCtrl.formSubmitted">
+                                        <small>End Position is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': variantAddEditCtrl.inputForm.referenceBases.$invalid && variantAddEditCtrl.formSubmitted }">
+                                    <label for="referenceBases" class="control-label">Reference Bases:</label>
+                                    <input id="referenceBases" name="referenceBases" type="text" class="form-control input-sm" placeholder="Reference Bases" required
+                                           data-ng-model="variantAddEditCtrl.hml.samples[variantAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.variant.referenceBases" />
+                                    <div class="help-block" data-ng-show="variantAddEditCtrl.inputForm.referenceBases.$error.required && variantAddEditCtrl.formSubmitted">
+                                        <small>Reference Bases are Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': variantAddEditCtrl.inputForm.alternateBases.$invalid && variantAddEditCtrl.formSubmitted }">
+                                    <label for="alternateBases" class="control-label">Alternate Bases:</label>
+                                    <input id="alternateBases" name="alternateBases" type="text" class="form-control input-sm" placeholder="Alternate Bases" required
+                                           data-ng-model="variantAddEditCtrl.hml.samples[variantAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.variant.alternateBases" />
+                                    <div class="help-block" data-ng-show="variantAddEditCtrl.inputForm.alternateBases.$error.required && variantAddEditCtrl.formSubmitted">
+                                        <small>Alternate Bases are Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': variantAddEditCtrl.inputForm.qualityScore.$invalid && variantAddEditCtrl.formSubmitted }">
+                                    <label for="qualityScore" class="control-label">Quality Score:</label>
+                                    <input id="qualityScore" name="qualityScore" type="text" class="form-control input-sm" placeholder="Quality Score" required
+                                           data-ng-model="variantAddEditCtrl.hml.samples[variantAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.variant.qualityScore" />
+                                    <div class="help-block" data-ng-show="variantAddEditCtrl.inputForm.qualityScore.$error.required && variantAddEditCtrl.formSubmitted">
+                                        <small>Quality Score is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': variantAddEditCtrl.inputForm.filter.$invalid && variantAddEditCtrl.formSubmitted }">
+                                    <label for="filter" class="control-label">Filter:</label>
+                                    <input id="filter" name="filter" type="text" class="form-control input-sm" placeholder="Filter" required
+                                           data-ng-model="variantAddEditCtrl.hml.samples[variantAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.variant.filter" />
+                                    <div class="help-block" data-ng-show="variantAddEditCtrl.inputForm.filter.$error.required && variantAddEditCtrl.formSubmitted">
+                                        <small>Filter is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': variantAddEditCtrl.inputForm.uri.$invalid && variantAddEditCtrl.formSubmitted }">
+                                    <label for="uri" class="control-label">Uri:</label>
+                                    <input id="uri" name="uri" type="text" class="form-control input-sm" placeholder="Uri" required
+                                           data-ng-model="variantAddEditCtrl.hml.samples[variantAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.variant.variantId" />
+                                    <div class="help-block" data-ng-show="variantAddEditCtrl.inputForm.uri.$error.required && variantAddEditCtrl.formSubmitted">
+                                        <small>Uri is Required</small>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" data-ng-click="variantAddEditCtrl.togglePanel('variantEffect')">
+                                <h5 class="panel-title">Variant Effect</h5>
+                            </div>
+                            <div class="panel-body" data-ng-show="variantAddEditCtrl.expandedPanels.variantEffect">
+                                <dynamic-controller templateurl="{{ variantAddEditCtrl.panelData.variantEffect.templateUrl }}" controller="{{ variantAddEditCtrl.panelData.variantEffect.controller }}"
+                                    controlleras="{{ variantAddEditCtrl.panelData.variantEffect.controllerAs }}"></dynamic-controller>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="variantAddEditCtrl.add(variantAddEditCtrl.inputForm)">{{ variantAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="variantAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

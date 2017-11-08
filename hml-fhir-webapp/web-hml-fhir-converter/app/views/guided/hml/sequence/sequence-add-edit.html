@@ -1,0 +1,41 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="sequenceAddEditCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">{{ sequenceAddEditCtrl.edit ? 'Edit' : 'Add' }} Sequence</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ sequenceAddEditCtrl.edit ? 'Edit' : 'Add' }} Sequence Information</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form">
+                                <form name="sequenceAddEditCtrl.inputForm">
+                                    <div class="form-group" data-ng-class="{ 'has-error': sequenceAddEditCtrl.inputForm.sequence.$invalid && sequenceAddEditCtrl.formSubmitted }">
+                                        <label for="sequence" class="control-label">Sequence:</label>
+                                        <input id="sequence" name="sequence" type="text" class="form-control input-sm"
+                                               data-ng-model="sequenceAddEditCtrl.sequence.sequence" placeholder="Sequence" required />
+                                        <div class="help-block" data-ng-show="sequenceAddEditCtrl.inputForm.testId.$error.required && sequenceAddEditCtrl.formSubmitted">
+                                            <small>Test ID Required</small>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="sequenceAddEditCtrl.add(sequenceAddEditCtrl.inputForm)">{{ sequenceAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="sequenceAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

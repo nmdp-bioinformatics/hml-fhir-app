@@ -1,0 +1,85 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="rawReadsAddEditCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">{{ rawReadsAddEditCtrl.edit ? 'Edit' : 'Add' }} Raw Reads</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ rawReadsAddEditCtrl.edit ? 'Edit' : 'Add' }} Raw Reads</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form">
+                                <form name="rawReadsAddEditCtrl.inputForm">
+                                    <div class="form-group" data-ng-class="{ 'has-error': rawReadsAddEditCtrl.inputForm.uri.$invalid && rawReadsAddEditCtrl.formSubmitted }">
+                                        <label for="uri" class="control-label">Uri:</label>
+                                        <input id="uri" name="uri" type="text" class="form-control input-sm"
+                                               data-ng-model="rawReadsAddEditCtrl.rawRead.uri" placeholder="Uri" required />
+                                        <div class="help-block" data-ng-show="rawReadsAddEditCtrl.inputForm.uri.$error.required && rawReadsAddEditCtrl.formSubmitted">
+                                            <small>Uri required</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': rawReadsAddEditCtrl.inputForm.format.$invalid && rawReadsAddEditCtrl.formSubmitted }">
+                                        <label for="format" class="control-label">Format:</label>
+                                        <input id="format" name="format" type="text" class="form-control input-sm"
+                                               data-ng-model="rawReadsAddEditCtrl.rawRead.format" placeholder="Format" required />
+                                        <div class="help-block" data-ng-show="rawReadsAddEditCtrl.inputForm.format.$error.required && rawReadsAddEditCtrl.formSubmitted">
+                                            <small>Format required</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': rawReadsAddEditCtrl.inputForm.paired.$invalid && rawReadsAddEditCtrl.formSubmitted }">
+                                        <label for="paired" class="control-label">Paired:</label>
+                                        <input id="paired" name="paired" type="checkbox" data-ng-model="rawReadsAddEditCtrl.rawRead.paired" required />
+                                        <div class="help-block" data-ng-show="rawReadsAddEditCtrl.inputForm.paired.$error.required && rawReadsAddEditCtrl.formSubmitted">
+                                            <small>Paired required</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': rawReadsAddEditCtrl.inputForm.pooled.$invalid && rawReadsAddEditCtrl.formSubmitted }">
+                                        <label for="pooled" class="control-label">Pooled:</label>
+                                        <input id="pooled" name="pooled" type="checkbox" data-ng-model="rawReadsAddEditCtrl.rawRead.pooled" required />
+                                        <div class="help-block" data-ng-show="rawReadsAddEditCtrl.inputForm.pooled.$error.required && rawReadsAddEditCtrl.formSubmitted">
+                                            <small>Pooled required</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': rawReadsAddEditCtrl.inputForm.availability.$invalid && rawReadsAddEditCtrl.formSubmitted }">
+                                        <label for="availability" class="control-label">Availability:</label>
+                                        <input id="availability" name="availability" type="text" class="form-control input-sm"
+                                               data-ng-model="rawReadsAddEditCtrl.rawRead.availability" placeholder="Availability" required />
+                                        <div class="help-block" data-ng-show="rawReadsAddEditCtrl.inputForm.availability.$error.required && rawReadsAddEditCtrl.formSubmitted">
+                                            <small>Availability required</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': rawReadsAddEditCtrl.inputForm.adapterTrimmed.$invalid && rawReadsAddEditCtrl.formSubmitted }">
+                                        <label for="adapterTrimmed" class="control-label">Adapter Trimmed:</label>
+                                        <input id="adapterTrimmed" name="adapterTrimmed" type="checkbox" data-ng-model="rawReadsAddEditCtrl.rawRead.adapterTrimmed" required />
+                                        <div class="help-block" data-ng-show="rawReadsAddEditCtrl.inputForm.adapterTrimmed.$error.required && rawReadsAddEditCtrl.formSubmitted">
+                                            <small>Adapter Trimmed required</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': rawReadsAddEditCtrl.inputForm.qualityTrimmed.$invalid && rawReadsAddEditCtrl.formSubmitted }">
+                                        <label for="qualityTrimmed" class="control-label">Quality Trimmed:</label>
+                                        <input id="qualityTrimmed" name="qualityTrimmed" type="checkbox" data-ng-model="rawReadsAddEditCtrl.rawRead.qualityTrimmed" required />
+                                        <div class="help-block" data-ng-show="rawReadsAddEditCtrl.inputForm.qualityTrimmed.$error.required && rawReadsAddEditCtrl.formSubmitted">
+                                            <small>Quality Trimmed required</small>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="rawReadsAddEditCtrl.add(rawReadsAddEditCtrl.inputForm)">{{ rawReadsAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="rawReadsAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

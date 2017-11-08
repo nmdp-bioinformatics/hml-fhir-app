@@ -1,0 +1,55 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="variantEffectAddEditCtrl.cancel()"></button>
+    <h3 class="modal-title">{{ variantEffectAddEditCtrl.edit ? 'Edit' : 'Add' }} Variant Effect</h3>
+</div>
+<div class="modal-body">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">Variant Effect</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form">
+                            <form name="variantEffectAddEditCtrl.inputForm">
+                                <div class="form-group" data-ng-class="{ 'has-error': variantEffectAddEditCtrl.inputForm.term.$invalid && variantEffectAddEditCtrl.formSubmitted }">
+                                    <label for="term" class="control-label">Term:</label>
+                                    <input id="term" name="term" type="text" class="form-control input-sm" placeholder="Term" required
+                                           data-ng-model="variantEffectAddEditCtrl.hml.samples[variantEffectAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.variant.variantEffect.term" />
+                                    <div class="help-block" data-ng-show="variantEffectAddEditCtrl.inputForm.term.$error.required && variantEffectAddEditCtrl.formSubmitted">
+                                        <small>Term is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': variantEffectAddEditCtrl.inputForm.hgvs.$invalid && variantEffectAddEditCtrl.formSubmitted }">
+                                    <label for="hgvs" class="control-label">Hgvs:</label>
+                                    <input id="hgvs" name="hgvs" type="text" class="form-control input-sm" placeholder="Hgvs" required
+                                           data-ng-model="variantEffectAddEditCtrl.hml.samples[variantEffectAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.variant.variantEffect.hgvs" />
+                                    <div class="help-block" data-ng-show="variantEffectAddEditCtrl.inputForm.hgvs.$error.required && variantEffectAddEditCtrl.formSubmitted">
+                                        <small>Hgvs is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': variantEffectAddEditCtrl.inputForm.uri.$invalid && variantEffectAddEditCtrl.formSubmitted }">
+                                    <label for="uri" class="control-label">Uri:</label>
+                                    <input id="uri" name="uri" type="text" class="form-control input-sm" placeholder="Uri" required
+                                           data-ng-model="variantEffectAddEditCtrl.hml.samples[variantEffectAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.variant.variantEffect.uri" />
+                                    <div class="help-block" data-ng-show="variantEffectAddEditCtrl.inputForm.uri.$error.required && variantEffectAddEditCtrl.formSubmitted">
+                                        <small>Uri is Required</small>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="variantEffectAddEditCtrl.add(variantEffectAddEditCtrl.inputForm)">{{ variantEffectAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="variantEffectAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

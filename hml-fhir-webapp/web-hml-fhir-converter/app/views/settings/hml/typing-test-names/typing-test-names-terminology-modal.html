@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <button type="button" class="close" aria-hidden="true" data-ng-click="typingTestNamesTerminologyModalCtrl.cancel()"></button>
+    <h3 class="modal-title">{{ typingTestNamesTerminologyModalCtrl.title }}</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading" data-ng-click="typingTestNamesTerminologyModalCtrl.togglePanels('typingTestNames')">
+                    <h5 class="panel-title">Typing Test Names</h5>
+                </div>
+                <div class="panel-body" data-ng-show="typingTestNamesTerminologyModalCtrl.panels.typingTestNames.show === true">
+                    <div data-ng-if="typingTestNamesTerminologyModalCtrl.panels.typingTestNames.show">
+                        <dynamic-controller templateurl="{{ typingTestNamesTerminologyModalCtrl.panels.typingTestNames.templateUrl }}"
+                                            controller="{{ typingTestNamesTerminologyModalCtrl.panels.typingTestNames.controller }}"
+                                            controlleras="{{ typingTestNamesTerminologyModalCtrl.panels.typingTestNames.controllerAs }}"></dynamic-controller>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="typingTestNamesTerminologyModalCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

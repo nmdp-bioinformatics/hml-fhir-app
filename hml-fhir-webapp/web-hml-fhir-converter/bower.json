@@ -1,0 +1,42 @@
+{
+  "name": "hml-fhir-angular-client",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "^1.4.0",
+    "bootstrap-sass-official": "^3.2.0",
+    "angular-resource": "^1.4.0",
+    "angular-route": "^1.4.0",
+    "angular-sanitize": "^1.4.0",
+    "angular-touch": "^1.4.0",
+    "angular-bootstrap": "^2.3.0",
+    "angular-animate": "^1.5.9",
+    "jquery": "^3.1.1",
+    "angular-material": "^1.1.1",
+    "AngularJS-Toaster": "angularjs-toaster#^2.1.0",
+    "angular-x2js": "^0.2.0",
+    "angular-ui-grid": "^4.0.2",
+    "angular-momentjs": "^0.2.2",
+    "angular-spinner": "^1.0.1",
+    "ramda": "^0.23.0",
+    "angular-ui-bootstrap-datetimepicker": "^2.5.0",
+    "angular-json-tree": "^1.0.1"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.4.0"
+  },
+  "appPath": "app",
+  "moduleName": "hmlFhirAngularClientApp",
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "less/bootstrap.less",
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
+      ]
+    }
+  },
+  "resolutions": {
+    "jquery": "~2.1.4",
+    "angular": "1.5.9"
+  }
+}

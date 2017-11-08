@@ -1,0 +1,93 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="sbtSangerAddEditCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">{{ sbtSangerAddEditCtrl.edit ? 'Edit' : 'Add' }} Sbt-Sanger Method</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ sbtSangerAddEditCtrl.edit ? 'Edit' : 'Add' }} Sbt-Sanger Information</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form">
+                                <form name="sbtSangerAddEditCtrl.inputForm">
+                                    <div class="form-group" data-ng-class="{ 'has-error': sbtSangerAddEditCtrl.inputForm.locus.$invalid && sbtSangerAddEditCtrl.formSubmitted }">
+                                        <label for="locus" class="control-label">Locus:</label>
+                                        <input id="locus" name="name" type="text" class="form-control input-sm"
+                                               data-ng-model="collectionMethodsAddEditCtrl.sbtSanger.locus" placeholder="Locus" required />
+                                        <div class="help-block" data-ng-show="sbtSangerAddEditCtrl.inputForm.locus.$error.required && sbtSangerAddEditCtrl.formSubmitted">
+                                            <small>Locus required</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': sbtSangerAddEditCtrl.inputForm.testId.$invalid && sbtSangerAddEditCtrl.formSubmitted }">
+                                        <label for="testId" class="control-label">Test ID:</label>
+                                        <input id="testId" name="testId" type="text" class="form-control input-sm"
+                                               data-ng-model="sbtSangerAddEditCtrl.sbtSanger.testId" placeholder="Test ID" required />
+                                        <div class="help-block" data-ng-show="sbtSangerAddEditCtrl.inputForm.testId.$error.required && sbtSangerAddEditCtrl.formSubmitted">
+                                            <small>Test ID Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': sbtSangerAddEditCtrl.inputForm.testIdSource.$invalid && sbtSangerAddEditCtrl.formSubmitted }">
+                                        <label for="testIdSource" class="control-label">Test ID Source:</label>
+                                        <input id="testIdSource" name="testIdSource" type="text" class="form-control input-sm"
+                                               data-ng-model="sbtSangerAddEditCtrl.sbtSanger.testIdSource" placeholder="Test ID Source" required />
+                                        <div class="help-block" data-ng-show="sbtSangerAddEditCtrl.inputForm.testIdSource.$error.required && sbtSangerAddEditCtrl.formSubmitted">
+                                            <small>Test ID Source Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading" data-ng-click="sbtSangerAddEditCtrl.togglePanel('properties')">
+                                            <h5 class="panel-title">Properties</h5>
+                                        </div>
+                                        <div class="panel-body" data-ng-show="sbtSangerAddEditCtrl.expandedPanels.properties">
+                                            <dynamic-controller templateurl="{{ sbtSangerAddEditCtrl.panelData.properties.templateUrl }}" controller="{{ sbtSangerAddEditCtrl.panelData.properties.controller }}"
+                                                controlleras="{{ sbtSangerAddEditCtrl.panelData.properties.controllerAs }}"></dynamic-controller>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading" data-ng-click="sbtSangerAddEditCtrl.togglePanel('amplification')">
+                                            <h5 class="panel-title">Amplification</h5>
+                                        </div>
+                                        <div class="panel-body" data-ng-show="sbtSangerAddEditCtrl.expandedPanels.amplification">
+                                            <dynamic-controller templateurl="{{ sbtSangerAddEditCtrl.panelData.amplification.templateUrl }}" controller="{{ sbtSangerAddEditCtrl.panelData.amplification.controller }}"
+                                                controlleras="{{ sbtSangerAddEditCtrl.panelData.amplification.controllerAs }}"></dynamic-controller>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading" data-ng-click="sbtSangerAddEditCtrl.togglePanel('subAmplification')">
+                                            <h5 class="panel-title">Sub-Amplification</h5>
+                                        </div>
+                                        <div class="panel-body" data-ng-show="sbtSangerAddEditCtrl.expandedPanels.subAmplification">
+                                            <dynamic-controller templateurl="{{ sbtSangerAddEditCtrl.panelData.subAmplification.templateUrl }}" controller="{{ sbtSangerAddEditCtrl.panelData.subAmplification.controller }}"
+                                                controlleras="{{ sbtSangerAddEditCtrl.panelData.subAmplification.controllerAs }}"></dynamic-controller>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading" data-ng-click="sbtSangerAddEditCtrl.togglePanel('gssp')">
+                                            <h5 class="panel-title">Gssp</h5>
+                                        </div>
+                                        <div class="panel-body" data-ng-show="sbtSangerAddEditCtrl.expandedPanels.gssp">
+                                            <dynamic-controller templateurl="{{ sbtSangerAddEditCtrl.panelData.gssp.templateUrl }}" controller="{{ sbtSangerAddEditCtrl.panelData.gssp.controller }}"
+                                                controlleras="{{ sbtSangerAddEditCtrl.panelData.gssp.controllerAs }}"></dynamic-controller>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="sbtSangerAddEditCtrl.add(sbtSangerAddEditCtrl.inputForm)">{{ sbtSangerAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="sbtSangerAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

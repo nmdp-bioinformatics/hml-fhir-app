@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <meta charset="utf-8">
+    <base href="/">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+    <link rel="stylesheet" href="bower_components/AngularJS-Toaster/toaster.css" />
+    <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.css" />
+    <link rel="stylesheet" href="bower_components/angular-ui-bootstrap-datetimepicker/datetimepicker.css" />
+    <link rel="stylesheet" href="bower_components/angular-json-tree/dist/angular-json-tree.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body ng-app="hmlFhirAngularClientApp">
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <div class="header">
+      <div class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand" href="#/">HML to HL7-FHIR Converter</a>
+          </div>
+
+          <div class="collapse navbar-collapse" id="js-navbar-collapse">
+
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#/">Home</a></li>
+              <li><a ng-href="#/about">About</a></li>
+              <li><a ng-href="#/">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div ng-view=""></div>
+      <span us-spinner spinner-key="index-spinner"></span>
+    </div>
+
+    <div class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h5 class="pull-right">Visit us on git: <a href="https://github.com/nmdp-bioinformatics/">NMDP Git</a></h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+     <script>
+       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+       }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-XXXXX-X');
+       ga('send', 'pageview');
+    </script>
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/AngularJS-Toaster/toaster.js"></script>
+    <script src="bower_components/x2js/xml2json.min.js"></script>
+    <script src="bower_components/angular-x2js/dist/x2js.min.js"></script>
+    <script src="bower_components/angular-ui-grid/ui-grid.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/angular-momentjs/angular-momentjs.js"></script>
+    <script src="bower_components/angular-spinner/dist/angular-spinner.min.js"></script>
+    <script src="bower_components/ramda/dist/ramda.js"></script>
+    <script src="bower_components/angular-ui-bootstrap-datetimepicker/datetimepicker.js"></script>
+    <script src="bower_components/angular-json-tree/dist/angular-json-tree.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <!-- controllers -->
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/about.js"></script>
+    <!-- controllers - file upload -->
+    <script src="scripts/controllers/file/file.js"></script>
+    <script src="scripts/controllers/file/upload.js"></script>
+    <script src="scripts/controllers/file/hml-validation-warnings.js"></script>
+    <script src="scripts/controllers/file/batch.js"></script>
+    <!-- controllers - guided ui -->
+    <script src="scripts/controllers/guided/guided-types.js"></script>
+    <!-- controllers - guided ui - hml area -->
+    <script src="scripts/controllers/guided/hml/hml.js"></script>
+    <script src="scripts/controllers/guided/hml/hml-version.js"></script>
+    <script src="scripts/controllers/guided/hml/hml-create.js"></script>
+    <script src="scripts/controllers/guided/hml/hml-modal.js"></script>
+    <script src="scripts/controllers/guided/hml/hml-add-edit-main.js"></script>
+    <script src="scripts/controllers/guided/hml/hml-id/hml-id.js"></script>
+    <script src="scripts/controllers/guided/hml/hml-id/hml-id-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/properties/properties.js"></script>
+    <script src="scripts/controllers/guided/hml/properties/properties-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/reporting-center/reporting-center.js"></script>
+    <script src="scripts/controllers/guided/hml/reporting-center/reporting-center-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/sequence/sequence.js"></script>
+    <script src="scripts/controllers/guided/hml/sequence/sequence-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/samples.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/samples-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/collection-methods/collection-methods.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/collection-methods/collection-methods-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/allele-assignment/allele-assignment.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/allele-assignment/allele-assignment-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/allele-assignment/genotypes/genotypes.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/allele-assignment/genotypes/genotypes-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/allele-assignment/genotypes/diploid-combination/diploid-combination.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/allele-assignment/genotypes/diploid-combination/diploid-combination-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/allele-assignment/genotypes/diploid-combination/locus-block/locus-block.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/allele-assignment/genotypes/diploid-combination/locus-block/locus-block-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/allele-assignment/genotypes/diploid-combination/locus-block/alleles/alleles.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/allele-assignment/genotypes/diploid-combination/locus-block/alleles/alleles-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/allele-assignment/glstring/glstring.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/allele-assignment/glstring/glstring-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/allele-assignment/haploid/haploid.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/allele-assignment/haploid/haploid-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/consensus-sequence/consensus-sequence.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/consensus-sequence/consensus-sequence-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/consensus-sequence/reference-database/reference-database.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/consensus-sequence/reference-database/reference-database-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/consensus-sequence/reference-database/reference-sequence/reference-sequence.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/consensus-sequence/reference-database/reference-sequence/reference-sequence-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/consensus-sequence/consensus-sequence-block/consensus-sequence-block.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/consensus-sequence/consensus-sequence-block/consensus-sequence-block-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/consensus-sequence/consensus-sequence-block/sequence-quality/sequence-quality.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/consensus-sequence/consensus-sequence-block/sequence-quality/sequence-quality-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/consensus-sequence/consensus-sequence-block/variant/variant.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/consensus-sequence/consensus-sequence-block/variant/variant-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/consensus-sequence/consensus-sequence-block/variant/variant-effect/variant-effect.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/consensus-sequence/consensus-sequence-block/variant/variant-effect/variant-effect-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing-method/typing-method.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing-method/typing-method-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing-method/sso/sso.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing-method/sso/sso-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing-method/ssp/ssp.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing-method/ssp/ssp-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing-method/sbt-sanger/sbt-sanger.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing-method/sbt-sanger/sbt-sanger-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing-method/sbt-sanger/amplification/amplification.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing-method/sbt-sanger/amplification/amplification-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing-method/sbt-sanger/sub-amplification/sub-amplification.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing-method/sbt-sanger/sub-amplification/sub-amplification-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing-method/sbt-sanger/gssp/gssp.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing-method/sbt-sanger/gssp/gssp-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing-method/sbt-ngs/sbt-ngs.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing-method/sbt-ngs/sbt-ngs-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing-method/sbt-ngs/raw-reads/raw-reads.js"></script>
+    <script src="scripts/controllers/guided/hml/samples/typing/typing-method/sbt-ngs/raw-reads/raw-reads-add-edit.js"></script>
+    <script src="scripts/controllers/guided/hml/typing-test-names/typing-test-names.js"></script>
+    <script src="scripts/controllers/guided/hml/typing-test-names/typing-test-name-add-edit.js"></script>
+    <!-- controllers - guided ui - fhir area -->
+    <script src="scripts/controllers/guided/fhir/fhir.js"></script>
+    <!-- controllers - guided ui - miring area -->
+    <script src="scripts/controllers/guided/miring/miring.js"></script>
+    <!-- controllers - settings -->
+    <script src="scripts/controllers/settings/settings.js"></script>
+    <!-- controllers - settings - hml area -->
+    <script src="scripts/controllers/settings/hml/hml-settings.js"></script>
+    <script src="scripts/controllers/settings/hml/hml-settings-modal.js"></script>
+    <script src="scripts/controllers/settings/hml/hml-id/hml-id-terminology-modal.js"></script>
+    <script src="scripts/controllers/settings/hml/typing-test-names/typing-test-names-terminology-modal.js"></script>
+    <script src="scripts/controllers/settings/hml/typing-test-names/terminology/typing-test-names-terminology.js"></script>
+    <script src="scripts/controllers/settings/hml/typing-test-names/terminology/typing-test-names-terminology-add-edit-modal.js"></script>
+    <script src="scripts/controllers/settings/hml/reporting-center/reporting-center-terminology-modal.js"></script>
+    <script src="scripts/controllers/settings/hml/reporting-center/terminology/reporting-center-terminology.js"></script>
+    <script src="scripts/controllers/settings/hml/reporting-center/terminology/reporting-center-terminology-add-edit-modal.js"></script>
+    <script src="scripts/controllers/settings/hml/samples/sample-terminology-modal.js"></script>
+    <script src="scripts/controllers/settings/hml/samples/collection-methods/terminology/collection-methods-terminology.js"></script>
+    <script src="scripts/controllers/settings/hml/samples/collection-methods/terminology/collection-methods-terminology-add-edit-modal.js"></script>
+    <script src="scripts/controllers/settings/hml/properties/properties-terminology-modal.js"></script>
+    <script src="scripts/controllers/settings/hml/versions/versions-terminology-modal.js"></script>
+    <script src="scripts/controllers/settings/hml/versions/terminology/versions-terminology.js"></script>
+    <script src="scripts/controllers/settings/hml/versions/terminology/versions-terminology-add-edit-modal.js"></script>
+    <!-- controllers - settings - fhir area -->
+    <!-- controllers - settings - miring area -->
+    <!-- controllers - common -->
+    <script src="scripts/controllers/common/confirmation-modal.js"></script>
+    <!-- factories -->
+    <script src="scripts/factories/xmlConverter.js"></script>
+    <script src="scripts/factories/httpHeaderTransform.js"></script>
+    <script src="scripts/factories/templateController.js"></script>
+    <script src="scripts/factories/guidGenerator.js"></script>
+    <script src="scripts/factories/dateConverter.js"></script>
+    <script src="scripts/factories/typeaheadQueryBuilder.js"></script>
+    <script src="scripts/factories/models/objectModelFactory.js"></script>
+    <script src="scripts/factories/views/gridCellTemplateFactory.js"></script>
+    <script src="scripts/factories/indexCollection.js"></script>
+    <script src="scripts/factories/modelUpdater.js"></script>
+    <!-- services -->
+    <script src="scripts/services/fileUpload.js"></script>
+    <script src="scripts/services/conversion.js"></script>
+    <script src="scripts/services/hml/hmlService.js"></script>
+    <script src="scripts/services/hml/typing-test-names/typingTestNameService.js"></script>
+    <script src="scripts/services/hml/reporting-centers/reportingCenterService.js"></script>
+    <script src="scripts/services/hml/samples/collection-methods/collectionMethodService.js"></script>
+    <script src="scripts/services/hml/properties/propertyService.js"></script>
+    <script src="scripts/services/hml/samples/sampleService.js"></script>
+    <script src="scripts/services/hml/hml-id/hmlIdService.js"></script>
+    <script src="scripts/services/hml/hmlModelService.js"></script>
+    <script src="scripts/services/hml/versions/versionService.js"></script>
+    <script src="scripts/services/hml/projects/projectService.js"></script>
+    <!-- constants -->
+    <script src="scripts/constants/app.constants.js"></script>
+    <!-- directives -->
+    <script src="scripts/directives/dynamicController.js"></script>
+    <script src="scripts/directives/toasterLink.js"></script>
+    <script src="scripts/directives/multiPartFileUpload.js"></script>
+    <!-- directive controllers -->
+    <script src="scripts/directives/controllers/modelAddEditWrapperCtrl.js"></script>
+    <!-- endbuild -->
+</body>
+</html>

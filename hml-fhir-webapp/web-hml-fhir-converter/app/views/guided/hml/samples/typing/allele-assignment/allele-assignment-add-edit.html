@@ -1,0 +1,81 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="alleleAssignmentAddEditCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">{{ alleleAssignmentAddEditCtrl.edit ? 'Edit' : 'Add' }} Allele Assignment</h3>
+</div>
+<div class="modal-body">
+    <toaster-container toaster-options="{ 'close-button': true, 'limit': 1, 'tap-to-dismiss': true, 'toaster-id': 1 }"></toaster-container>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ alleleAssignmentAddEditCtrl.edit ? 'Edit' : 'Add' }} Allele Assignemnts</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form">
+                                <form name="alleleAssignmentAddEditCtrl.inputForm">
+                                    <div class="form-group" data-ng-class="{ 'has-error': alleleAssignmentAddEditCtrl.inputForm.date.$invalid && alleleAssignmentAddEditCtrl.formSubmitted }">
+                                        <label for="date" class="control-label">Date:</label>
+                                        <input id="date" name="date" uib-datepicker-popup="{{ alleleAssignmentAddEditCtrl.dateFormat }}" data-ng-model="alleleAssignmentAddEditCtrl.hml.samples[alleleAssignmentAddEditCtrl.sampleIndex].typing.alleleAssignment.date"
+                                           class="form-control input-sm" datpicker-options="alleleAssignmentAddEditCtrl.dateOptions" data-ng-required="true"
+                                           data-ng-click="alleleAssignmentAddEditCtrl.openDatePicker()" is-open="alleleAssignmentAddEditCtrl.dateOpen" alt-input-formats="altInputFormats" />
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': alleleAssignmentAddEditCtrl.inputForm.geneFamily.$invalid && alleleAssignmentAddEditCtrl.formSubmitted }">
+                                        <label for="alleleDb" class="control-label">Allele DB:</label>
+                                        <input id="alleleDb" name="alleleDb" type="text" class="form-control input-sm" data-ng-model="alleleAssignmentAddEditCtrl.hml.samples[alleleAssignmentAddEditCtrl.sampleIndex].typing.alleleAssignment.alleleDb" placeholder="Allele DB" required />
+                                        <div class="help-block" data-ng-show="alleleAssignmentAddEditCtrl.inputForm.geneFamily.$error.required && alleleAssignmentAddEditCtrl.formSubmitted">
+                                            <small>Allele DB is Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': alleleAssignmentAddEditCtrl.inputForm.geneFamily.$invalid && alleleAssignmentAddEditCtrl.formSubmitted }">
+                                        <label for="geneFamily" class="control-label">Allele Version:</label>
+                                        <input id="geneFamily" name="geneFamily" type="text" class="form-control input-sm" data-ng-model="alleleAssignmentAddEditCtrl.hml.samples[alleleAssignmentAddEditCtrl.sampleIndex].typing.alleleAssignment.alleleVersion" placeholder="Allele Version" required />
+                                        <div class="help-block" data-ng-show="alleleAssignmentAddEditCtrl.inputForm.geneFamily.$error.required && alleleAssignmentAddEditCtrl.formSubmitted">
+                                            <small>Allele Version is Required</small>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" data-ng-click="alleleAssignmentAddEditCtrl.togglePanel('genotypes')">
+                                    <h5 class="panel-title">Genotypes</h5>
+                                </div>
+                                <div class="panel-body" data-ng-show="alleleAssignmentAddEditCtrl.expandedPanels.genotypes">
+                                    <dynamic-controller templateurl="{{ alleleAssignmentAddEditCtrl.panelData.genotypes.templateUrl }}" controller="{{ alleleAssignmentAddEditCtrl.panelData.genotypes.controller }}"
+                                        controlleras="{{ alleleAssignmentAddEditCtrl.panelData.genotypes.controllerAs }}"></dynamic-controller>
+                                </div>
+                            </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" data-ng-click="alleleAssignmentAddEditCtrl.togglePanel('glstring')">
+                                    <h5 class="panel-title">Gl String</h5>
+                                </div>
+                                <div class="panel-body" data-ng-show="alleleAssignmentAddEditCtrl.expandedPanels.glstring">
+                                    <dynamic-controller templateurl="{{ alleleAssignmentAddEditCtrl.panelData.glstring.templateUrl }}" controller="{{ alleleAssignmentAddEditCtrl.panelData.glstring.controller }}"
+                                        controlleras="{{ alleleAssignmentAddEditCtrl.panelData.glstring.controllerAs }}"></dynamic-controller>
+                                </div>
+                            </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" data-ng-click="alleleAssignmentAddEditCtrl.togglePanel('haploid')">
+                                    <h5 class="panel-title">Haploid</h5>
+                                </div>
+                                <div class="panel-body" data-ng-show="alleleAssignmentAddEditCtrl.expandedPanels.haploid">
+                                    <dynamic-controller templateurl="{{ alleleAssignmentAddEditCtrl.panelData.haploid.templateUrl }}" controller="{{ alleleAssignmentAddEditCtrl.panelData.haploid.controller }}"
+                                        controlleras="{{ alleleAssignmentAddEditCtrl.panelData.haploid.controllerAs }}"></dynamic-controller>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="alleleAssignmentAddEditCtrl.add(alleleAssignmentAddEditCtrl.inputForm)">{{ alleleAssignmentAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="alleleAssignmentAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

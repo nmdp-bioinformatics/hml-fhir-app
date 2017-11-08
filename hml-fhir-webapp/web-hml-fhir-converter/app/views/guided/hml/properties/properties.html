@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-md-12">
+        <button type="button" class="btn btn-success" data-ng-click="propertiesCtrl.addPropertyEntry()">
+            <i class="glyphicon glyphicon-plus button-glyphicon" />Add
+        </button>
+    </div>
+</div>
+<div class="row push-down">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">Selected Properties</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div ui-grid="propertiesCtrl.gridOptions" ui-grid-edit ui-grid-cellNav class="modal-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

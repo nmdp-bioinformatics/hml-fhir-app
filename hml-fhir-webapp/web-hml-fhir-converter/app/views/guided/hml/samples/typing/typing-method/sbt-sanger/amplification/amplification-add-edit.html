@@ -1,0 +1,49 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="amplificationAddEditCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">{{ amplificationAddEditCtrl.edit ? 'Edit' : 'Add' }} Amplification</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ amplificationAddEditCtrl.edit ? 'Edit' : 'Add' }} Amplification Information</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form">
+                                <form name="amplificationAddEditCtrl.inputForm">
+                                    <div class="form-group" data-ng-class="{ 'has-error': amplificationAddEditCtrl.inputForm.registeredName.$invalid && amplificationAddEditCtrl.formSubmitted }">
+                                        <label for="registeredName" class="control-label">Center Code:</label>
+                                        <input id="registeredName" name="registeredName" type="text" class="form-control input-sm" data-ng-model="amplificationAddEditCtrl.amplification.registeredName" placeholder="Registered Name" required />
+                                        <div class="help-block" data-ng-show="amplificationAddEditCtrl.inputForm.registeredName.$error.required && amplificationAddEditCtrl.formSubmitted">
+                                            <small>Registered Name is required.</small>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" data-ng-click="amplificationAddEditCtrl.togglePanel('sequence')">
+                                    <h5 class="panel-title">Sequence</h5>
+                                </div>
+                                <div class="panel-body" data-ng-show="amplificationAddEditCtrl.expandedPanels.sequence">
+                                    <dynamic-controller templateurl="{{ amplificationAddEditCtrl.panelData.sequence.templateUrl }}" controller="{{ amplificationAddEditCtrl.panelData.sequence.controller }}"
+                                        controlleras="{{ amplificationAddEditCtrl.panelData.sequence.controllerAs }}"></dynamic-controller>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="amplificationAddEditCtrl.add(amplificationAddEditCtrl.inputForm)">{{ amplificationAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="amplificationAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

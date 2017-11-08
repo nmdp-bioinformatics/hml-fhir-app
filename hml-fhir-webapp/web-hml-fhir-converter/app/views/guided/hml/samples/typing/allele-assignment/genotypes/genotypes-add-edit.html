@@ -1,0 +1,44 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="genotypesAddEditCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">{{ genotypesAddEditCtrl.edit ? 'Edit' : 'Add' }} Genotype</h3>
+</div>
+<div class="modal-body">
+    <toaster-container toaster-options="{ 'close-button': true, 'limit': 1, 'tap-to-dismiss': true, 'toaster-id': 1 }"></toaster-container>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ genotypesAddEditCtrl.edit ? 'Edit' : 'Add' }} Typing Resources</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form">
+                                <form name="genotypesAddEditCtrl.inputForm">
+
+                                </form>
+                            </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" data-ng-click="genotypesAddEditCtrl.togglePanel('diploidCombination')">
+                                    <h5 class="panel-title">Diploid Combination</h5>
+                                </div>
+                                <div class="panel-body" data-ng-show="genotypesAddEditCtrl.expandedPanels.diploidCombination">
+                                    <dynamic-controller templateurl="{{ genotypesAddEditCtrl.panelData.diploidCombination.templateUrl }}" controller="{{ genotypesAddEditCtrl.panelData.diploidCombination.controller }}"
+                                        controlleras="{{ genotypesAddEditCtrl.panelData.diploidCombination.controllerAs }}"></dynamic-controller>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="genotypesAddEditCtrl.add()">{{ genotypesAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="genotypesAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

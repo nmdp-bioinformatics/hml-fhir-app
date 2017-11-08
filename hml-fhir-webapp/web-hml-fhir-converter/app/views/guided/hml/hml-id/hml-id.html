@@ -1,0 +1,32 @@
+<div class="row push-down">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">Hml ID</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="rootName" class="control-label">Root Name:</label>
+                            <p id="rootName">{{ hmlIdCtrl.hml.hmlId.rootName }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="extension" class="control-label">Extension:</label>
+                            <p id="extension">{{ hmlIdCtrl.hml.hmlId.extension }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-primary btn-sm pull-right" data-ng-click="hmlIdCtrl.editHmlId()">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

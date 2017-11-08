@@ -1,0 +1,50 @@
+<div class="modal-header">
+    <button type="button" class="close" aria-hidden="true" data-ng-click="reportingCenterTerminologyAddEditModalCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">{{ reportingCenterTerminologyAddEditModalCtrl.title }}</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">Reporting Center</div>
+                </div>
+                <div class="panel-body">
+                    <div class="form">
+                        <form name="reportingCenterTerminologyAddEditModalCtrl.terminologyForm">
+                            <div class="form-group" data-ng-class="{ 'has-error': reportingCenterTerminologyAddEditModalCtrl.terminologyForm.context.$invalid && reportingCenterTerminologyAddEditModalCtrl.formSubmitted }">
+                                <label for="context" class="control-label">Name:</label>
+                                <input id="context" name="context" type="text" class="form-control input-sm" data-ng-model="reportingCenterTerminologyAddEditModalCtrl.reportingCenter.context" placeholder="Context" required />
+                                <div class="help-block" data-ng-show="reportingCenterTerminologyAddEditModalCtrl.terminologyForm.context.$error && reportingCenterTerminologyAddEditModalCtrl.formSubmitted">
+                                    <small>Context Is Required</small>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{ 'has-error': reportingCenterTerminologyAddEditModalCtrl.terminologyForm.centerId.$invalid && reportingCenterTerminologyAddEditModalCtrl.formSubmitted }">
+                                <label for="centerId" class="control-label">Reporting Center ID:</label>
+                                <input id="centerId" name="centerId" type="text" class="form-control input-sm" data-ng-model="reportingCenterTerminologyAddEditModalCtrl.reportingCenter.centerId" placeholder="Center ID" required />
+                                <div class="help-block" data-ng-show="reportingCenterTerminologyAddEditModalCtrl.terminologyForm.centerId.$error && reportingCenterTerminologyAddEditModalCtrl.formSubmitted">
+                                    <small>Center ID Required</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input id="active" type="checkbox" data-ng-model="reportingCenterTerminologyAddEditModalCtrl.reportingCenter.active" />
+                                &nbsp;
+                                <label for="active" data-ng-class="reportingCenterTerminologyAddEditModalCtrl.reportingCenter.active ? 'active-text' : 'inactive-text'">
+                                    {{ reportingCenterTerminologyAddEditModalCtrl.reportingCenter.active ? 'Active' : 'Inactive' }}
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="reportingCenterTerminologyAddEditModalCtrl.save()">{{ !reportingCenterTerminologyAddEditModalCtrl.edit ? 'Add' : 'Edit'}}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="reportingCenterTerminologyAddEditModalCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

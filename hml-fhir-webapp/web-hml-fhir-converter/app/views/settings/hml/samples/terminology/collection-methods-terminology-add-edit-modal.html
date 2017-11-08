@@ -1,0 +1,50 @@
+<div class="modal-header">
+    <button type="button" class="close" aria-hidden="true" data-ng-click="collectionMethodsTerminologyAddEditModalCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">{{ collectionMethodsTerminologyAddEditModalCtrl.title }}</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">Collection Methods</div>
+                </div>
+                <div class="panel-body">
+                    <div class="form">
+                        <form name="collectionMethodsTerminologyAddEditModalCtrl.terminologyForm">
+                            <div class="form-group" data-ng-class="{ 'has-error': collectionMethodsTerminologyAddEditModalCtrl.terminologyForm.name.$invalid && collectionMethodsTerminologyAddEditModalCtrl.formSubmitted }">
+                                <label for="name" class="control-label">Name:</label>
+                                <input id="name" name="name" type="text" class="form-control input-sm" data-ng-model="collectionMethodsTerminologyAddEditModalCtrl.collectionMethod.name" placeholder="Name" required />
+                                <div class="help-block" data-ng-show="collectionMethodsTerminologyAddEditModalCtrl.terminologyForm.name.$error && collectionMethodsTerminologyAddEditModalCtrl.formSubmitted">
+                                    <small>Name Is Required</small>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{ 'has-error': collectionMethodsTerminologyAddEditModalCtrl.terminologyForm.description.$invalid && collectionMethodsTerminologyAddEditModalCtrl.formSubmitted }">
+                                <label for="description" class="control-label">Description:</label>
+                                <input id="description" name="description" type="text" class="form-control input-sm" data-ng-model="collectionMethodsTerminologyAddEditModalCtrl.collectionMethod.description" placeholder="Description" required />
+                                <div class="help-block" data-ng-show="collectionMethodsTerminologyAddEditModalCtrl.terminologyForm.description.$error && collectionMethodsTerminologyAddEditModalCtrl.formSubmitted">
+                                    <small>Description Is Required</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input id="active" type="checkbox" data-ng-model="collectionMethodsTerminologyAddEditModalCtrl.collectionMethod.active" />
+                                &nbsp;
+                                <label for="active" data-ng-class="collectionMethodsTerminologyAddEditModalCtrl.collectionMethod.active ? 'active-text' : 'inactive-text'">
+                                    {{ typingTestNamesTerminologyAddEditModalCtrl.typingTestName.active ? 'Active' : 'Inactive' }}
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="collectionMethodsTerminologyAddEditModalCtrl.save()">{{ !collectionMethodsTerminologyAddEditModalCtrl.edit ? 'Add' : 'Edit'}}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="collectionMethodsTerminologyAddEditModalCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

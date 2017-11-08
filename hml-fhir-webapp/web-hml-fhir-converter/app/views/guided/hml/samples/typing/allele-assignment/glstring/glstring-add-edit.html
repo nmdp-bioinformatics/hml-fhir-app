@@ -1,0 +1,48 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="glstringAddEditCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">{{ glstringAddEditCtrl.edit ? 'Edit' : 'Add' }} Gl String</h3>
+</div>
+<div class="modal-body">
+    <toaster-container toaster-options="{ 'close-button': true, 'limit': 1, 'tap-to-dismiss': true, 'toaster-id': 1 }"></toaster-container>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ glstringAddEditCtrl.edit ? 'Edit' : 'Add' }} Gl String</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form">
+                                <form name="glstringAddEditCtrl.inputForm">
+                                    <div class="form-group" data-ng-class="{ 'has-error': glstringAddEditCtrl.inputForm.uri.$invalid && glstringAddEditCtrl.formSubmitted }">
+                                        <label for="uri" class="control-label">Uri:</label>
+                                        <input id="uri" name="uri" type="text" class="form-control input-sm" data-ng-model="glstringAddEditCtrl.glstring.uri" placeholder="Uri" required />
+                                        <div class="help-block" data-ng-show="glstringAddEditCtrl.inputForm.uri.$error.required && glstringAddEditCtrl.formSubmitted">
+                                            <small>Uri is Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': glstringAddEditCtrl.inputForm.value.$invalid && glstringAddEditCtrl.formSubmitted }">
+                                        <label for="value" class="control-label">Value:</label>
+                                        <input id="value" name="value" type="text" class="form-control input-sm" data-ng-model="glstringAddEditCtrl.glstring.value" placeholder="Value" required />
+                                        <div class="help-block" data-ng-show="glstringAddEditCtrl.inputForm.value.$error.required && glstringAddEditCtrl.formSubmitted">
+                                            <small>Value is Required</small>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="glstringAddEditCtrl.add()">{{ glstringAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="glstringAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

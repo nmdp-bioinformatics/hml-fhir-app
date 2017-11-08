@@ -1,0 +1,63 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="typingMethodAddEditCtrl.cancel()"></button>
+    <h3 class="modal-title">{{ typingMethodAddEditCtrl.edit ? 'Edit' : 'Add' }} Typing Method</h3>
+</div>
+<div class="modal-body">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">Typing Method</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" data-ng-click="typingMethodAddEditCtrl.togglePanel('sso')">
+                                <h5 class="panel-title">SSO</h5>
+                            </div>
+                            <div class="panel-body" data-ng-show="typingMethodAddEditCtrl.expandedPanels.sso">
+                                <dynamic-controller templateurl="{{ typingMethodAddEditCtrl.panelData.sso.templateUrl }}" controller="{{ typingMethodAddEditCtrl.panelData.sso.controller }}"
+                                    controlleras="{{ typingMethodAddEditCtrl.panelData.sso.controllerAs }}"></dynamic-controller>
+                            </div>
+                        </div>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" data-ng-click="typingMethodAddEditCtrl.togglePanel('ssp')">
+                                <h5 class="panel-title">SSP</h5>
+                            </div>
+                            <div class="panel-body" data-ng-show="typingMethodAddEditCtrl.expandedPanels.ssp">
+                                <dynamic-controller templateurl="{{ typingMethodAddEditCtrl.panelData.ssp.templateUrl }}" controller="{{ typingMethodAddEditCtrl.panelData.ssp.controller }}"
+                                    controlleras="{{ typingMethodAddEditCtrl.panelData.ssp.controllerAs }}"></dynamic-controller>
+                            </div>
+                        </div>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" data-ng-click="typingMethodAddEditCtrl.togglePanel('sbtSanger')">
+                                <h5 class="panel-title">SBT Sanger</h5>
+                            </div>
+                            <div class="panel-body" data-ng-show="typingMethodAddEditCtrl.expandedPanels.sbtSanger">
+                                <dynamic-controller templateurl="{{ typingMethodAddEditCtrl.panelData.sbtSanger.templateUrl }}" controller="{{ typingMethodAddEditCtrl.panelData.sbtSanger.controller }}"
+                                    controlleras="{{ typingMethodAddEditCtrl.panelData.sbtSanger.controllerAs }}"></dynamic-controller>
+                            </div>
+                        </div>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" data-ng-click="typingMethodAddEditCtrl.togglePanel('sbtNgs')">
+                                <h5 class="panel-title">SBT Ngs</h5>
+                            </div>
+                            <div class="panel-body" data-ng-show="typingMethodAddEditCtrl.expandedPanels.sbtNgs">
+                                <dynamic-controller templateurl="{{ typingMethodAddEditCtrl.panelData.sbtNgs.templateUrl }}" controller="{{ typingMethodAddEditCtrl.panelData.sbtNgs.controller }}"
+                                    controlleras="{{ typingMethodAddEditCtrl.panelData.sbtNgs.controllerAs }}"></dynamic-controller>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="typingMethodAddEditCtrl.add()">{{ typingMethodAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="typingMethodAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

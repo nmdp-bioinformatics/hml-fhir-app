@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-md-12">
+        <button type="button" class="btn btn-success btn-sm" data-ng-click="sspCtrl.addSsp()">
+            <i class="glyphicon glyphicon-plus button-glyphicon" />Add
+        </button>
+    </div>
+</div>
+<div class="row push-down">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">SSP</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <json-tree object="{ ssp: sspCtrl.ssp }" start-expanded="false" root-name="ssp"></json-tree>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

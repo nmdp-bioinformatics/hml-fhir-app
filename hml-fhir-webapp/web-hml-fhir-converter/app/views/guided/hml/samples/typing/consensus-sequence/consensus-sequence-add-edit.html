@@ -1,0 +1,55 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="consensusSequenceAddEditCtrl.cancel()"></button>
+    <h3 class="modal-title">{{ consensusSequenceAddEditCtrl.edit ? 'Edit' : 'Add' }} Consensus Sequence</h3>
+</div>
+<div class="modal-body">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">Consensus Sequence</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form">
+                            <form name="consensusSequenceAddEditCtrl.inputForm">
+                                <div class="form-group" data-ng-class="{ 'has-error': consensusSequenceAddEditCtrl.inputForm.date.$invalid && consensusSequenceAddEditCtrl.formSubmitted }">
+                                    <label for="date" class="control-label">Date:</label>
+                                    <input id="date" name="date" uib-datepicker-popup="{{ consensusSequenceAddEditCtrl.dateFormat }}" data-ng-model="consensusSequenceAddEditCtrl.hml.samples[consensusSequenceAddEditCtrl.sampleIndex].typing.consensusSequence.date"
+                                       class="form-control input-sm" datpicker-options="consensusSequenceAddEditCtrl.dateOptions" data-ng-required="true"
+                                       data-ng-click="consensusSequenceAddEditCtrl.openDatePicker()" is-open="consensusSequenceAddEditCtrl.dateOpen" alt-input-formats="altInputFormats" />
+                                </div>
+                            </form>
+                        </div>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" data-ng-click="consensusSequenceAddEditCtrl.togglePanel('consensusSequenceBlock')">
+                                <h5 class="panel-title">Consensus Sequence Block</h5>
+                            </div>
+                            <div class="panel-body" data-ng-show="consensusSequenceAddEditCtrl.expandedPanels.consensusSequenceBlock">
+                                <dynamic-controller templateurl="{{ consensusSequenceAddEditCtrl.panelData.consensusSequenceBlock.templateUrl }}" controller="{{ consensusSequenceAddEditCtrl.panelData.consensusSequenceBlock.controller }}"
+                                    controlleras="{{ consensusSequenceAddEditCtrl.panelData.consensusSequenceBlock.controllerAs }}"></dynamic-controller>
+                            </div>
+                        </div>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" data-ng-click="consensusSequenceAddEditCtrl.togglePanel('referenceDatabase')">
+                                <h5 class="panel-title">Reference Database</h5>
+                            </div>
+                            <div class="panel-body" data-ng-show="consensusSequenceAddEditCtrl.expandedPanels.referenceDatabase">
+                                <dynamic-controller templateurl="{{ consensusSequenceAddEditCtrl.panelData.referenceDatabase.templateUrl }}" controller="{{ consensusSequenceAddEditCtrl.panelData.referenceDatabase.controller }}"
+                                    controlleras="{{ consensusSequenceAddEditCtrl.panelData.referenceDatabase.controllerAs }}"></dynamic-controller>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="consensusSequenceAddEditCtrl.add(consensusSequenceAddEditCtrl.inputForm)">{{ consensusSequenceAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="consensusSequenceAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

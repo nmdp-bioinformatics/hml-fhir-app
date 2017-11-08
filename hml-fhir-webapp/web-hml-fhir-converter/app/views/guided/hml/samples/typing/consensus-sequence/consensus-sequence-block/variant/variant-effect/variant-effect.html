@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-md-12">
+        <button type="button" class="btn btn-success btn-sm" data-ng-click="variantEffectCtrl.addVariantEffect()">
+            <i class="glyphicon glyphicon-plus button-glyphicon" />Add
+        </button>
+    </div>
+</div>
+<div class="row push-down">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">Selected Variant Effect</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <json-tree object="{ variantEffect: variantEffectCtrl.variantEffect }" start-expanded="false" root-name="variantEffect"></json-tree>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="typingAddEditCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">{{ typingAddEditCtrl.edit ? 'Edit' : 'Add' }} Typing</h3>
+</div>
+<div class="modal-body">
+    <toaster-container toaster-options="{ 'close-button': true, 'limit': 1, 'tap-to-dismiss': true, 'toaster-id': 1 }"></toaster-container>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ typingAddEditCtrl.edit ? 'Edit' : 'Add' }} Typing Resources</h4>
+                </div>
+                <div class="panel-body" data-ng-disabled="typingAddEditCtrl.disabled">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form">
+                                <form name="typingAddEditCtrl.inputForm">
+                                    <div class="form-group" data-ng-class="{ 'has-error': typingAddEditCtrl.inputForm.geneFamily.$invalid && typingAddEditCtrl.formSubmitted }">
+                                        <label for="geneFamily" class="control-label">Gene Family:</label>
+                                        <input id="geneFamily" name="geneFamily" type="text" class="form-control input-sm" data-ng-model="typingAddEditCtrl.typing.geneFamily" placeholder="Gene Family" required />
+                                        <div class="help-block" data-ng-show="typingAddEditCtrl.inputForm.geneFamily.$error.required && typingAddEditCtrl.formSubmitted">
+                                            <small>Gene Family is Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': typingAddEditCtrl.inputForm.date.$invalid && typingAddEditCtrl.formSubmitted }">
+                                        <label for="date" class="control-label">Date:</label>
+                                        <input id="date" name="date" uib-datepicker-popup="{{ typingAddEditCtrl.dateFormat }}" data-ng-model="typingAddEditCtrl.typing.date"
+                                             class="form-control input-sm" datpicker-options="typingAddEditCtrl.dateOptions" data-ng-required="true"
+                                             data-ng-click="typingAddEditCtrl.openDatePicker()" is-open="typingAddEditCtrl.dateOpen" alt-input-formats="altInputFormats" />
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" data-ng-click="typingAddEditCtrl.togglePanel('properties')">
+                                    <h5 class="panel-title">Properties</h5>
+                                </div>
+                                <div class="panel-body" data-ng-show="typingAddEditCtrl.expandedPanels.properties">
+                                    <dynamic-controller templateurl="{{ typingAddEditCtrl.panelData.properties.templateUrl }}" controller="{{ typingAddEditCtrl.panelData.properties.controller }}"
+                                        controlleras="{{ typingAddEditCtrl.panelData.properties.controllerAs }}"></dynamic-controller>
+                                </div>
+                            </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" data-ng-click="typingAddEditCtrl.togglePanel('alleleAssignment')">
+                                    <h5 class="panel-title">Allele Assignment</h5>
+                                </div>
+                                <div class="panel-body" data-ng-show="typingAddEditCtrl.expandedPanels.alleleAssignment">
+                                    <dynamic-controller templateurl="{{ typingAddEditCtrl.panelData.alleleAssignment.templateUrl }}" controller="{{ typingAddEditCtrl.panelData.alleleAssignment.controller }}"
+                                        controlleras="{{ typingAddEditCtrl.panelData.alleleAssignment.controllerAs }}"></dynamic-controller>
+                                </div>
+                            </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" data-ng-click="typingAddEditCtrl.togglePanel('typingMethod')">
+                                    <h5 class="panel-title">Typing Method</h5>
+                                </div>
+                                <div class="panel-body" data-ng-show="typingAddEditCtrl.expandedPanels.typingMethod">
+                                    <dynamic-controller templateurl="{{ typingAddEditCtrl.panelData.typingMethod.templateUrl }}" controller="{{ typingAddEditCtrl.panelData.typingMethod.controller }}"
+                                        controlleras="{{ typingAddEditCtrl.panelData.typingMethod.controllerAs }}"></dynamic-controller>
+                                </div>
+                            </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" data-ng-click="typingAddEditCtrl.togglePanel('consensusSequence')">
+                                    <h5 class="panel-title">Consensus Sequence</h5>
+                                </div>
+                                <div class="panel-body" data-ng-show="typingAddEditCtrl.expandedPanels.consensusSequence">
+                                    <dynamic-controller templateurl="{{ typingAddEditCtrl.panelData.consensusSequence.templateUrl }}" controller="{{ typingAddEditCtrl.panelData.consensusSequence.controller }}"
+                                        controlleras="{{ typingAddEditCtrl.panelData.consensusSequence.controllerAs }}"></dynamic-controller>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="typingAddEditCtrl.add(typingAddEditCtrl.inputForm)">{{ typingAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="typingAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

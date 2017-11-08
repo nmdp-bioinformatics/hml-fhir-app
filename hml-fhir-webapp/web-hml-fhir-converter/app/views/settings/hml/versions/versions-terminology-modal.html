@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <button type="button" class="close" aria-hidden="true" data-ng-click="versionsTerminologyModalCtrl.cancel()"></button>
+    <h3 class="modal-title">{{ versionsTerminologyModalCtrl.title }}</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading" data-ng-click="versionsTerminologyModalCtrl.togglePanels('versions')">
+                    <h5 class="panel-title">Versions</h5>
+                </div>
+                <div class="panel-body" data-ng-show="versionsTerminologyModalCtrl.panels.versions.show === true">
+                    <div data-ng-if="versionsTerminologyModalCtrl.panels.versions.show">
+                        <dynamic-controller templateurl="{{ versionsTerminologyModalCtrl.panels.versions.templateUrl }}"
+                                            controller="{{ versionsTerminologyModalCtrl.panels.versions.controller }}"
+                                            controlleras="{{ versionsTerminologyModalCtrl.panels.versions.controllerAs }}"></dynamic-controller>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="versionsTerminologyModalCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

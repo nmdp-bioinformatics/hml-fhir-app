@@ -1,0 +1,63 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="gsspAddEditCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">{{ gsspAddEditCtrl.edit ? 'Edit' : 'Add' }} GSSP</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ gsspAddEditCtrl.edit ? 'Edit' : 'Add' }} GSSP Information</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form">
+                                <form name="gsspAddEditCtrl.inputForm">
+                                    <div class="form-group" data-ng-class="{ 'has-error': gsspAddEditCtrl.inputForm.registeredName.$invalid && gsspAddEditCtrl.formSubmitted }">
+                                        <label for="registeredName" class="control-label">Center Code:</label>
+                                        <input id="registeredName" name="registeredName" type="text" class="form-control input-sm" data-ng-model="gsspAddEditCtrl.subAmplification.registeredName" placeholder="Registered Name" required />
+                                        <div class="help-block" data-ng-show="gsspAddEditCtrl.inputForm.registeredName.$error.required && gsspAddEditCtrl.formSubmitted">
+                                            <small>Registered Name is required.</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': gsspAddEditCtrl.inputForm.primerSequence.$invalid && gsspAddEditCtrl.formSubmitted }">
+                                        <label for="primerSequence" class="control-label">Center Code:</label>
+                                        <input id="primerSequence" name="primerSequence" type="text" class="form-control input-sm" data-ng-model="gsspAddEditCtrl.subAmplification.primerSequence" placeholder="Primer Sequence" required />
+                                        <div class="help-block" data-ng-show="gsspAddEditCtrl.inputForm.primerSequence.$error.required && gsspAddEditCtrl.formSubmitted">
+                                            <small>Primer Sequence is required.</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': gsspAddEditCtrl.inputForm.primerTarget.$invalid && gsspAddEditCtrl.formSubmitted }">
+                                        <label for="primerTarget" class="control-label">Center Code:</label>
+                                        <input id="primerTarget" name="primerTarget" type="text" class="form-control input-sm" data-ng-model="gsspAddEditCtrl.subAmplification.primerTarget" placeholder="Primer Target" required />
+                                        <div class="help-block" data-ng-show="gsspAddEditCtrl.inputForm.primerTarget.$error.required && gsspAddEditCtrl.formSubmitted">
+                                            <small>Primer Target is required.</small>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" data-ng-click="gsspAddEditCtrl.togglePanel('sequence')">
+                                    <h5 class="panel-title">Sequence</h5>
+                                </div>
+                                <div class="panel-body" data-ng-show="gsspAddEditCtrl.expandedPanels.sequence">
+                                    <dynamic-controller templateurl="{{ gsspAddEditCtrl.panelData.sequence.templateUrl }}" controller="{{ gsspAddEditCtrl.panelData.sequence.controller }}"
+                                        controlleras="{{ gsspAddEditCtrl.panelData.sequence.controllerAs }}"></dynamic-controller>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="gsspAddEditCtrl.add(gsspAddEditCtrl.inputForm)">{{ gsspAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="gsspAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

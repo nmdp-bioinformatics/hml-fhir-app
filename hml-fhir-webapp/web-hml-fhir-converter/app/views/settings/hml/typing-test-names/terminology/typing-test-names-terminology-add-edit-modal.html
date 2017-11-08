@@ -1,0 +1,50 @@
+<div class="modal-header">
+    <button type="button" class="close" aria-hidden="true" data-ng-click="typingTestNamesTerminologyAddEditModalCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">{{ typingTestNamesTerminologyAddEditModalCtrl.title }}</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">Typing Test Name</div>
+                </div>
+                <div class="panel-body">
+                    <div class="form">
+                        <form name="typingTestNamesTerminologyAddEditModalCtrl.terminologyForm">
+                            <div class="form-group" data-ng-class="{ 'has-error': typingTestNamesTerminologyAddEditModalCtrl.terminologyForm.testName.$invalid && typingTestNamesTerminologyAddEditModalCtrl.formSubmitted }">
+                                <label for="testName" class="control-label">Name:</label>
+                                <input id="testName" name="testName" type="text" class="form-control input-sm" data-ng-model="typingTestNamesTerminologyAddEditModalCtrl.typingTestName.name" placeholder="Name" required />
+                                <div class="help-block" data-ng-show="typingTestNamesTerminologyAddEditModalCtrl.terminologyForm.testName.$error && typingTestNamesTerminologyAddEditModalCtrl.formSubmitted">
+                                    <small>Name Is Required</small>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{ 'has-error': typingTestNamesTerminologyAddEditModalCtrl.terminologyForm.description.$invalid && typingTestNamesTerminologyAddEditModalCtrl.formSubmitted }">
+                                <label for="description" class="control-label">Description:</label>
+                                <input id="description" name="description" type="text" class="form-control input-sm" data-ng-model="typingTestNamesTerminologyAddEditModalCtrl.typingTestName.description" placeholder="Description" required />
+                                <div class="help-block" data-ng-show="typingTestNamesTerminologyAddEditModalCtrl.terminologyForm.description.$error && typingTestNamesTerminologyAddEditModalCtrl.formSubmitted">
+                                    <small>Description Is Required</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input id="active" type="checkbox" data-ng-model="typingTestNamesTerminologyAddEditModalCtrl.typingTestName.active" />
+                                &nbsp;
+                                <label for="active" data-ng-class="typingTestNamesTerminologyAddEditModalCtrl.typingTestName.active ? 'active-text' : 'inactive-text'">
+                                    {{ typingTestNamesTerminologyAddEditModalCtrl.typingTestName.active ? 'Active' : 'Inactive' }}
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="typingTestNamesTerminologyAddEditModalCtrl.save()">{{ !typingTestNamesTerminologyAddEditModalCtrl.edit ? 'Add' : 'Edit'}}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="typingTestNamesTerminologyAddEditModalCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

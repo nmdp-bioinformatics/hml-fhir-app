@@ -1,0 +1,130 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="consensusSequenceBlockAddEditCtrl.cancel()"></button>
+    <h3 class="modal-title">{{ consensusSequenceBlockAddEditCtrl.edit ? 'Edit' : 'Add' }} Consensus Sequence Block</h3>
+</div>
+<div class="modal-body">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">Consensus Sequence Block</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form">
+                            <form name="consensusSequenceBlockAddEditCtrl.inputForm">
+                                <div class="form-group" data-ng-class="{ 'has-error': consensusSequenceBlockAddEditCtrl.inputForm.referenceSequenceId.$invalid && consensusSequenceBlockAddEditCtrl.formSubmitted }">
+                                    <label for="referenceSequenceId" class="control-label">Reference Sequence ID:</label>
+                                    <input id="referenceSequenceId" name="referenceSequenceId" type="text" class="form-control input-sm" placeholder="Reference Sequence ID" required
+                                       data-ng-model="consensusSequenceBlockAddEditCtrl.hml.samples[consensusSequenceBlockAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.referenceSequenceId" />
+                                    <div class="help-block" data-ng-show="consensusSequenceBlockAddEditCtrl.inputForm.referenceSequenceId.$error.required && consensusSequenceBlockAddEditCtrl.formSubmitted">
+                                        <small>Reference Sequence ID is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': consensusSequenceBlockAddEditCtrl.inputForm.start.$invalid && consensusSequenceBlockAddEditCtrl.formSubmitted }">
+                                    <label for="start" class="control-label">Start:</label>
+                                    <input id="start" name="start" type="number" class="form-control input-sm" min="0" step="1" required
+                                           data-ng-model="consensusSequenceBlockAddEditCtrl.hml.samples[consensusSequenceBlockAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.start" />
+                                    <div class="help-block" data-ng-show="consensusSequenceBlockAddEditCtrl.inputForm.start.$error.required && consensusSequenceBlockAddEditCtrl.formSubmitted">
+                                        <small>Start Position is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': consensusSequenceBlockAddEditCtrl.inputForm.end.$invalid && consensusSequenceBlockAddEditCtrl.formSubmitted }">
+                                    <label for="end" class="control-label">End:</label>
+                                    <input id="end" name="end" type="number" class="form-control input-sm" min="0" step="1" required
+                                           data-ng-model="consensusSequenceBlockAddEditCtrl.hml.samples[consensusSequenceBlockAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.end" />
+                                    <div class="help-block" data-ng-show="consensusSequenceBlockAddEditCtrl.inputForm.end.$error.required && consensusSequenceBlockAddEditCtrl.formSubmitted">
+                                        <small>End Position is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': consensusSequenceBlockAddEditCtrl.inputForm.strand.$invalid && consensusSequenceBlockAddEditCtrl.formSubmitted }">
+                                    <label for="strand" class="control-label">Strand:</label>
+                                    <input id="strand" name="strand" type="text" class="form-control input-sm" placeholder="Strand" required
+                                           data-ng-model="consensusSequenceBlockAddEditCtrl.hml.samples[consensusSequenceBlockAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.strand" />
+                                    <div class="help-block" data-ng-show="consensusSequenceBlockAddEditCtrl.inputForm.strand.$error.required && consensusSequenceBlockAddEditCtrl.formSubmitted">
+                                        <small>Strand is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': consensusSequenceBlockAddEditCtrl.inputForm.phasingGroup.$invalid && consensusSequenceBlockAddEditCtrl.formSubmitted }">
+                                    <label for="phasingGroup" class="control-label">Phasing Group:</label>
+                                    <input id="phasingGroup" name="phasingGroup" type="text" class="form-control input-sm" placeholder="Phasing Group" required
+                                           data-ng-model="consensusSequenceBlockAddEditCtrl.hml.samples[consensusSequenceBlockAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.phasingGroup" />
+                                    <div class="help-block" data-ng-show="consensusSequenceBlockAddEditCtrl.inputForm.phasingGroup.$error.required && consensusSequenceBlockAddEditCtrl.formSubmitted">
+                                        <small>Phasing Group is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': consensusSequenceBlockAddEditCtrl.inputForm.phaseSet.$invalid && consensusSequenceBlockAddEditCtrl.formSubmitted }">
+                                    <label for="phaseSet" class="control-label">Phase Set:</label>
+                                    <input id="phaseSet" name="phaseSet" type="text" class="form-control input-sm" placeholder="Phase Set" required
+                                           data-ng-model="consensusSequenceBlockAddEditCtrl.hml.samples[consensusSequenceBlockAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.phaseSet" />
+                                    <div class="help-block" data-ng-show="consensusSequenceBlockAddEditCtrl.inputForm.phaseSet.$error.required && consensusSequenceBlockAddEditCtrl.formSubmitted">
+                                        <small>Phase Set is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': consensusSequenceBlockAddEditCtrl.inputForm.continuity.$invalid && consensusSequenceBlockAddEditCtrl.formSubmitted }">
+                                    <label for="continuity" class="control-label">Reference Sequecne ID:</label>
+                                    <input id="continuity" name="continuity" type="checkbox" required
+                                           data-ng-model="consensusSequenceBlockAddEditCtrl.hml.samples[consensusSequenceBlockAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.continuity" />
+                                    <div class="help-block" data-ng-show="consensusSequenceBlockAddEditCtrl.inputForm.continuity.$error.required && consensusSequenceBlockAddEditCtrl.formSubmitted">
+                                        <small>Continuity is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': consensusSequenceBlockAddEditCtrl.inputForm.expectedCopyNumber.$invalid && consensusSequenceBlockAddEditCtrl.formSubmitted }">
+                                    <label for="expectedCopyNumber" class="control-label">Expected Copy Number:</label>
+                                    <input id="expectedCopyNumber" name="expectedCopyNumber" type="number" class="form-control input-sm" min="0" step="1" required
+                                           data-ng-model="consensusSequenceBlockAddEditCtrl.hml.samples[consensusSequenceBlockAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.expectedCopyNumber" />
+                                    <div class="help-block" data-ng-show="consensusSequenceBlockAddEditCtrl.inputForm.expectedCopyNumber.$error.required && consensusSequenceBlockAddEditCtrl.formSubmitted">
+                                        <small>Expected Copy Number is Required</small>
+                                    </div>
+                                </div>
+                                <div class="form-group" data-ng-class="{ 'has-error': consensusSequenceBlockAddEditCtrl.inputForm.description.$invalid && consensusSequenceBlockAddEditCtrl.formSubmitted }">
+                                    <label for="description" class="control-label">Description:</label>
+                                    <input id="description" name="description" type="text" class="form-control input-sm" placeholder="Description" required
+                                           data-ng-model="consensusSequenceBlockAddEditCtrl.hml.samples[consensusSequenceBlockAddEditCtrl.sampleIndex].typing.consensusSequence.consensusSequenceBlock.description" />
+                                    <div class="help-block" data-ng-show="consensusSequenceBlockAddEditCtrl.inputForm.description.$error.required && consensusSequenceBlockAddEditCtrl.formSubmitted">
+                                        <small>Description is Required</small>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" data-ng-click="consensusSequenceBlockAddEditCtrl.togglePanel('variant')">
+                                <h5 class="panel-title">Variant</h5>
+                            </div>
+                            <div class="panel-body" data-ng-show="consensusSequenceBlockAddEditCtrl.expandedPanels.variant">
+                                <dynamic-controller templateurl="{{ consensusSequenceBlockAddEditCtrl.panelData.variant.templateUrl }}" controller="{{ consensusSequenceBlockAddEditCtrl.panelData.variant.controller }}"
+                                    controlleras="{{ consensusSequenceBlockAddEditCtrl.panelData.variant.controllerAs }}"></dynamic-controller>
+                            </div>
+                        </div>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" data-ng-click="consensusSequenceBlockAddEditCtrl.togglePanel('sequence')">
+                                <h5 class="panel-title">Sequence</h5>
+                            </div>
+                            <div class="panel-body" data-ng-show="consensusSequenceBlockAddEditCtrl.expandedPanels.sequence">
+                                <dynamic-controller templateurl="{{ consensusSequenceBlockAddEditCtrl.panelData.sequence.templateUrl }}" controller="{{ consensusSequenceBlockAddEditCtrl.panelData.sequence.controller }}"
+                                    controlleras="{{ consensusSequenceBlockAddEditCtrl.panelData.sequence.controllerAs }}"></dynamic-controller>
+                            </div>
+                        </div>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" data-ng-click="consensusSequenceBlockAddEditCtrl.togglePanel('sequenceQuality')">
+                                <h5 class="panel-title">Sequence Quality</h5>
+                            </div>
+                            <div class="panel-body" data-ng-show="consensusSequenceBlockAddEditCtrl.expandedPanels.sequenceQuality">
+                                <dynamic-controller templateurl="{{ consensusSequenceBlockAddEditCtrl.panelData.sequenceQuality.templateUrl }}" controller="{{ consensusSequenceBlockAddEditCtrl.panelData.sequenceQuality.controller }}"
+                                    controlleras="{{ consensusSequenceBlockAddEditCtrl.panelData.sequenceQuality.controllerAs }}"></dynamic-controller>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="consensusSequenceBlockAddEditCtrl.add(consensusSequenceBlockAddEditCtrl.inputForm)">{{ consensusSequenceBlockAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="consensusSequenceBlockAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

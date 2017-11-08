@@ -1,0 +1,342 @@
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+// bower:scss
+@import "bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+@import "AngularJS-Toaster/toaster.scss";
+// endbower
+
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+body {
+  padding: 0;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Custom page header */
+.header {
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 10px;
+
+  /* Make the masthead heading the same height as the navigation */
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px;
+  }
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+.centered-heading {
+  text-align: center;
+}
+
+.upload-container {
+  width: 40%;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.button-row {
+  margin-top: 60px;
+  margin-bottom: 30px;
+  margin-left: 0px;
+}
+
+.push-right-30pct {
+  margin-right: 30%;
+}
+
+.red-link {
+  color: red;
+}
+
+.inactive-text {
+  color: red ;
+}
+
+.active-text {
+  color: green;
+}
+
+.green {
+  color: green;
+  border-color: green !important;
+  background-color: black;
+  border-radius: 100%;
+  margin: 0 !important;
+  display: inline-block;
+}
+
+.red {
+  color: red;
+  border-color: red !important;
+  background-color: black;
+  border-radius: 100%;
+  margin: 0 !important;
+  display: inline-block;
+}
+
+.yellow {
+  color: yellow;
+  border-color: yellow !important;
+  background-color: black;
+  border-radius: 100%;
+  margin: 0 !important;
+  display: inline-block;
+}
+
+.heading-button {
+  width: 90%;
+  font-weight: 400;
+  margin: auto;
+  text-align: center;
+}
+
+.heading-button:hover {
+  filter: brightness(80%);
+}
+
+.pull-right {
+  float: right;
+}
+
+:focus {
+  outline: none;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+
+  .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+  }
+}
+
+.modal-footer-button {
+  width: 100px;
+}
+
+.panel-button {
+  width: 100px;
+  float: right;
+}
+
+.panel-button:first-of-type {
+  margin-left: 10px;
+}
+
+.stylish-file-input {
+  display: none !important;
+}
+
+.select-label-right-side {
+  margin-left: -20px;
+  margin-top: 5px;
+}
+
+.push-down {
+  padding-top: 25px;
+}
+
+.bottom-margin {
+  margin-bottom: 25px;
+}
+
+.inner-panel-footer-button {
+  width: 75%;
+}
+
+.progress-container {
+  display: block;
+  position: relative;
+  width: 100%;
+  border: 2px solid #aad1f9;
+  transition: opacity 0.1s linear;
+  margin-top: 6px;
+}
+
+.scrollable-panel-body {
+  max-height: 135px;
+  min-height: 135px;
+  overflow-y: scroll;
+}
+
+.border {
+  margin: 1.2em;
+}
+
+.light-border {
+  margin: 0.5em;
+}
+
+.border-up {
+  margin-bottom: 0.8em;
+}
+
+.push-up {
+  padding-bottom: 25px;
+}
+
+.round-edges {
+  border-radius: 5px !important;
+}
+
+.cell-button {
+  margin-right: 3px;
+}
+
+.cell-button:last-of-type {
+  margin-right: 0;
+}
+
+.typing-test-list {
+  float: right;
+  margin-bottom: 12px;
+}
+
+.typing-test-list:first-of-type {
+  margin-left: 15px;
+}
+
+.file-list-remove-button {
+  margin-left: 15px;
+  margin-top: 5px;
+}
+
+.ui-grid-grid-footer {
+  float: left;
+  width: 100%;
+  padding-left: 15px;
+  padding-top: 4px;
+}
+
+.odd-row {
+  background-color: darken(#b7cae5, 10%) !important;
+}
+
+.even-row {
+  background-color: lighten(#b7cae5, 10%) !important;
+}
+
+.upload-row {
+  margin: 5px;
+}
+
+.upload-row-container {
+  padding: 25px;
+}
+
+.btn-outline-success {
+  background: white;
+  color: #5cb85c;
+  outline-color: #5cb85c;
+}
+
+.button-glyphicon {
+  margin-right: 5px;
+}
+
+.vertical-center-text {
+  margin-top: 30%;
+}
+
+.modal-grid {
+  width: 100%;
+  height: 150px;
+}
+
+.modal-grid-sm {
+  width: 98%;
+  height: 120px;
+}
+
+.file-upload-button-continue {
+  margin-bottom: 15px;
+}
+
+.vertical-center {
+  vertial-align: middle;
+}
+
+.inline-text-button {
+  margin-left: -10px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.modal-default-body {
+  background: #b7cae5;
+  min-height: 150px;
+  width: 90%;
+  float: none;
+  margin: 0 auto;
+  border-radius: 5px;
+  outline: dashed 2px black;
+  outline-offset: -8px;
+}
+
+.modal-status-body {
+  background: #b7cae5;
+  min-height: 150px;
+  width: 90%;
+  float: none;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+
+  p + h4 {
+    margin-top: 28px;
+  }
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}

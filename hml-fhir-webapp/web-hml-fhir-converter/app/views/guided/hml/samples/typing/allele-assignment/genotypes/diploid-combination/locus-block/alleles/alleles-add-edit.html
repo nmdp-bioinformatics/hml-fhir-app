@@ -1,0 +1,48 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="allelesAddEditCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">{{ allelesAddEditCtrl.edit ? 'Edit' : 'Add' }} Allele</h3>
+</div>
+<div class="modal-body">
+    <toaster-container toaster-options="{ 'close-button': true, 'limit': 1, 'tap-to-dismiss': true, 'toaster-id': 1 }"></toaster-container>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ allelesAddEditCtrl.edit ? 'Edit' : 'Add' }} Allele</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form">
+                                <form name="allelesAddEditCtrl.inputForm">
+                                    <div class="form-group" data-ng-class="{ 'has-error': allelesAddEditCtrl.inputForm.name.$invalid && allelesAddEditCtrl.formSubmitted }">
+                                        <label for="name" class="control-label">Name:</label>
+                                        <input id="name" name="name" type="text" class="form-control input-sm" data-ng-model="allelesAddEditCtrl.allele.name" placeholder="Name" required />
+                                        <div class="help-block" data-ng-show="allelesAddEditCtrl.inputForm.name.$error.required && allelesAddEditCtrl.formSubmitted">
+                                            <small>Name is Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': allelesAddEditCtrl.inputForm.present.$invalid && allelesAddEditCtrl.formSubmitted }">
+                                        <label for="present" class="control-label">Present:</label>
+                                        <input id="present" name="present" type="text" class="form-control input-sm" data-ng-model="allelesAddEditCtrl.allele.present" placeholder="Present" required />
+                                        <div class="help-block" data-ng-show="allelesAddEditCtrl.inputForm.present.$error.required && allelesAddEditCtrl.formSubmitted">
+                                            <small>Presence is Required</small>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="allelesAddEditCtrl.add(allelesAddEditCtrl.inputForm)">{{ allelesAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="allelesAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

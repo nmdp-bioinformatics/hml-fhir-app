@@ -1,0 +1,75 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="sbtNgsAddEditCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">{{ sbtNgsAddEditCtrl.edit ? 'Edit' : 'Add' }} Sbt-Ngs</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ sbtNgsAddEditCtrl.edit ? 'Edit' : 'Add' }} Sbt-Ngs</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form">
+                                <form name="sbtNgsAddEditCtrl.inputForm">
+                                    <div class="form-group" data-ng-class="{ 'has-error': sbtNgsAddEditCtrl.inputForm.locus.$invalid && sbtNgsAddEditCtrl.formSubmitted }">
+                                        <label for="locus" class="control-label">Locus:</label>
+                                        <input id="locus" name="name" type="text" class="form-control input-sm"
+                                               data-ng-model="sbtNgsAddEditCtrl.sbtNgs.locus" placeholder="Locus" required />
+                                        <div class="help-block" data-ng-show="sbtNgsAddEditCtrl.inputForm.locus.$error.required && sbtNgsAddEditCtrl.formSubmitted">
+                                            <small>Locus required</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': sbtNgsAddEditCtrl.inputForm.testId.$invalid && sbtNgsAddEditCtrl.formSubmitted }">
+                                        <label for="testId" class="control-label">Test ID:</label>
+                                        <input id="testId" name="testId" type="text" class="form-control input-sm"
+                                               data-ng-model="sbtNgsAddEditCtrl.sbtNgs.testId" placeholder="Test ID" required />
+                                        <div class="help-block" data-ng-show="sbtNgsAddEditCtrl.inputForm.testId.$error.required && sbtNgsAddEditCtrl.formSubmitted">
+                                            <small>Test ID Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': sbtNgsAddEditCtrl.inputForm.testIdSource.$invalid && sbtNgsAddEditCtrl.formSubmitted }">
+                                        <label for="testIdSource" class="control-label">Test ID Source:</label>
+                                        <input id="testIdSource" name="testIdSource" type="text" class="form-control input-sm"
+                                               data-ng-model="sbtNgsAddEditCtrl.sbtNgs.testIdSource" placeholder="Test ID Source" required />
+                                        <div class="help-block" data-ng-show="sbtNgsAddEditCtrl.inputForm.testIdSource.$error.required && sbtNgsAddEditCtrl.formSubmitted">
+                                            <small>Test ID Source Required</small>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading" data-ng-click="sbtNgsAddEditCtrl.togglePanel('properties')">
+                                            <h5 class="panel-title">Properties</h5>
+                                        </div>
+                                        <div class="panel-body" data-ng-show="sbtNgsAddEditCtrl.expandedPanels.properties">
+                                            <dynamic-controller templateurl="{{ sbtNgsAddEditCtrl.panelData.properties.templateUrl }}" controller="{{ sbtNgsAddEditCtrl.panelData.properties.controller }}"
+                                                controlleras="{{ sbtNgsAddEditCtrl.panelData.properties.controllerAs }}"></dynamic-controller>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading" data-ng-click="sbtNgsAddEditCtrl.togglePanel('rawReads')">
+                                            <h5 class="panel-title">Raw Reads</h5>
+                                        </div>
+                                        <div class="panel-body" data-ng-show="sbtNgsAddEditCtrl.expandedPanels.rawReads">
+                                            <dynamic-controller templateurl="{{ sbtNgsAddEditCtrl.panelData.rawReads.templateUrl }}" controller="{{ sbtNgsAddEditCtrl.panelData.rawReads.controller }}"
+                                                controlleras="{{ sbtNgsAddEditCtrl.panelData.rawReads.controllerAs }}"></dynamic-controller>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="sbtNgsAddEditCtrl.add(sbtNgsAddEditCtrl.inputForm)">{{ sbtNgsAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="sbtNgsAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

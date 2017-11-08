@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <button type="button" class="close" aria-hidden="true" data-ng-click="hmlIdTerminologyModalCtrl.cancel()"></button>
+    <h3 class="modal-title">{{ hmlIdTerminologyModalCtrl.title }}</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading" data-ng-click="hmlIdTerminologyModalCtrl.togglePanels('hmlId')">
+                    <h5 class="panel-title">HML ID</h5>
+                </div>
+                <div class="panel-body" data-ng-show="hmlIdTerminologyModalCtrl.panels.hmlId.show === true">
+                    <div data-ng-if="hmlIdTerminologyModalCtrl.panels.hmlId.show">
+                        <dynamic-controller templateurl="{{ hmlIdTerminologyModalCtrl.panels.hmlId.templateUrl }}"
+                            controller="{{ hmlIdTerminologyModalCtrl.panels.hmlId.controller }}"
+                            controlleras="{{ hmlIdTerminologyModalCtrl.panels.hmlId.controllerAs }}"></dynamic-controller>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="hmlIdTerminologyModalCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

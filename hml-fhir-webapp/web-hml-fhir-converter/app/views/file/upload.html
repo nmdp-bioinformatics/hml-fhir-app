@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <button type="button" class="close" aria-hidden="true" data-ng-click="uploadCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">Uploading files to validation server...</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12 modal-status-body">
+            <div class="upload-row-container">
+                <div class="row upload-row" data-ng-class="$even ? 'even-row' : 'odd-row'" data-ng-repeat="file in uploadCtrl.files">
+                    <div class="border">
+                        <div class="col-md-3">
+                            <label class="border-up">{{ file.name }}</label>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="progress-container">
+                                <md-progress-linear md-mode="determinate" value="{{ file.percentageUploaded }}"></md-progress-linear>
+                            </div>
+                        </div>
+                        <div data-ng-show="file.result !== undefined">
+                            <div class="col-md-12 push-right-30pct">
+                                <i id="hmlCompliant" class="glyphicon" data-ng-class="{ 'glyphicon-ok-sign green': file.result['miring-report']['hml-compliant'] === 'true', 'glyphicon-remove-sign red': file.result['miring-report']['hml-compliant'] !== 'true' }" />
+                                <label for="hmlCompliant">{{ file.result['miring-report']['hml-compliant'] === 'true' ? 'HML Compliant' : 'Non-HML Compliant' }}</label>
+                            </div>
+                            <div class="col-md-12 push-right-30pct">
+                                <i id="validMiring" class="glyphicon" data-ng-class="{ 'glyphicon-ok-sign green': file.result['miring-report']['miring-compliant'] === 'true', 'glyphicon-exclamation-sign yellow': file.result['miring-report']['miring-compliant'] === 'warnings', 'glyphicon-remove-sign red': file.result['miring-report']['miring-compliant'] === 'false' }" />
+                                <label for="validMiring">{{ file.result['miring-report']['miring-compliant'] === 'true' || 'warnings' ? 'Miring Compliant' : 'Non-Miring Compliant' }}</label>
+                                <button type="button" class="btn btn-link inline-text-button" data-ng-show="file.result['miring-report']['miring-compliant'] !== 'true'" aria-hidden="true"
+                                        data-ng-click="uploadCtrl.displayMiringWarnings(file.result['miring-report']['validation-warnings'], file)">( Warnings! )</button>
+                                <div class="pull-right" data-ng-show="file.result['miring-report']['hml-compliant]">
+                                    <button type="button" class="btn btn-primary file-upload-button-continue" data-ng-click="uploadCtrl.convert(file)">Convert</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="uploadCtrl.close()">Cancel</button>
+</div>
+<toaster-container toaster-options="{ 'time-out': 0, 'close-button': true, 'position-class': 'toast-top-full-width' }"></toaster-container>

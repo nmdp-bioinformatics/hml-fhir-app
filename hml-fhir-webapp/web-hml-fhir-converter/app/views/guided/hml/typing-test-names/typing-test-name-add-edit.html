@@ -1,0 +1,52 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="typingTestNameAddEditCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">{{ typingTestNameAddEditCtrl.edit ? 'Edit' : 'Add' }} Typing Test Name</h3>
+</div>
+<div class="modal-body">
+    <toaster-container toaster-options="{ 'close-button': true, 'limit': 1, 'tap-to-dismiss': true, 'toaster-id': 1 }"></toaster-container>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ typingTestNameAddEditCtrl.edit ? 'Edit' : 'Add' }} Typing Test Information</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form">
+                                <form name="typingTestNameAddEditCtrl.inputForm">
+                                    <div class="form-group">
+                                        <label for="maxQuery" class="control-label">Maximum Query Results:</label>
+                                        <select id="maxQuery" data-ng-options="numResults.text for numResults in typingTestNameAddEditCtrl.resultsPerPage track by numResults.number"
+                                                data-ng-model="typingTestNameAddEditCtrl.maxQuery" class="form-control input-sm" />
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error': typingTestNameAddEditCtrl.inputForm.typingTestName.$invalid && typingTestNameAddEditCtrl.formSubmitted }">
+                                        <label for="typingTestName" class="control-label">Typing Test name:</label>
+                                        <input id="typingTestName" name="typingTestName" type="text" class="form-control input-sm" data-ng-model="typingTestNameAddEditCtrl.selectedTypingTestName" placeholder="Typing Test Name"
+                                               uib-typeahead="typingTest.name for typingTest in typingTestNameAddEditCtrl.getTypingTestNames($viewValue)" data-ng-change="typingTestNameAddEditCtrl.typingTestChange()"
+                                               typeahead-on-select="typingTestNameAddEditCtrl.selectTypingTest($item)" autocomplete="off" required />
+                                        <div class="help-block" data-ng-show="typingTestNameAddEditCtrl.inputForm.typingTestName.$error.required && typingTestNameAddEditCtrl.formSubmitted">
+                                            <small>Please select a typing test name</small>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="checkbox" data-ng-model="typingTestNameAddEditCtrl.autoAdd" />
+                                        <small>Automatically route to add / edit form on no results</small>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="typingTestNameAddEditCtrl.add(typingTestNameAddEditCtrl.inputForm)">{{ typingTestNameAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="typingTestNameAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

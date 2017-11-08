@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <button type="button" class="close" aria-hidden="true" data-ng-click="sampleTerminologyModalCtrl.cancel()"></button>
+    <h3 class="modal-title">{{ sampleTerminologyModalCtrl.title }}</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading" data-ng-click="sampleTerminologyModalCtrl.togglePanels('collectionMethods')">
+                    <h5 class="panel-title">Collection Centers</h5>
+                </div>
+                <div class="panel-body" data-ng-show="sampleTerminologyModalCtrl.panels.collectionMethods.show === true">
+                    <div data-ng-if="sampleTerminologyModalCtrl.panels.collectionMethods.show">
+                        <dynamic-controller templateurl="{{ sampleTerminologyModalCtrl.panels.collectionMethods.templateUrl }}"
+                            controller="{{ sampleTerminologyModalCtrl.panels.collectionMethods.controller }}"
+                            controlleras="{{ sampleTerminologyModalCtrl.panels.collectionMethods.controllerAs }}"></dynamic-controller>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="sampleTerminologyModalCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

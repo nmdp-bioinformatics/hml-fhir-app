@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h5 class="panel-title">Version Terminology</h5>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div ui-grid="versionsTerminologyCtrl.gridOptions" ui-grid-edit ui-grid-cellNav class="modal-grid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="row centered-heading">
+                    <div class="col-md-12">
+                        <button type="button" class="btn btn-success modal-footer-button" data-ng-click="versionsTerminologyCtrl.addItem()">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <toaster-container toaster-options="{ 'time-out': 1000 }"></toaster-container>
+</div>

@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <button type="button" class="close" aria-hidden="true" data-ng-click="hmlValidationWarningsCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">HML Validation Warnings</h3>
+</div>
+<div class="modal-body">
+    <div class="row" data-ng-repeat="warning in hmlValidationWarningsCtrl.warnings">
+        <div class="col-md-12">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        Issue
+                        <i class="pull-right glyphicon" data-ng-click="hmlValidationWarningsCtrl.toggleIssue(warning['miring-result'].xpath)"
+                           data-ng-class="{ 'glyphicon-chevron-down': hmlValidationWarningsCtrl.isMainPanelOpen(warning['miring-result'].xpath), 'glyphicon-chevron-right': !hmlValidationWarningsCtrl.isMainPanelOpen(warning['miring-result'].xpath) }"></i>
+                    </div>
+                </div>
+                <div class="panel-body" data-ng-show="hmlValidationWarningsCtrl.isMainPanelOpen(warning['miring-result'].xpath)">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5>{{ hmlValidationWarningsCtrl.parseWarningDescription(warning['miring-result'].description) }}</h5>
+                            <div class="panel panel-success">
+                                <div class="panel-heading">
+                                    <div class="panel-title">
+                                        Solution
+                                        <i class="pull-right glyphicon" data-ng-click="hmlValidationWarningsCtrl.toggleSolution(warning['miring-result'].xpath)"
+                                           data-ng-class="{ 'glyphicon-chevron-down': hmlValidationWarningsCtrl.isSubPanelOpen(warning['miring-result'].xpath), 'glyphicon-chevron-right': !hmlValidationWarningsCtrl.isSubPanelOpen(warning['miring-result'].xpath) }"></i>
+                                    </div>
+                                </div>
+                                <div class="panel-body" data-ng-show="hmlValidationWarningsCtrl.isSubPanelOpen(warning['miring-result'].xpath)">
+                                    <h6>{{ warning['miring-result'].solution }}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="hmlValidationWarningsCtrl.removeFile()">Remove File</button>
+    <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="hmlValidationWarningsCtrl.close()">Cancel</button>
+</div>

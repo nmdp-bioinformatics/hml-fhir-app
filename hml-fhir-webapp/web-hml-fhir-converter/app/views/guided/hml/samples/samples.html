@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-md-12">
+        <button type="button" class="btn btn-success btn-sm" data-ng-show="samplesCtrl.selectedSampleCount === 0" data-ng-click="samplesCtrl.addSampleEntry()">
+            <i class="glyphicon glyphicon-plus button-glyphicon" />Add
+        </button>
+        <button type="button" class="btn btn-primary btn-sm" data-ng-show="samplesCtrl.selectedSampleCount > 0" data-ng-click="samplesCtrl.addSampleEntry()">
+            <i class="glyphicon glyphicon-pencil button-glyphicon" />Edit
+        </button>
+    </div>
+</div>
+<div class="row push-down">
+    <div class="col-md-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">Selected Samples</h4>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div ui-grid="samplesCtrl.gridOptions" ui-grid-selection class="modal-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

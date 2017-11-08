@@ -1,0 +1,168 @@
+<div class="row centered-heading">
+    <div class="col-md-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h5 class="panel-title">Reporting Center</h5>
+            </div>
+            <div class="panel-body">
+                <div class="scrollable-panel-body">
+                    <div class="row" data-ng-show="hmlAddEditMainCtrl.hml.reportingCenters.length > 0">
+                        <div class="col-md-12 centered-heading">
+                            <div ui-grid="hmlAddEditMainCtrl.gridOptions.reportingCentersGrid" ui-grid-edit ui-grid-cellNav class="modal-grid-sm"></div>
+                        </div>
+                    </div>
+                    <div class="centered-heading" data-ng-show="hmlAddEditMainCtrl.hml.reportingCenters.length === 0">
+                        <label class="vertical-center-text">None Selected</label>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12 centered-heading">
+                        <button data-ng-show="hmlAddEditMainCtrl.hml.reportingCenters.length === 0" type="button" class="btn btn-success btn-outline-success inner-panel-footer-button" data-ng-click="hmlAddEditMainCtrl.addReportingCenter(false)">
+                            <i class="glyphicon glyphicon-plus button-glyphicon" />Add
+                        </button>
+                        <button data-ng-show="hmlAddEditMainCtrl.hml.reportingCenters.length > 0" type="button" class="btn btn-success btn-outline-success inner-panel-footer-button" data-ng-click="hmlAddEditMainCtrl.addReportingCenter(true)">
+                            <i class="glyphicon glyphicon-pencil button-glyphicon" />Edit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h5 class="panel-title">HML ID</h5>
+            </div>
+            <div class="panel-body">
+                <div class="scrollable-panel-body">
+                    <div class="centered-heading" data-ng-if="hmlAddEditMainCtrl.hml.hmlId.id !== null">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="rootName">Root Name:</label>
+                                <p id="rootName">{{ hmlAddEditMainCtrl.hml.hmlId.rootName }}</p>
+                                <label for="extension">Extension:</label>
+                                <p id="extension">{{ hmlAddEditMainCtrl.hml.hmlId.extension }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="centered-heading" data-ng-if="hmlAddEditMainCtrl.hml.hmlId.id === null">
+                        <label class="vertical-center-text">None Selected</label>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12 centered-heading">
+                        <button data-ng-show="!hmlAddEditMainCtrl.hml.hmlId.id" type="button" class="btn btn-success btn-outline-success inner-panel-footer-button" data-ng-click="hmlAddEditMainCtrl.addHmlId(false)">
+                            <i class="glyphicon glyphicon-plus button-glyphicon" />Add
+                        </button>
+                        <button data-ng-show="hmlAddEditMainCtrl.hml.hmlId.id" type="button" class="btn btn-success btn-outline-success inner-panel-footer-button" data-ng-click="hmlAddEditMainCtrl.addHmlId(true)">
+                            <i class="glyphicon glyphicon-pencil button-glyphicon" />Edit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row centered-heading">
+    <div class="col-md-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h5 class="panel-title">Samples</h5>
+            </div>
+            <div class="panel-body">
+                <div class="scrollable-panel-body">
+                    <div class="row" data-ng-show="hmlAddEditMainCtrl.hml.samples.length > 0">
+                        <div class="col-md-12 centered-heading">
+                            <div ui-grid="hmlAddEditMainCtrl.gridOptions.samplesGrid" ui-grid-edit ui-grid-cellNav class="modal-grid-sm"></div>
+                        </div>
+                    </div>
+                    <div data-ng-show="hmlAddEditMainCtrl.hml.samples.length === 0" class="centered-heading">
+                        <label class="vertical-center-text">None Selected</label>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12 centered-heading">
+                        <button data-ng-show="hmlAddEditMainCtrl.hml.samples.length === 0" type="button" class="btn btn-success btn-outline-success inner-panel-footer-button" data-ng-click="hmlAddEditMainCtrl.addSamples()">
+                            <i class="glyphicon glyphicon-plus button-glyphicon" />Add
+                        </button>
+                        <button data-ng-show="hmlAddEditMainCtrl.hml.samples.length > 0" type="button" class="btn btn-success btn-outline-success inner-panel-footer-button" data-ng-click="hmlAddEditMainCtrl.addSamples()">
+                            <i class="glyphicon glyphicon-pencil button-glyphicon" />Edit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h5 class="panel-title">Properties</h5>
+            </div>
+            <div class="panel-body">
+                <div class="scrollable-panel-body">
+                    <div class="row" data-ng-show="hmlAddEditMainCtrl.hml.properties.length > 0">
+                        <div class="col-md-12 centered-heading">
+                            <div ui-grid="hmlAddEditMainCtrl.gridOptions.propertiesGrid" ui-grid-edit ui-grid-cellNav class="modal-grid-sm"></div>
+                        </div>
+                    </div>
+                    <div data-ng-show="hmlAddEditMainCtrl.hml.properties.length === 0" class="centered-heading">
+                        <label class="vertical-center-text">None Selected</label>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12 centered-heading">
+                        <button data-ng-show="hmlAddEditMainCtrl.hml.properties.length === 0" type="button" class="btn btn-success btn-outline-success inner-panel-footer-button" data-ng-click="hmlAddEditMainCtrl.addProperties()">
+                            <i class="glyphicon glyphicon-plus button-glyphicon" />Add
+                        </button>
+                        <button data-ng-show="hmlAddEditMainCtrl.hml.properties.length > 0" type="button" class="btn btn-success btn-outline-success inner-panel-footer-button" data-ng-click="hmlAddEditMainCtrl.addProperties()">
+                            <i class="glyphicon glyphicon-pencil button-glyphicon" />Edit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row centered-heading">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h5 class="panel-title">Typing Test Names</h5>
+            </div>
+            <div class="panel-body">
+                <div class="scrollable-panel-body">
+                    <div class="row" data-ng-show="hmlAddEditMainCtrl.hml.typingTestNames.length > 0">
+                        <div class="col-md-12 centered-heading">
+                            <div ui-grid="hmlAddEditMainCtrl.gridOptions.typingTestNamesGrid" ui-grid-edit ui-grid-cellNav class="modal-grid-sm"></div>
+                        </div>
+                    </div>
+                    <div data-ng-show="hmlAddEditMainCtrl.hml.typingTestNames.length === 0" class="centered-heading">
+                        <label class="vertical-center-text">None Selected</label>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div class="row">
+                    <div class="col-md-12 centered-heading">
+                        <button data-ng-show="hmlAddEditMainCtrl.hml.typingTestNames.length === 0" type="button" class="btn btn-success btn-outline-success inner-panel-footer-button" data-ng-click="hmlAddEditMainCtrl.addTypingTestNames(false)">
+                            <i class="glyphicon glyphicon-plus button-glyphicon" />Add
+                        </button>
+                        <button data-ng-show="hmlAddEditMainCtrl.hml.typingTestNames.length > 0" type="button" class="btn btn-success btn-outline-success inner-panel-footer-button" data-ng-click="hmlAddEditMainCtrl.addTypingTestNames(true)">
+                            <i class="glyphicon glyphicon-pencil button-glyphicon" />Edit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>

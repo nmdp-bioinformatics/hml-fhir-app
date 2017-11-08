@@ -1,0 +1,44 @@
+<div class="modal-header">
+    <button type="modal" class="close" aria-hidden="true" data-ng-click="locusBlockAddEditCtrl.cancel()">&times;</button>
+    <h3 class="modal-title">{{ locusBlockAddEditCtrl.edit ? 'Edit' : 'Add' }} Locus Block</h3>
+</div>
+<div class="modal-body">
+    <toaster-container toaster-options="{ 'close-button': true, 'limit': 1, 'tap-to-dismiss': true, 'toaster-id': 1 }"></toaster-container>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="panel-title">{{ locusBlockAddEditCtrl.edit ? 'Edit' : 'Add' }} Locus Block</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form">
+                                <form name="locusBlockAddEditCtrl.inputForm">
+
+                                </form>
+                            </div>
+                            <div class="panel panel-primary">
+                                <div class="panel-heading" data-ng-click="locusBlockAddEditCtrl.togglePanel('alleles')">
+                                    <h5 class="panel-title">Locus Block</h5>
+                                </div>
+                                <div class="panel-body" data-ng-show="locusBlockAddEditCtrl.expandedPanels.alleles">
+                                    <dynamic-controller templateurl="{{ locusBlockAddEditCtrl.panelData.alleles.templateUrl }}" controller="{{ locusBlockAddEditCtrl.panelData.alleles.controller }}"
+                                        controlleras="{{ locusBlockAddEditCtrl.panelData.alleles.controllerAs }}"></dynamic-controller>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-primary modal-footer-button" data-ng-click="locusBlockAddEditCtrl.add()">{{ locusBlockAddEditCtrl.edit ? 'Edit' : 'Add' }}</button>
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="locusBlockAddEditCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>

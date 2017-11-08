@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <button type="button" class="close" aria-hidden="true" data-ng-click="propertiesTerminologyModalCtrl.cancel()"></button>
+    <h3 class="modal-title">{{ propertiesTerminologyModalCtrl.title }}</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading" data-ng-click="propertiesTerminologyModalCtrl.togglePanels('properties')">
+                    <h5 class="panel-title">Properties</h5>
+                </div>
+                <div class="panel-body" data-ng-show="propertiesTerminologyModalCtrl.panels.properties.show === true">
+                    <div data-ng-if="propertiesTerminologyModalCtrl.panels.properties.show">
+                        <dynamic-controller templateurl="{{ propertiesTerminologyModalCtrl.panels.properties.templateUrl }}"
+                                            controller="{{ propertiesTerminologyModalCtrl.panels.properties.controller }}"
+                                            controlleras="{{ propertiesTerminologyModalCtrl.panels.properties.controllerAs }}"></dynamic-controller>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="row">
+        <div class="col-md-12">
+            <button type="button" class="btn btn-danger modal-footer-button" data-ng-click="propertiesTerminologyModalCtrl.close()">Close</button>
+        </div>
+    </div>
+</div>
