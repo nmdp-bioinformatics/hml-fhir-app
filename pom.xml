@@ -32,9 +32,16 @@
     <version>1.0.0-SNAPSHOT</version>
 
 	<modules>
-		<module>fhir-submission-consumer</module>
-		<module>hml-fhir-api</module>
-		<module>hml-fhir-consumer</module>
+		<module>service-hml-fhir-converter-models</module>
+		<module>service-kafka-producer-model</module>
+		<module>fhir-submission</module>
+		<module>hml-fhir-converter-mongo</module>
+		<module>hml-fhir-converter</module>
+		<module>kafka-consumer</module>
+		<module>kafka-producer</module>
+		<module>process-kafka-fhir-submission-consumer</module>
+		<module>process-kafka-hml-fhir-conversion-consumer</module>
+		<module>service-hml-fhir-converter-api</module>
 	</modules>
 
 	<build>
@@ -59,15 +66,43 @@
 		<dependencies>
 			<dependency>
 				<groupId>org.nmdp</groupId>
-				<artifactId>fhir-submission-consumer</artifactId>
+				<artifactId>service-hml-fhir-converter-models</artifactId>
 			</dependency>
 			<dependency>
 				<groupId>org.nmdp</groupId>
-				<artifactId>hml-fhir-api</artifactId>
+				<artifactId>service-kafka-producer-model</artifactId>
 			</dependency>
 			<dependency>
 				<groupId>org.nmdp</groupId>
-				<artifactId>hml-fhir-consumer</artifactId>
+				<artifactId>hml-fhir-mongo</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.nmdp</groupId>
+				<artifactId>hml-fhir</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.nmdp</groupId>
+				<artifactId>kafka-consumer</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.nmdp</groupId>
+				<artifactId>kafka-producer</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.nmdp</groupId>
+				<artifactId>fhir-submission</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.nmdp</groupId>
+				<artifactId>process-kafka-fhir-submission-consumer</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.nmdp</groupId>
+				<artifactId>process-kafka-hml-fhir-conversion-consumer</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.nmdp</groupId>
+				<artifactId>service-hml-fhir-converter-api</artifactId>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
