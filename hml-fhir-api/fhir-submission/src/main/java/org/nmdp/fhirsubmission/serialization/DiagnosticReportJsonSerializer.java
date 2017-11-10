@@ -27,15 +27,20 @@ package org.nmdp.fhirsubmission.serialization;
 import com.google.gson.*;
 
 import org.nmdp.fhirsubmission.object.FhirSubmissionResponse;
+import org.nmdp.fhirsubmission.util.DateParser;
 import org.nmdp.hmlfhirconvertermodels.domain.fhir.*;
 import org.nmdp.hmlfhirconvertermodels.domain.fhir.lists.Glstrings;
 import org.nmdp.hmlfhirconvertermodels.domain.fhir.lists.Observations;
 
 import java.lang.reflect.Type;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 public class DiagnosticReportJsonSerializer implements JsonSerializer<Specimen> {
@@ -61,6 +66,8 @@ public class DiagnosticReportJsonSerializer implements JsonSerializer<Specimen> 
     private static final String VALUE_URI_KEY = "valueUri";
     private static final String REFERENCE_KEY = "reference";
 
+    private static final String SPECIMEN_RESOURCE = "Specimen";
+    private static final String PATIENT_RESOURCE = "Patient";
     private static final String RESOURCE_VALUE = "DiagnosticReport";
     private static final String STATUS_VALUE = "final";
     private static final String DISPLAY_VALUE = "HLA-A+B+C (class I) [Type]";
@@ -85,7 +92,7 @@ public class DiagnosticReportJsonSerializer implements JsonSerializer<Specimen> 
     public JsonElement serialize(Specimen src, Type typeOfSource, JsonSerializationContext context) {
         JsonObject code = new JsonObject();
         JsonObject codeCoding = new JsonObject();
-        JsonObject basedOn = new JsonObject();
+//        JsonObject basedOn = new JsonObject();
         JsonObject category = new JsonObject();
         JsonObject categoryCoding = new JsonObject();
         JsonObject diagnosticReport = new JsonObject();
@@ -105,16 +112,16 @@ public class DiagnosticReportJsonSerializer implements JsonSerializer<Specimen> 
 
         diagnosticReport.addProperty(RESOURCE_KEY, RESOURCE_VALUE);
         diagnosticReport.addProperty(STATUS_KEY, STATUS_VALUE);
-        diagnosticReport.addProperty(EFFECTIVE_DATE_TIME_KEY, LocalDateTime.now().format(DateTimeFormatter.ISO_DATE));
-        diagnosticReport.addProperty(ISSUED_KEY, LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
+        diagnosticReport.addProperty(EFFECTIVE_DATE_TIME_KEY, DateParser.parseDate(new Date()));
+        diagnosticReport.addProperty(ISSUED_KEY, DateParser.parseDate(new Date()));
 
         codeCoding.addProperty(SYSTEM_KEY, CODE_CODING_SYSTEM_VALUE);
         codeCoding.addProperty(CODE_KEY, CODE_CODING_CODE_VALUE);
         codeCoding.addProperty(DISPLAY_KEY, DISPLAY_VALUE);
         code.add(CODING_KEY, codeCoding);
 
-        basedOn.addProperty(REFERENCE_KEY, BLANK);
-        basedOn.addProperty(DISPLAY_KEY, BLANK);
+//        basedOn.addProperty(REFERENCE_KEY, BLANK);
+//        basedOn.addProperty(DISPLAY_KEY, PATIENT_RESOURCE);
 
         categoryCoding.addProperty(SYSTEM_KEY, CATEGORY_CODE_SYSTEM);
         categoryCoding.addProperty(CODE_KEY, CATEGORY_CODE_VALUE);
@@ -123,12 +130,12 @@ public class DiagnosticReportJsonSerializer implements JsonSerializer<Specimen> 
 
         if (response != null) {
             subject.addProperty(REFERENCE_KEY, response.getUrl());
-            subject.addProperty(DISPLAY_KEY, BLANK);
+            subject.addProperty(DISPLAY_KEY, PATIENT_RESOURCE);
         }
 
         if (reference != null) {
             specimen.addProperty(REFERENCE_KEY, reference.getUrl());
-            specimen.addProperty(DISPLAY_KEY, BLANK);
+            specimen.addProperty(DISPLAY_KEY, SPECIMEN_RESOURCE);
         }
 
         performer.addProperty(REFERENCE_KEY, REFERENCE_VALUE);
@@ -174,7 +181,7 @@ public class DiagnosticReportJsonSerializer implements JsonSerializer<Specimen> 
         diagnosticReport.add(RESULT_KEY, results);
         diagnosticReport.add(CODE_KEY, code);
         diagnosticReport.add(CATEGORY_KEY, category);
-        diagnosticReport.add(BASED_ON_KEY, basedOn);
+//        diagnosticReport.add(BASED_ON_KEY, basedOn);
         diagnosticReport.add(SUBJECT_KEY, subject);
         diagnosticReport.add(SPECIMEN_KEY, specimen);
         diagnosticReport.add(PERFORMER_KEY, performer);

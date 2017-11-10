@@ -47,7 +47,7 @@ public class SequenceJsonSerializer implements JsonSerializer<Sequence> {
     private static final String CODE_CODING_SYSTEM_VALUE = "http://hl7.org/fhir/sequence-type";
     private static final String CODE_CODING_CODE_VALUE = "dna";
     private static final String DISPLAY_VALUE = "DNA Sequence";
-    private static final String COORDINATE_SYSTEM_VALUE = "0";
+    private static final Integer COORDINATE_SYSTEM_VALUE = 0;
 
     @Override
     public JsonElement serialize(Sequence src, Type typeOfSource, JsonSerializationContext context) {

@@ -49,7 +49,8 @@ public class ResourceBundler {
     private static final String REQUEST_METOHD_VALUE = "POST";
     private static final String REQUEST_URL_KEY = "url";
     private static final String REQUEST_KEY = "request";
-    private static final String VALUE_KEY = "value";
+    private static final String STATUS_KEY = "status";
+    private static final String STATUS_VALUE = "final";
     private static final String SUBJECT_KEY = "subject";
     private static final String SPECIMEN_KEY = "specimen";
     private static final String REFERENCE_KEY = "reference";
@@ -71,7 +72,10 @@ public class ResourceBundler {
     private static final String CODE_VALUE = "51959-5";
     private static final String CODING_KEY = "coding";
     private static final String TYPE_KEY = "type";
-    private static final String DERIVED_FROM_KEY = "derivedFrom";
+    private static final String DERIVED_FROM_VALUE = "derived-from";
+    private static final String HAS_MEMBER_VALUE = "has-member";
+    private static final String TARGET_KEY = "target";
+    private static final String VALUE_STRING_KEY = "valueString";
 
     private static final Logger LOG = Logger.getLogger(ResourceBundler.class);
 
@@ -195,7 +199,7 @@ public class ResourceBundler {
             }
 
             String sequenceObservation = handleSequenceObservation(sequenceResults, patientId, gson);
-            String sequenceObservationId = loopRelatedResources(entry, OBSERVATION_RESOURCE, observationReferences, sequenceObservation, gson, observationResults);
+            String sequenceObservationId = loopRelatedResources(entry, OBSERVATION_RESOURCE, observationReferences, sequenceObservation, gson, null);
 
             for (String observation : observations) {
                 loopObservations(entry, OBSERVATION_RESOURCE, observationReferences, observation, gson, observationResults, sequenceObservationId);
@@ -211,12 +215,12 @@ public class ResourceBundler {
         String id = String.format("%s%s", GUID_PREFIX, UUID.randomUUID().toString());
         JsonObject json = createJsonObject(data, gson, resourceType, id, references);
         JsonObject related = new JsonObject();
-        JsonObject type = new JsonObject();
-        JsonObject derrivedFrom = new JsonObject();
+        JsonObject target = new JsonObject();
 
-        derrivedFrom.addProperty(REFERENCE_KEY, sequenceObservationId);
-        type.add(DERIVED_FROM_KEY, derrivedFrom);
-        related.add(TYPE_KEY, type);
+        related.addProperty(TYPE_KEY, DERIVED_FROM_VALUE);
+        target.addProperty(REFERENCE_KEY, sequenceObservationId);
+
+        related.add(TARGET_KEY, target);
         json.add(RELATED_KEY, related);
         entry.add(json);
         idMap.put(id, json);
@@ -226,7 +230,10 @@ public class ResourceBundler {
         String id = String.format("%s%s", GUID_PREFIX, UUID.randomUUID().toString());
         JsonObject json = createJsonObject(data, gson, resourceType, id, references);
         entry.add(json);
-        idMap.put(id, json);
+
+        if (idMap != null) {
+            idMap.put(id, json);
+        }
 
         return id;
     }
@@ -240,7 +247,12 @@ public class ResourceBundler {
 
         for (Map.Entry<String, JsonObject> entry : sequences.entrySet()) {
             JsonObject sequence = new JsonObject();
-            sequence.addProperty(REFERENCE_KEY, entry.getKey());
+            JsonObject target = new JsonObject();
+
+            sequence.addProperty(TYPE_KEY, HAS_MEMBER_VALUE);
+            target.addProperty(REFERENCE_KEY, entry.getKey());
+            target.addProperty(DISPLAY_KEY, SEQUENCE_RESOURCE);
+            sequence.add(TARGET_KEY, target);
             sequenceRefs.add(sequence);
         }
 
@@ -249,6 +261,7 @@ public class ResourceBundler {
         coding.addProperty(SYSTEM_KEY, SYSTEM_VALUE);
         code.add(CODING_KEY, coding);
         observation.addProperty(RESOURCE_TYPE_KEY, OBSERVATION_RESOURCE);
+        observation.addProperty(STATUS_KEY, STATUS_VALUE);
         observation.add(SUBJECT_KEY, subject);
         observation.add(RELATED_KEY, sequenceRefs);
         observation.add(CODE_KEY, code);
@@ -271,7 +284,7 @@ public class ResourceBundler {
         JsonObject obs = new JsonObject();
         JsonObject resource = observation.get(RESOURCE).getAsJsonObject();
 
-        obs.addProperty(DISPLAY_KEY, resource.has(VALUE_KEY) ? resource.get(VALUE_KEY).getAsString() : "");
+        obs.addProperty(DISPLAY_KEY, resource.get(VALUE_STRING_KEY).getAsString());
         obs.addProperty(REFERENCE_KEY, observation.get(FULL_URL).getAsString());
 
         return obs;

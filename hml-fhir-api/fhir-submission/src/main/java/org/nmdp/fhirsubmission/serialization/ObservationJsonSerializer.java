@@ -28,15 +28,18 @@ package org.nmdp.fhirsubmission.serialization;
 import com.google.gson.*;
 
 import org.nmdp.fhirsubmission.object.FhirSubmissionResponse;
+import org.nmdp.fhirsubmission.util.DateParser;
 import org.nmdp.hmlfhirconvertermodels.domain.fhir.*;
 import org.nmdp.hmlfhirconvertermodels.domain.fhir.lists.Glstrings;
 import org.nmdp.hmlfhirconvertermodels.domain.fhir.lists.Observations;
 
 
+import javax.print.DocFlavor;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,7 +52,7 @@ public class ObservationJsonSerializer implements JsonSerializer<Observation> {
     private static final String CODING_KEY = "coding";
     private static final String DISPLAY_KEY = "display";
     private static final String REFERENCE_KEY = "reference";
-    private static final String VALUE_KEY = "value";
+    private static final String VALUE_KEY = "valueString";
     private static final String ISSUED_KEY = "issued";
     private static final String SUBJECT_KEY = "subject";
 
@@ -65,7 +68,9 @@ public class ObservationJsonSerializer implements JsonSerializer<Observation> {
         JsonObject obs = new JsonObject();
         JsonObject code = new JsonObject();
         JsonObject codeCoding = new JsonObject();
+        JsonObject defaultCoding = new JsonObject();
         JsonObject subject = new JsonObject();
+        JsonArray codingArray = new JsonArray();
         Glstrings glstrings = src.getGlstrings();
         List<String> glstringValues = new ArrayList<>();
         FhirSubmissionResponse response = (FhirSubmissionResponse) src.getReference();
@@ -78,15 +83,22 @@ public class ObservationJsonSerializer implements JsonSerializer<Observation> {
 
         obs.addProperty(RESOURCE_KEY, RESOURCE_VALUE);
         obs.addProperty(STATUS_KEY, STATUS_VALUE);
-        obs.addProperty(ISSUED_KEY, LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
+        obs.addProperty(ISSUED_KEY, DateParser.parseDate(new Date()));
         obs.addProperty(VALUE_KEY, glsv);
 
         String[] alleleCodes = getAlleleCode(glsv).split(",");
+        String[] defaultCodes = getAlleleCode("").split(",");
 
         codeCoding.addProperty(SYSTEM_KEY, CODE_CODING_SYSTEM_VALUE);
         codeCoding.addProperty(CODE_KEY, alleleCodes[0]);
         codeCoding.addProperty(DISPLAY_KEY, alleleCodes[1]);
-        code.add(CODING_KEY, codeCoding);
+
+        defaultCoding.addProperty(SYSTEM_KEY, CODE_CODING_SYSTEM_VALUE);
+        defaultCoding.addProperty(CODE_KEY, defaultCodes[0]);
+        defaultCoding.addProperty(DISPLAY_KEY, defaultCodes[1]);
+        codingArray.add(codeCoding);
+        codingArray.add(defaultCoding);
+        code.add(CODING_KEY, codingArray);
 
         if (response != null) {
             subject.addProperty(REFERENCE_KEY, response.getUrl());
