@@ -26,6 +26,7 @@ package org.nmdp.hmlfhirconverterapi.service;
 
 import org.bson.Document;
 
+import org.nmdp.hmlfhirconverterapi.config.ApplicationProperties;
 import org.yaml.snakeyaml.Yaml;
 
 import org.apache.log4j.Logger;
@@ -37,6 +38,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 
@@ -55,10 +57,13 @@ public class SubmissionServiceImpl extends BaseService implements SubmissionServ
         this.customRepository = customRepository;
         this.repository = repository;
         this.yaml = new Yaml();
+
         org.nmdp.hmlfhirmongo.config.MongoConfiguration config = null;
 
         try {
-            URL url = new URL("file:." + "/src/main/resources/mongo-configuration.yaml");
+            ApplicationProperties applicationProperties = new ApplicationProperties();
+            File file = new File(applicationProperties.getMongoConfigurationPath());
+            URL url = file.toURL();
             try (InputStream is = url.openStream()) {
                 config = yaml.loadAs(is, org.nmdp.hmlfhirmongo.config.MongoConfiguration.class);
             }

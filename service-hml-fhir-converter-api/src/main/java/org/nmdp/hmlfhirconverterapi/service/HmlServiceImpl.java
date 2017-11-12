@@ -29,10 +29,12 @@ import org.apache.log4j.Logger;
 import org.nmdp.hmlfhir.ConvertHmlToFhir;
 import org.nmdp.hmlfhir.ConvertHmlToFhirImpl;
 import org.nmdp.hmlfhir.deserialization.HmlXmlDeserializerHyphenatedProperties;
+import org.nmdp.hmlfhirconverterapi.config.ApplicationProperties;
 import org.nmdp.hmlfhirconverterapi.dao.HmlRepository;
 import org.nmdp.hmlfhirconverterapi.dao.custom.HmlCustomRepository;
 import org.nmdp.hmlfhirconverterapi.util.Serializer;
 import org.nmdp.hmlfhirconvertermodels.dto.hml.Hml;
+import org.nmdp.hmlfhirmongo.config.MongoConfiguration;
 import org.nmdp.hmlfhirmongo.mongo.MongoHmlDatabase;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,8 @@ import org.bson.Document;
 
 import org.yaml.snakeyaml.Yaml;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -63,7 +67,21 @@ public class HmlServiceImpl extends MongoServiceBase implements HmlService {
         this.repository = repository;
         this.customRepository = customRepository;
         this.yaml = new Yaml();
-        this.hmlDatabase = createHmlDatabase();
+
+        MongoConfiguration mc = null;
+
+        try {
+            ApplicationProperties applicationProperties = new ApplicationProperties();
+            File file = new File(applicationProperties.getMongoConfigurationPath());
+            URL url = file.toURL();
+            try (InputStream is = url.openStream()) {
+                mc = yaml.loadAs(is, MongoConfiguration.class);
+            }
+        } catch (IOException ex) {
+            LOG.error(ex);
+        } finally {
+            this.hmlDatabase = new MongoHmlDatabase(mc);
+        }
     }
 
     @Override
@@ -124,23 +142,6 @@ public class HmlServiceImpl extends MongoServiceBase implements HmlService {
         } catch (Exception ex) {
             LOG.error(ex);
             return null;
-        }
-    }
-
-    private MongoHmlDatabase createHmlDatabase() {
-        org.nmdp.hmlfhirmongo.config.MongoConfiguration config = null;
-
-        try {
-            URL url = new URL("file:." + "/src/main/resources/mongo-configuration.yaml");
-
-            try (InputStream is = url.openStream()) {
-                config = yaml.loadAs(is, org.nmdp.hmlfhirmongo.config.MongoConfiguration.class);
-            }
-
-            return new MongoHmlDatabase(config);
-        } catch (Exception ex) {
-            LOG.error(ex);
-            return new MongoHmlDatabase(null);
         }
     }
 

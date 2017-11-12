@@ -26,9 +26,10 @@ package org.nmdp.hmlfhirconverterapi.service;
 
 import org.apache.log4j.Logger;
 
+import org.nmdp.hmlfhirconverterapi.config.ApplicationProperties;
 import org.nmdp.hmlfhirconverterapi.dao.StatusRepository;
 import org.nmdp.hmlfhirconverterapi.dao.custom.StatusCustomRepository;
-import org.nmdp.hmlfhirmongo.models.ConversionStatus;
+import org.nmdp.hmlfhirmongo.config.MongoConfiguration;
 import org.nmdp.hmlfhirmongo.models.Status;
 import org.nmdp.hmlfhirmongo.mongo.MongoConversionStatusDatabase;
 
@@ -40,6 +41,8 @@ import org.yaml.snakeyaml.Yaml;
 
 import org.bson.Document;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
@@ -47,30 +50,17 @@ import java.util.List;
 @Service
 public class StatusServiceImpl extends BaseService implements StatusService {
 
-    private final Yaml yaml;
     private static final Logger LOG = Logger.getLogger(StatusServiceImpl.class);
+    private static final MongoConversionStatusDatabase database = getDatabase();
+
     private final StatusCustomRepository customRepository;
     private final StatusRepository repository;
-    private final MongoConversionStatusDatabase database;
 
     @Autowired
     public StatusServiceImpl(@Qualifier("statusCustomRepository") StatusCustomRepository customRepository,
         @Qualifier("statusRepository") StatusRepository repository) {
-        this.yaml = new Yaml();
         this.customRepository = customRepository;
         this.repository = repository;
-        org.nmdp.hmlfhirmongo.config.MongoConfiguration config = null;
-
-        try {
-            URL url = new URL("file:." + "/src/main/resources/mongo-configuration.yaml");
-            try (InputStream is = url.openStream()) {
-                config = yaml.loadAs(is, org.nmdp.hmlfhirmongo.config.MongoConfiguration.class);
-            }
-        } catch(Exception ex) {
-            LOG.error("Error instantiating ConversionStatus database.", ex);
-        } finally {
-            this.database = new MongoConversionStatusDatabase(config);
-        }
     }
 
     @Override
@@ -101,6 +91,24 @@ public class StatusServiceImpl extends BaseService implements StatusService {
         } catch (Exception ex) {
             LOG.error("Error updating Status in Mongo.", ex);
             throw ex;
+        }
+    }
+
+    private static MongoConversionStatusDatabase getDatabase() {
+        MongoConfiguration mc = null;
+        Yaml yaml = new Yaml();
+
+        try {
+            ApplicationProperties applicationProperties = new ApplicationProperties();
+            File file = new File(applicationProperties.getMongoConfigurationPath());
+            URL url = file.toURL();
+            try (InputStream is = url.openStream()) {
+                mc = yaml.loadAs(is, MongoConfiguration.class);
+            }
+        } catch(IOException ex) {
+            LOG.error(ex);
+        } finally {
+            return new MongoConversionStatusDatabase(mc);
         }
     }
 }

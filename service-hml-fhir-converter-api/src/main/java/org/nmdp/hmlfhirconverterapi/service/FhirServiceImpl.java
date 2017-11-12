@@ -29,10 +29,12 @@ import org.apache.log4j.Logger;
 import org.bson.Document;
 import org.nmdp.hmlfhir.ConvertFhirToHml;
 import org.nmdp.hmlfhir.ConvertFhirToHmlImpl;
+import org.nmdp.hmlfhirconverterapi.config.ApplicationProperties;
 import org.nmdp.hmlfhirconverterapi.dao.FhirRepository;
 import org.nmdp.hmlfhirconverterapi.dao.custom.FhirCustomRepository;
 import org.nmdp.hmlfhirconverterapi.util.Serializer;
 import org.nmdp.hmlfhirconvertermodels.dto.fhir.FhirMessage;
+import org.nmdp.hmlfhirmongo.config.MongoConfiguration;
 import org.nmdp.hmlfhirmongo.mongo.MongoFhirDatabase;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.Yaml;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -60,7 +64,21 @@ public class FhirServiceImpl extends MongoServiceBase implements FhirService {
         this.yaml = new Yaml();
         this.customRepository = customRepository;
         this.repository = repository;
-        this.fhirDatabase = createFhirDatabase();
+
+        MongoConfiguration mc = null;
+
+        try {
+            ApplicationProperties applicationProperties = new ApplicationProperties();
+            File file = new File(applicationProperties.getMongoConfigurationPath());
+            URL url = file.toURL();
+            try (InputStream is = url.openStream()) {
+                mc = yaml.loadAs(is, MongoConfiguration.class);
+            }
+        } catch (IOException ex) {
+            LOG.error(ex);
+        } finally {
+            this.fhirDatabase = new MongoFhirDatabase(mc);
+        }
     }
 
     @Override
@@ -119,23 +137,6 @@ public class FhirServiceImpl extends MongoServiceBase implements FhirService {
         } catch (Exception ex) {
             LOG.error(ex);
             return null;
-        }
-    }
-
-    private MongoFhirDatabase createFhirDatabase() {
-        org.nmdp.hmlfhirmongo.config.MongoConfiguration config = null;
-
-        try {
-            URL url = new URL("file:." + "/src/main/resources/mongo-configuration.yaml");
-
-            try (InputStream is = url.openStream()) {
-                config = yaml.loadAs(is, org.nmdp.hmlfhirmongo.config.MongoConfiguration.class);
-            }
-
-            return new MongoFhirDatabase(config);
-        } catch (Exception ex) {
-            LOG.error(ex);
-            return new MongoFhirDatabase(null);
         }
     }
 

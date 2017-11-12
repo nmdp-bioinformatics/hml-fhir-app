@@ -1,6 +1,7 @@
 package org.nmdp.hmlfhirconverterapi.service;
 
 import org.apache.log4j.Logger;
+import org.nmdp.hmlfhirconverterapi.config.ApplicationProperties;
 import org.nmdp.hmlfhirconvertermodels.dto.fhir.FhirMessage;
 import org.nmdp.hmlfhirmongo.config.MongoConfiguration;
 import org.nmdp.hmlfhirmongo.models.ConversionStatus;
@@ -8,6 +9,7 @@ import org.nmdp.hmlfhirmongo.models.Status;
 import org.nmdp.hmlfhirmongo.mongo.MongoConversionStatusDatabase;
 import org.yaml.snakeyaml.Yaml;
 
+import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
@@ -75,7 +77,9 @@ public abstract class MongoServiceBase {
         org.nmdp.hmlfhirmongo.config.MongoConfiguration config = null;
 
         try {
-            URL url = new URL("file:." + "/src/main/resources/mongo-configuration.yaml");
+            ApplicationProperties applicationProperties = new ApplicationProperties();
+            File file = new File(applicationProperties.getMongoConfigurationPath());
+            URL url = file.toURL();
 
             try (InputStream is = url.openStream()) {
                 config = yaml.loadAs(is, org.nmdp.hmlfhirmongo.config.MongoConfiguration.class);

@@ -1,0 +1,3 @@
+connectionString: "mongodb"
+port: 27017
+databaseName: "nmdp_conversion"

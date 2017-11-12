@@ -13,12 +13,19 @@ consumerDefaults:
   maxPollRecords: 10000
 
 kafkaBrokers:
-  - id: sandbox
+kafkaBrokers:
+  - id: localsingle
+    hostS: "localhost:9092"
+  - id: local
     hosts: "localhost:9092,localhost:9093,localhost:9094"
+  - id: sandbox
+    hosts: "127.0.0.1:9092,127.0.0.1:9093,127.0.0.1:9094"
+  - id: docker
+    hosts: "192.168.99.100:9092"
 
 connectors:
   - id: dev_andrew_submission
-    sourceBroker: sandbox
+    sourceBroker: localsingle
     sourceTopic: fhir-submission
     targetCluster: "sandbox/analytics"
     targetTable: "%SOURCE%"

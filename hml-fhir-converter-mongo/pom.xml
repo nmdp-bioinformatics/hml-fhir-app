@@ -11,7 +11,7 @@
     
     <properties>
         <maven-compiler-plugin-version>3.5.1</maven-compiler-plugin-version>
-        <mongodb-version>3.4.0</mongodb-version>
+        <mongodb-version>3.5.0</mongodb-version>
         <log4j-version>1.2.17</log4j-version>
         <nmdp-models-version>2.0.0</nmdp-models-version>
         <nmdp-submission-version>1.0.0</nmdp-submission-version>

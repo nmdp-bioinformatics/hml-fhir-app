@@ -27,12 +27,14 @@ package org.nmdp.hmlfhirconverterapi.config;
 import org.apache.log4j.Logger;
 import org.yaml.snakeyaml.Yaml;
 
+import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 
 public class KafkaConfig {
 
     private static final Logger LOG = Logger.getLogger(KafkaConfig.class);
+
     private String messageKey;
     private String key;
     private String hmlToFhirTopic;
@@ -84,8 +86,9 @@ public class KafkaConfig {
         KafkaConfig config = new KafkaConfig();
 
         try {
-            URL url = new URL("file:." + "/src/main/resources/kafka-configuration.yaml");
-
+            ApplicationProperties applicationProperties = new ApplicationProperties();
+            File file = new File(applicationProperties.getKafkaConfigurationPath());
+            URL url = file.toURL();
             try (InputStream is = url.openStream()) {
                 config = yaml.loadAs(is, KafkaConfig.class);
             }
