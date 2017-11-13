@@ -26,22 +26,28 @@ Prerequisites:
 ---------------
 
 -   Docker <http://www.docker.com>
+-   Python <https://www.python.org>
 
 To easily build this application via Docker-Compose, please simply execute:
  
     "sh intsall.sh"
     
-This will handle building docker images and start docker-compose via the up commadn with all necessary linkaging of containers.
-    
-        
+This will handle building docker images and start docker-compose via the up commadn with all necessary linkaging of containers. You will then need to create databases and collections in MongoDb. To accomplish this, there is a script located in the "mongo" directory. Simply run:
 
+    "python CreateDatabse.py"
+    
+You are now ready to import hml files that will be convered, and/or submitted to a FHIR conformance server.
+
+Naviage to:
+    
+    "0.0.0.0:9005" 
 
 Prerequisites:
 ---------------
 
 -   Maven v3.x+ <https://maven.apache.org>
 
--   Python v2.7x+ <https://www.python.or)>
+-   Python v2.7x+ <https://www.python.org>
 
 -   Java 8 <http://www.oracle.com>
 

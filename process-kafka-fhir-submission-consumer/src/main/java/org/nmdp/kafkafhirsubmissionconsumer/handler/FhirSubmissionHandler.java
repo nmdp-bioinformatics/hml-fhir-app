@@ -152,6 +152,8 @@ public class FhirSubmissionHandler implements KafkaMessageHandler, Closeable {
     private void writeFhirResources(List<org.nmdp.hmlfhirmongo.models.FhirSubmission> results) throws Exception {
         try {
             for (org.nmdp.hmlfhirmongo.models.FhirSubmission result : results) {
+                LOG.info(String.format("Writing result of conversion to Mongo.\n%s", result.toString()));
+
                 FhirMessage fhirMessage = result.getFhirMessage();
                 String submissionId = mongoFhirSubmissionDatabase.save(result).getId();
                 Document conversionStatus = getConversionStatusByFhirId(fhirMessage.getFhirId());

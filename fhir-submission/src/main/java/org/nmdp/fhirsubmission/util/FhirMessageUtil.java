@@ -25,6 +25,7 @@ package org.nmdp.fhirsubmission.util;
  */
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.apache.http.HttpResponse;
 import org.apache.log4j.Logger;
 import org.nmdp.fhirsubmission.exceptions.FhirBundleSubmissionFailException;
@@ -64,11 +65,22 @@ public class FhirMessageUtil {
 
     public org.nmdp.hmlfhirmongo.models.FhirSubmission submit(FhirMessage fhirMessage) throws Exception {
         org.nmdp.hmlfhirmongo.models.FhirSubmission fhirSubmission = new org.nmdp.hmlfhirmongo.models.FhirSubmission();
-        List<HmlSubmission> submissions = new ArrayList<>();
         final String bundleUrl = URL + BUNDLE + QUERY_STRING;
         ResourceBundler bundler = new ResourceBundler();
         JsonArray bundle = bundler.serialize(fhirMessage);
-        Post.postBatch(bundleUrl, bundle);
+        List<String> jsonBundle = new ArrayList<>();
+        Iterator bundleIterator = bundle.iterator();
+
+        while (bundleIterator.hasNext()) {
+            JsonObject json = (JsonObject) bundleIterator.next();
+            String jsonString = json.toString();
+            jsonBundle.add(jsonString);
+            LOG.info(String.format("Adding patient bundle result to record:\n%s", jsonString));
+        }
+
+        fhirSubmission.addSubmissionResult(jsonBundle);
+
+        //Post.postBatch(bundleUrl, bundle);
         return  fhirSubmission;
     }
 

@@ -1,7 +1,19 @@
 #!/usr/bin/env bash
 
-sh service-hml-fhir-converter-api/dockerize.sh
-sh process-kafka-hml-fhir-conversion-consumer/dockerize.sh
-sh process-kafka-fhir-submission-consumer/dockerize.sh
-sh local/web/dockerize.sh
-sh kafka_0.10/dockerize.sh
+cd service-hml-fhir-converter-api
+sh dockerize.sh
+
+cd ..
+
+cd process-kafka-hml-fhir-conversion-consumer
+sh dockerize.sh
+
+cd ..
+
+cd process-kafka-fhir-submission-consumer
+sh dockerize.sh
+
+cd ..
+
+cd local/web
+sh dockerize.sh
