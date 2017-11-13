@@ -19,14 +19,31 @@ updates regularly as the development of this source code is an active
 effort, we strongly recommend staying up to date with current code
 releases.
 
+Docker
+======
+
 Prerequisites:
 ---------------
 
--   Maven v3.x+ (<https://maven.apache.org)>
+-   Docker <http://www.docker.com>
 
--   Python v2.7x+ (<https://www.python.org)>
+To easily build this application via Docker-Compose, please simply execute:
+ 
+    "sh intsall.sh"
+    
+This will handle building docker images and start docker-compose via the up commadn with all necessary linkaging of containers.
+    
+        
 
--   Java 8 (<http://www.oracle.com)>
+
+Prerequisites:
+---------------
+
+-   Maven v3.x+ <https://maven.apache.org>
+
+-   Python v2.7x+ <https://www.python.or)>
+
+-   Java 8 <http://www.oracle.com>
 
 Environment Setup
 =================
