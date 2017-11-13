@@ -32,7 +32,7 @@ To easily build this application via Docker-Compose, please simply execute:
  
     "sh intsall.sh"
     
-This will handle building docker images and start docker-compose via the up commadn with all necessary linkaging of containers. You will then need to create databases and collections in MongoDb. To accomplish this, there is a script located in the "mongo" directory. Simply run:
+Running this script assumes you have Maven 3.+ installed, if you do not have Maven, or do not with to install Maven, there are .jar files included at the 'local' directory. Simply modify the Dockerfile's of their parent project to point to these jars. This will handle building docker images and start docker-compose via the up command with all necessary container linkage. You will then need to create databases and collections in MongoDb. To accomplish this, there is a script located in the "mongo" directory. Simply run:
 
     "python CreateDatabse.py"
     

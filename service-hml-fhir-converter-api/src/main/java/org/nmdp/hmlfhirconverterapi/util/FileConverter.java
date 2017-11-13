@@ -1,8 +1,10 @@
 package org.nmdp.hmlfhirconverterapi.util;
 
+import org.apache.commons.lang3.StringUtils;
 import scala.util.parsing.input.StreamReader;
 
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -33,5 +35,13 @@ public class FileConverter {
 
     public static byte[] convertStringToBytes(String str) {
         return str.getBytes();
+    }
+    public static byte[] convertStringToBytes(List<String> strs) {
+        StringBuilder stringBuilder = new StringBuilder();
+        strs.forEach(str -> stringBuilder.append(
+            String.format("Fhir Message Bundle:\n%s\n\n", str)));
+        String joined = stringBuilder.toString();
+
+        return joined.getBytes();
     }
 }

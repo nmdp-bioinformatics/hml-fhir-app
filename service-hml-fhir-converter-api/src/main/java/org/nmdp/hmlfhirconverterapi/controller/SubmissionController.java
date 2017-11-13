@@ -24,26 +24,37 @@ package org.nmdp.hmlfhirconverterapi.controller;
  * > http://www.opensource.org/licenses/lgpl-license.php
  */
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.apache.log4j.Logger;
 
 import org.bson.Document;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.nmdp.hmlfhirconverterapi.config.KafkaConfig;
 import org.nmdp.hmlfhirconverterapi.service.FhirService;
 import org.nmdp.hmlfhirconverterapi.service.StatusService;
 import org.nmdp.hmlfhirconverterapi.service.SubmissionService;
 
+import org.nmdp.hmlfhirconverterapi.util.FileConverter;
 import org.nmdp.hmlfhirmongo.models.FhirSubmission;
 import org.nmdp.hmlfhirmongo.models.Status;
 import org.nmdp.kafkaproducer.kafka.KafkaProducerService;
 import org.nmdp.kafkaproducer.util.ConvertToKafkaMessage;
 import org.nmdp.servicekafkaproducermodel.models.KafkaMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -87,13 +98,44 @@ public class SubmissionController {
         }
     }
 
-    @RequestMapping(path = "/{submissionId}/{get}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public Callable<ResponseEntity<Document>> getFhirSubmission(@PathVariable String submissionId) {
+    @RequestMapping(path = "/{submissionId}/{get}", method = RequestMethod.GET)
+    public Callable<ResponseEntity> getFhirSubmission(@PathVariable String submissionId) {
         try {
-            return () -> new ResponseEntity<>(submissionService.getFhirSubmission(submissionId), HttpStatus.OK);
+            Document document = submissionService.getFhirSubmission(submissionId);
+            ArrayList submissionResult = document.get("submissionResult", ArrayList.class);
+            List<String> parentBundles = new ArrayList<>();
+
+            for (Object obj: submissionResult) {
+                parentBundles.add(obj.toString());
+            }
+
+            JSONArray jsonArray = new JSONArray(parentBundles.toString());
+            List<String> jsonBundles = new ArrayList<>();
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONArray array = jsonArray.getJSONArray(i);
+                for (int j = 0; j < array.length(); j++) {
+                    JSONObject json = array.getJSONObject(j);
+                    jsonBundles.add(json.toString());
+                }
+            }
+
+            return () -> new ResponseEntity(FileConverter.convertStringToBytes(jsonBundles),
+                    getHeadersForDownload(submissionId, "fhir", "application/json"), HttpStatus.OK);
         } catch (Exception ex) {
             LOG.error("Error in retriving submission record.", ex);
-            return () -> new ResponseEntity<>(new Document(), HttpStatus.INTERNAL_SERVER_ERROR);
+            byte[] array = new byte[0];
+            InputStream isr = new ByteArrayInputStream(array);
+            return () -> new ResponseEntity<>(new InputStreamReader(isr), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    private HttpHeaders getHeadersForDownload(String fileName, String extension, String contentType) {
+        HttpHeaders headers = new HttpHeaders();
+
+        headers.add("content-disposition", "attachment; filename=\"" + fileName + "." + extension + "\"");
+        headers.add("Content-Type", contentType);
+
+        return headers;
     }
 }
