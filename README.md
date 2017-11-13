@@ -26,7 +26,11 @@ Prerequisites:
 ---------------
 
 -   Docker <http://www.docker.com>
--   Python <https://www.python.org>
+-   Maven v3.x+ <https://maven.apache.org>
+-   Python v2.7x+ <https://www.python.org> **
+-   Java 8 <http://www.oracle.com> **
+
+(** = Only needed if compling code from source)
 
 To easily build this application via Docker-Compose, please simply execute:
  
@@ -42,15 +46,6 @@ Naviage to:
     
     "0.0.0.0:9005" 
 
-Prerequisites:
----------------
-
--   Maven v3.x+ <https://maven.apache.org>
-
--   Python v2.7x+ <https://www.python.org>
-
--   Java 8 <http://www.oracle.com>
-
 Environment Setup
 =================
 
@@ -61,13 +56,13 @@ Interfaces (APIs). We have chosen the following open-sourced projects to
 satisfy environmental requirements:
 
 -   Apache Kafka: high-throughput message bus
-(<https://kafka.apache.org)>
+<https://kafka.apache.org>
 
 -   MongoDB: schemaless map-reduce capable database
-(<https://www.mongodb.org)>
+<https://www.mongodb.org>
 
 -   Spring Framework: RESTful API framework
-(<http://projects.spring.io/spring-boot)>
+<http://projects.spring.io/spring-boot>
 
 Kafka Setup:
 ------------
