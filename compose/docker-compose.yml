@@ -11,6 +11,9 @@ services:
     links:
       - mongodb
       - kafka
+    depends_on:
+      - kafka
+      - mongodb
   mongodb:
     image: mongo:latest
     ports:
@@ -20,19 +23,31 @@ services:
     ports:
       - "2181:2181"
       - "9092:9092"
-  kafkatopics:
-    image: kafka-topics:latest
-    links:
-      - kafka
-  hmlconsumer:
+    hostname: kafka
+    environment:
+      ADVERTISED_HOST: kafka
+      ADVERTISED_PORT: 9092
+      TOPICS: fhir-submission,hml-fhir-conversion
+    expose:
+      - "9092"
+      - "2181"
+  fhirconsumer:
     image: fhir-submission-consumer:latest
     links:
       - kafka
       - serviceconversion
       - mongodb
-  fhirconsumer:
+    depends_on:
+      - kafka
+      - serviceconversion
+      - mongodb
+  hmlconsumer:
     image: hml-fhir-consumer:latest
     links:
+      - kafka
+      - serviceconversion
+      - mongodb
+    depends_on:
       - kafka
       - serviceconversion
       - mongodb

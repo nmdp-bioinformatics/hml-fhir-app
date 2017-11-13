@@ -14,7 +14,7 @@ consumerDefaults:
 
 kafkaBrokers:
   - id: localsingle
-    hostS: "kafka:9092"
+    hosts: "kafka:9092"
   - id: local
     hosts: "localhost:9092,localhost:9093,localhost:9094"
   - id: sandbox

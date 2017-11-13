@@ -71,16 +71,24 @@ public class FhirSubmission {
     public final MetricRegistry metrics;
 
     public FhirSubmission(ApplicationProperties applicationProperties) throws Exception {
+        LOG.info(String.format("Creating kafka consumer from config file: %s.", applicationProperties.getConsumerConfigurationPath()));
+
         Yaml yaml = new Yaml();
+        File file =  null;
+        URL configUrl = null;
         RootConfiguration config;
-        File file = new File(applicationProperties.getConsumerConfigurationPath());
-        URL configUrl = file.toURL();
 
-        try (InputStream is = configUrl.openStream()) {
-            config = yaml.loadAs(is, RootConfiguration.class);
+        try {
+            file = new File(applicationProperties.getConsumerConfigurationPath());
+            configUrl = file.toURL();
+            try (InputStream is = configUrl.openStream()) {
+                config = yaml.loadAs(is, RootConfiguration.class);
+                LOG.info(String.format("Config: %s", config.toString()));
+            }
+        } catch (Exception ex) {
+            LOG.error("Error opening file",  ex);
+            throw ex;
         }
-
-        LOG.info("Configuration: {}", config);
 
         Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
 

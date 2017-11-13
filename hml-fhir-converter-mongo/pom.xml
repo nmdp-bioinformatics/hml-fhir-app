@@ -81,11 +81,6 @@
                 <artifactId>json</artifactId>
                 <version>${json-version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.nmdp</groupId>
-                <artifactId>fhir-submission</artifactId>
-                <version>${nmdp-submission-version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -117,10 +112,6 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.nmdp</groupId>
-            <artifactId>fhir-submission</artifactId>
         </dependency>
     </dependencies>
 </project>

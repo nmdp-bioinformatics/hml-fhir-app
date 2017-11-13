@@ -75,14 +75,20 @@ public class KafkaHmlFhirConverter {
     public KafkaHmlFhirConverter(ApplicationProperties applicationProperties) throws Exception {
         Yaml yaml = new Yaml();
         RootConfiguration config;
-        File file = new File(applicationProperties.getConsumerConfigurationPath());
-        URL configUrl = file.toURL();
+        File file = null;
+        URL configUrl = null;
 
-        try (InputStream is = configUrl.openStream()) {
-            config = yaml.loadAs(is, RootConfiguration.class);
+        try {
+            file = new File(applicationProperties.getConsumerConfigurationPath());
+            configUrl = file.toURL();
+            try (InputStream is = configUrl.openStream()) {
+                config = yaml.loadAs(is, RootConfiguration.class);
+                LOG.info(String.format("Config: %s", config.toString()));
+            }
+        } catch (Exception ex) {
+            LOG.error("Error opening file", ex);
+            throw ex;
         }
-
-        LOG.info("Configuration: {}", config);
 
         Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
 
