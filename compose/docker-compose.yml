@@ -20,3 +20,19 @@ services:
     ports:
       - "2181:2181"
       - "9092:9092"
+  kafkatopics:
+    image: kafka-topics:latest
+    links:
+      - kafka
+  hmlconsumer:
+    image: fhir-submission-consumer:latest
+    links:
+      - kafka
+      - serviceconversion
+      - mongodb
+  fhirconsumer:
+    image: hml-fhir-consumer:latest
+    links:
+      - kafka
+      - serviceconversion
+      - mongodb
