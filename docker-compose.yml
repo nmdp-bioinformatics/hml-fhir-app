@@ -1,0 +1,53 @@
+version: '3'
+services:
+  gui:
+    image: abrown001/web-hml-fhir:latest
+    ports:
+      - "9005:9005"
+  serviceconversion:
+    image: abrown001/service-hml-fhir:latest
+    ports:
+      - "8099:8099"
+    links:
+      - mongodb
+      - kafka
+    depends_on:
+      - kafka
+      - mongodb
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "127.0.0.1:27017:27017"
+  kafka:
+    image: spotify/kafka:latest
+    ports:
+      - "2181:2181"
+      - "9092:9092"
+    hostname: kafka
+    environment:
+      ADVERTISED_HOST: kafka
+      ADVERTISED_PORT: 9092
+      TOPICS: fhir-submission,hml-fhir-conversion
+    expose:
+      - "9092"
+      - "2181"
+  fhirconsumer:
+    image: abrown001/fhir-submission-consumer:latest
+    links:
+      - kafka
+      - serviceconversion
+      - mongodb
+    depends_on:
+      - kafka
+      - serviceconversion
+      - mongodb
+  hmlconsumer:
+    image: abrown001/hml-fhir-consumer:latest
+    links:
+      - kafka
+      - serviceconversion
+      - mongodb
+    depends_on:
+      - kafka
+      - serviceconversion
+      - mongodb
