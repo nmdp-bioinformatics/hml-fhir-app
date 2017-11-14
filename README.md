@@ -22,10 +22,27 @@ releases.
 Docker
 ======
 
+EASY IMAGE PULL
+
+At the root of this directory, there is a docker-compose.yml file. Simply execute the following after installing Docker:
+
+    "docker-compose up"
+    
+This will pull published images from the Docker Hub, this will build and launch the application on your local machine. Navigate to: 0.0.0.0:9005 to use the application.
+
 Prerequisites:
 ---------------
 
 -   Docker <http://www.docker.com>
+
+Docker
+======
+
+LOCAL BUILDS
+
+Prerequisites:
+---------------
+
 -   Maven v3.x+ <https://maven.apache.org>
 -   Python v2.7x+ <https://www.python.org> **
 -   Java 8 <http://www.oracle.com> **
