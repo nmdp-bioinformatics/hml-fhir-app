@@ -94,7 +94,7 @@ public class ConvertHmlToFhirImpl extends Convert implements ConvertHmlToFhir {
     @Override
     public FhirMessage convert(String hml, String prefix) throws Exception {
         try {
-            org.nmdp.hmlfhirconvertermodels.dto.hml.Hml javaHml = convertToDto(hml, prefix);
+            org.nmdp.hmlfhirconvertermodels.dto.hml.Hml javaHml = convertToDto(hml);
             return toFhir(javaHml);
         } catch (Exception ex) {
             LOG.error(ex);
@@ -149,8 +149,9 @@ public class ConvertHmlToFhirImpl extends Convert implements ConvertHmlToFhir {
     }
 
     @Override
-    public Hml convertToDo(String hml, String prefix) throws Exception {
+    public Hml convertToDo(String hml) throws Exception {
         try {
+            String prefix = getPrefixFromXml(hml);
             JSONObject jsonObj = convertXmlStringToJson(hml);
             JsonParser parser = new JsonParser();
             Gson gson = getGsonConverter();
@@ -213,8 +214,9 @@ public class ConvertHmlToFhirImpl extends Convert implements ConvertHmlToFhir {
     }
 
     @Override
-    public org.nmdp.hmlfhirconvertermodels.dto.hml.Hml convertToDto(String hml, String prefix) throws Exception {
+    public org.nmdp.hmlfhirconvertermodels.dto.hml.Hml convertToDto(String hml) throws Exception {
         try {
+            String prefix = getPrefixFromXml(hml);
             JSONObject jsonObj = convertXmlStringToJson(hml);
             JsonParser parser = new JsonParser();
             Gson gson = getGsonConverter();

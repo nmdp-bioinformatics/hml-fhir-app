@@ -90,7 +90,7 @@ public class HmlServiceImpl extends MongoServiceBase implements HmlService {
             HmlXmlDeserializerHyphenatedProperties deserializer = new HmlXmlDeserializerHyphenatedProperties();
             ConvertHmlToFhir converter = new ConvertHmlToFhirImpl(deserializer);
             List<org.nmdp.hmlfhirconvertermodels.dto.hml.Hml> hmls = new ArrayList<>();
-            hmls.add(converter.convertToDto(new String(bytes), xmlPrefix));
+            hmls.add(converter.convertToDto(new String(bytes) /*, xmlPrefix*/));
 
             return hmls;
         } catch (Exception ex) {
@@ -116,7 +116,7 @@ public class HmlServiceImpl extends MongoServiceBase implements HmlService {
             HmlXmlDeserializerHyphenatedProperties deserializer = new HmlXmlDeserializerHyphenatedProperties();
             ConvertHmlToFhir converter = new ConvertHmlToFhirImpl(deserializer);
             List<org.nmdp.hmlfhirconvertermodels.dto.hml.Hml> hmls = new ArrayList<>();
-            hmls.add(converter.convertToDto(xml, xmlPrefix));
+            hmls.add(converter.convertToDto(xml/*, xmlPrefix*/));
 
             return hmls;
         } catch (Exception ex) {

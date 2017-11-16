@@ -40,9 +40,9 @@ public interface ConvertHmlToFhir {
     Hml convertToDo(org.nmdp.hmlfhirconvertermodels.dto.hml.Hml hml) throws Exception;
     Hml convertToDo(JsonObject hml) throws Exception;
     Hml convertToDo(JSONObject hml, String prefix) throws Exception;
-    Hml convertToDo(String hml, String prefix) throws Exception;
+    Hml convertToDo(String hml) throws Exception;
     org.nmdp.hmlfhirconvertermodels.dto.hml.Hml convertToDto(Hml hml) throws Exception;
     org.nmdp.hmlfhirconvertermodels.dto.hml.Hml convertToDto(JsonObject hml) throws Exception;
     org.nmdp.hmlfhirconvertermodels.dto.hml.Hml convertToDto(JSONObject hml, String prefix) throws Exception;
-    org.nmdp.hmlfhirconvertermodels.dto.hml.Hml convertToDto(String hml, String prefix) throws Exception;
+    org.nmdp.hmlfhirconvertermodels.dto.hml.Hml convertToDto(String hml) throws Exception;
 }

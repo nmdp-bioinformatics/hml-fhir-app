@@ -39,10 +39,14 @@ import javax.xml.parsers.SAXParserFactory;
 
 import java.io.StringReader;
 import java.util.Iterator;
+import java.util.Set;
 
 public abstract class Convert {
 
     private static final Logger LOG = Logger.getLogger(Convert.class);
+    private static final String HML = "hml";
+    private static final Character COLON = ':';
+    private static final String COLON_STR = ":";
 
     protected JSONObject convertXmlStringToJson(String xml) throws Exception {
         try {
@@ -51,6 +55,33 @@ public abstract class Convert {
             LOG.error("Error parsing Xml to Json.", ex);
             throw ex;
         }
+    }
+
+    protected String getPrefixFromXml(String xml) {
+        JSONObject json = XML.toJSONObject(xml);
+        Set<String> keySet = json.keySet();
+        String prefix = "";
+
+        for (String key : keySet) {
+            String[] segments = key.split(COLON_STR);
+
+            for (int i = 0; i < segments.length; i++) {
+                String segment = segments[i];
+
+                if (segment.charAt(0) == COLON) {
+                    segment = segment.substring(1, segment.length());
+                    prefix += COLON;
+                }
+
+                if (segment.contains(HML)) {
+                    return prefix;
+                }
+
+                prefix += String.format("%s%s", segment, COLON_STR);
+            }
+        }
+
+        return prefix;
     }
 
     protected JSONObject mutatePropertyNames(JSONObject json, String prefix) {

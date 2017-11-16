@@ -174,7 +174,7 @@ public class HmlFhirConverter implements KafkaMessageHandler, Closeable {
         try {
             org.bson.Document document = mongoHmlDatabase.get(hmlId);
             String json = document.toJson();
-            return CONVERTER.convertToDto(json, null);
+            return CONVERTER.convertToDto(json);
         } catch (Exception ex) {
             LOG.error("Error retrieving record from mongo", ex);
             throw ex;
