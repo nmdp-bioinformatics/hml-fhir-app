@@ -11,7 +11,7 @@ while getopts ":p:b:m:y:" opt; do
         m) model_path="$OPTARG"
         ;;
         y) python_script="$OPTARG"
-        ;;
+        ;;d
     esac
 done
 
