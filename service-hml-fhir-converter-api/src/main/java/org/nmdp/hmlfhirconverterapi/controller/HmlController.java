@@ -84,6 +84,7 @@ public class HmlController implements HmlApi {
     @RequestMapping(path = "/{prefix}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public Callable<ResponseEntity<Boolean>> convertHmlFileToFhir(@RequestBody MultipartFile file, @PathVariable String prefix) {
         try {
+            LOG.info(String.format("Prefix of HML file: %s", prefix));
             List<Hml> hmls = hmlService.convertByteArrayToHmls(file.getBytes(), prefix);
             Map<String, Hml> dbHmls = hmlService.writeHmlToMongoConversionDb(hmls);
             List<KafkaMessage> kafkaMessages = ConvertToKafkaMessage.transform(dbHmls, kafkaConfig.getMessageKey());
