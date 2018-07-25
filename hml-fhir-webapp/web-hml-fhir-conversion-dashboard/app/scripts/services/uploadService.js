@@ -3,9 +3,9 @@
 
     function uploadService($http, $q, appConfig, headerFactory) {
         var service = {
-            uploadHml: function (file, prefix) {
+            uploadHml: function (file) {
                 var defer = $q.defer(),
-                    url = appConfig.conversion_server_url + 'hml/' + prefix,
+                    url = appConfig.conversion_server_url + 'hml',
                     headers = headerFactory.uploadFileHeaders(),
                     formData = new FormData();
 
@@ -13,6 +13,23 @@
 
                 $http.post(url, formData, {
                     transformRequest: angular.identity,
+                    headers: headers
+                }).then(function (result) {
+                    defer.resolve(result.data);
+                });
+
+                return defer.promise;
+            },
+
+            uploadHmlText: function (text) {
+                var defer = $q.defer(),
+                    url = appConfig.conversion_server_url + 'hml/text',
+                    headers = headerFactory.conversionServiceHeaders();
+
+                $http({
+                    method: 'POST',
+                    url: url,
+                    data: text,
                     headers: headers
                 }).then(function (result) {
                     defer.resolve(result.data);

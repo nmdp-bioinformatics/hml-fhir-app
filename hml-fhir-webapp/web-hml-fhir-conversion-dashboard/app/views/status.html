@@ -5,7 +5,7 @@
         <div class="panel-title">Upload to converter</div>
       </div>
       <div class="panel-body">
-        <div class="col-xs-6">
+        <div class="col-xs-12">
           <div class="panel panel-primary">
             <div class="panel-heading">
               <div class="panel-title">HML <i class="glyphicon glyphicon-arrow-right" /> FHIR</div>
@@ -17,27 +17,6 @@
               <div class="row">
                 <div class="col-xs-12">
                   <button data-ng-disabled="!statusCtrl.hmlFile" type="button" data-ng-click="statusCtrl.convertHml()" class="btn btn-primary">Upload</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-xs-6">
-          <div class="panel panel-danger">
-            <div class="panel-heading">
-              <div class="panel-title">Pre-FHIR <i class="glyphicon glyphicon-arrow-right" /> HML</div>
-            </div>
-            <div class="panel-body">
-              <div class="row">
-                <div class="col-xs-12">
-                  <input type="file" multi-part-file-upload="statusCtrl.fhirFile" name="file" />
-                </div>
-              </div>
-            </div>
-            <div class="panel-footer">
-              <div class="row">
-                <div class="col-xs-12">
-                  <button data-ng-disabled="!statusCtrl.fhirFile" type="button" data-ng-click="statusCtrl.convertFhir()" class="btn btn-danger">Upload</button>
                 </div>
               </div>
             </div>
@@ -61,114 +40,26 @@
               <div class="col-xs-4">
                 <h4 class="conversion-table-heading">Status</h4>
               </div>
-              <div class="col-xs-4">
-                <h4 class="conversion-table-heading">Pre-FHIR</h4>
-              </div>
             </div>
             <div class="row" data-ng-repeat="status in statusCtrl.statuses">
               <div class="col-xs-12">
-                <div class="col-xs-4">
-                  <div class="row">
-                    <div class="col-xs-12">
-                      <div class="panel panel-primary">
-                        <div class="panel-heading">
-                          <div class="panel-title">HML ({{ status.hmlId ? 'Completed' : 'Processing' }})</div>
-                        </div>
-                        <div class="panel-body">
-                          <div class="row" data-ng-disabled="!status.hmlId">
-                          <span class="center-buttons">
-                            <button class="btn btn-info btn-sm" type="button" data-ng-click="statusCtrl.viewHml(status)">View</button>
-                            <button class="btn btn-info btn-sm" type="button" data-ng-click="statusCtrl.downloadHmlXml(status)"><span class="glyphicon glyphicon-download button-glyphicon" />Xml</button>
-                            <button class="btn btn-info btn-sm" type="button" data-ng-click="statusCtrl.downloadHmlJson(status)"><span class="glyphicon glyphicon-download button-glyphicon" />Json</button>
-                          </span>
-                          </div>
-                        </div>
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <div class="panel-title">Conversion Result</div>
+                  </div>
+                  <div class="panel-body">
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <label for="submission" class="label control-label">Status:</label>
+                        <h5 id="submission">{{ status.hmlId ? 'Completed' : 'Processing' }}</h5>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-xs-4">
-                  <div class="panel" data-ng-class="{ 'panel-success': status.status === 'COMPLETE', 'panel-warning': status.status === 'QUEUED', 'panel-warning': status.status = 'SUBMITTING' }">
-                    <div class="panel-heading">
-                      <div class="row">
-                        <div class="col-xs-12">
-                          <label for="status">Status:</label>
-                          <p id="status" class="pull-right">{{ status.status }}</p>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-xs-12">
-                          <label for="id">ID:</label>
-                          <p id="id" class="pull-right row-status-id-text">{{ status._id }}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xs-4">
-                  <div class="row">
-                    <div class="col-xs-12">
-                      <div class="panel panel-danger">
-                        <div class="panel-heading">
-                          <div class="panel-title">Pre-FHIR ({{ status.fhirId ? 'Completed' : 'Processing' }})</div>
-                        </div>
-                        <div class="panel-body">
-                          <div class="row" data-ng-disabled="!status.fhirId">
-                          <span class="center-buttons">
-                            <button class="btn btn-info btn-sm" type="button" data-ng-click="statusCtrl.viewFhir(status)">View</button>
-                            <button class="btn btn-info btn-sm" type="button" data-ng-click="statusCtrl.downloadFhirXml(status)"><span class="glyphicon glyphicon-download button-glyphicon" />Xml</button>
-                            <button class="btn btn-info btn-sm" type="button" data-ng-click="statusCtrl.downloadFhirJson(status)"><span class="glyphicon glyphicon-download button-glyphicon" />Json</button>
-                          </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xs-12" data-ng-if="status.fhirSubmissionId">
-                  <div class="row">
-                    <div class="col-xs-12">
-                      <div class="panel panel-success">
-                        <div class="panel-heading">
-                          <div class="panel-title">FHIR RESOURCE VIEWER</div>
-                        </div>
-                        <div class="panel-body">
-                          <div data-ng-if="!statusCtrl.submission || statusCtrl.submission.fhirId !== status.fhirSubmissionId">
-                            <a data-ng-click="statusCtrl.getSubmissionById(status.fhirSubmissionId)">Get FHIR Resource Report</a>
-                          </div>
-                          <div data-ng-if="statusCtrl.submission.fhirId === status.fhirSubmissionId">
-                            <div data-ng-repeat="patient in statusCtrl.submission.patients">
-                              <div class="row">
-                                <div class="panel panel-primary">
-                                  <div class="panel-heading">
-                                    <div class="panel-title"><a href="{{ patient.patientUrl }}">Patient ID: {{ patient.patientId }}</a></div>
-                                  </div>
-                                  <div class="panel-body">
-                                    <div class="row">
-                                      <div class="col-xs-12">
-                                        <a href="{{ patient.diagnosticReport.value }}">Diagnostic Report: {{ patient.diagnosticReport.key }}</a>
-                                      </div>
-                                    </div>
-                                    <div class="row">
-                                      <div class="col-xs-12">
-                                        <div class="panel panel-success">
-                                          <div class="panel-heading">
-                                            <div class="panel-title">Observations</div>
-                                          </div>
-                                          <div class="panel-body">
-                                            <div data-ng-repeat="observation in patient.observations">
-                                              <div><a href="{{ observation.value }}">{{ observation.key }}</a></div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                  <div class="panel-footer">
+                    <div class="row">
+                      <div class="col-xs-12">
+                        <button type="button" class="btn btn-success" data-ng-click="statusCtrl.downloadHmlXml(status)"><span class="glyphicon glyphicon-download button-glyphicon" />Download HML</button>
+                        <button type="button" class="btn btn-success" data-ng-click="statusCtrl.getSubmissionById(status.fhirSubmissionId)"><span class="glyphicon glyphicon-download button-glyphicon" />Download FHIR</button>
                       </div>
                     </div>
                   </div>
