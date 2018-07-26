@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hml xmlns="http://schemas.nmdp.org/spec/hml/1.0.1"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schemas.nmdp.org/spec/hml/1.0.1  http://schemas.nmdp.org/spec/hml/1.0.1/hml-1.0.1.xsd"
+    version="1.0.1" >
+
+    <hmlid root="2.34.48.32" extension="HML.3245662"/>
+
+
+    <reporting-center reporting-center-id="567" reporting-center-context="myorganization"/>
+
+    <sample id="4555-6677-10">
+        <typing gene-family="HLA" date="2015-01-13">
+            <allele-assignment date="2015-07-28" allele-db="IMGT/HLA" allele-version="3.23.0">
+                <glstring>
+                    HLA-A*01:01:01G+HLA-A*01:02
+                </glstring>
+            </allele-assignment>
+
+            <typing-method>
+                <sbt-ngs locus="HLA-A"
+                    test-id="HLA-A.Test.1234"
+                    test-id-source="AcmeGenLabs">
+                    <raw-reads uri="rawreads/read2.fastq.gz"
+                    availability="public"
+                    format="fastq"
+                    paired="1"
+                    pooled="1"
+                    adapter-trimmed="1"
+                    quality-trimmed="0"/>
+                </sbt-ngs>
+            </typing-method>
+
+            <consensus-sequence date="2015-01-13">
+                <reference-database availability="public" curated="true">
+                    <reference-sequence
+                        name="HLA-A*01:01:01:01"
+                        id="Ref1"
+                        start="0"
+                        end="3503"
+                        accession="HLA00001"
+                        uri="https://www.ebi.ac.uk/Tools/dbfetch/dbfetch?db=imgthla;id=HLA00001"/>
+               </reference-database>
+
+                <reference-database availability="public" curated="true">
+                    <reference-sequence
+                        name="HLA-A*01:02"
+                        id="Ref2"
+                        start="0"
+                        end="3374"
+                        accession="HLA00002"
+                        uri="https://www.ebi.ac.uk/Tools/dbfetch/dbfetch?db=imgthla;id=HLA00002"/>
+               </reference-database>
+
+                <consensus-sequence-block
+                    reference-sequence-id="Ref1"
+                    start="503"
+                    end="773"
+                    phase-set="1"
+                    expected-copy-number="1"
+                    continuity="false"
+                    description="HLA-A*01:01:01:01, exon 2">
+                    <sequence>
+GCTCCCACTCCATGAGGTATTTCTTCACATCCGTGTCCCGGCCCGGCCGCGGGGAGCCCCGCTTCATCGCCGTGGGCTACGTGGACGACACGCAGTTCGTGCGGTTCGACAGCGACGCCGCGAGCCAGAAGATGGAGCCGCGGGCGCCGTGGATAGAGCAGGAGGGGCCGGAGTATTGGGACCAGGAGACACGGAATATGAAGGCCCACTCACAGACTGACCGAGCGAACCTGGGGACCCTGCGCGGCTACTACAACCAGAGCGAGGACG
+                    </sequence>
+                </consensus-sequence-block>
+
+                <consensus-sequence-block
+                    reference-sequence-id="Ref1"
+                    start="1014"
+                    end="1290"
+                    phase-set="1"
+                    expected-copy-number="1"
+                    continuity="false"
+                    description="HLA-A*01:01:01:01, exon 3">
+                    <sequence>
+GTTCTCACACCATCCAGATAATGTATGGCTGCGACGTGGGGCCGGACGGGCGCTTCCTCCGCGGGTACCGGCAGGACGCCTACGACGGCAAGGATTACATCGCCCTGAACGAGGACCTGCGCTCTTGGACCGCGGCGGACATGGCAGCTCAGATCACCAAGCGCAAGTGGGAGGCGGTCCATGCGGCGGAGCAGCGGAGAGTCTACCTGGAGGGCCGGTGCGTGGACGGGCTCCGCAGATACCTGGAGAACGGGAAGGAGACGCTGCAGCGCACGG
+                    </sequence>
+                </consensus-sequence-block>
+
+                <consensus-sequence-block
+                    reference-sequence-id="Ref2"
+                    start="503"
+                    end="773"
+                    phase-set="2"
+                    expected-copy-number="1"
+                    continuity="false"
+                    description="HLA-A*01:02, exon 2">
+                    <sequence>
+GCTCCCACTCCATGAGGTATTTCTCCACATCCGTGTCCCGGCCCGGCAGTGGAGAGCCCCGCTTCATCGCAGTGGGCTACGTGGACGACACGCAGTTCGTGCGGTTCGACAGCGACGCCGCGAGCCAGAAGATGGAGCCGCGGGCGCCGTGGATAGAGCAGGAGGGGCCGGAGTATTGGGACCAGGAGACACGGAATATGAAGGCCCACTCACAGACTGACCGAGCGAACCTGGGGACCCTGCGCGGCTACTACAACCAGAGCGAGGACG
+                    </sequence>
+                </consensus-sequence-block>
+
+                <consensus-sequence-block
+                    reference-sequence-id="Ref2"
+                    start="1014"
+                    end="1290"
+                    phase-set="2"
+                    expected-copy-number="1"
+                    continuity="false"
+                    description="HLA-A*01:02, exon 3">
+                    <sequence>
+GTTCTCACACCATCCAGATAATGTATGGCTGCGACGTGGGGCCGGACGGGCGCTTCCTCCGCGGGTACCGGCAGGACGCCTACGACGGCAAGGATTACATCGCCCTGAACGAGGACCTGCGCTCTTGGACCGCGGCGGACATGGCAGCTCAGATCACCAAGCGCAAGTGGGAGGCGGTCCATGCGGCGGAGCAGCGGAGAGTCTACCTGGAGGGCCGGTGCGTGGACGGGCTCCGCAGATACCTGGAGAACGGGAAGGAGACGCTGCAGCGCACGG
+                    </sequence>
+                </consensus-sequence-block>
+
+           </consensus-sequence>
+        </typing>
+    </sample>
+
+</hml>
