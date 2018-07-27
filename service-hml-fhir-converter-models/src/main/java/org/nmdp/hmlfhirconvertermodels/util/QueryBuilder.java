@@ -53,22 +53,22 @@ public class QueryBuilder {
 
         List<List<QueryCriteria>> likeNonExclusionQueries = groupCriteriaByQueryProperty(typeaheadQuery.getCriteria().stream()
                 .filter(Objects::nonNull)
-                .filter(q -> q.getUseLike() && !q.getExclude())
+                .filter(q -> q.isUseLike() && !q.isExclude())
                 .collect(Collectors.toList()));
 
         List<List<QueryCriteria>> isNonExclusionQueries = groupCriteriaByQueryProperty(typeaheadQuery.getCriteria().stream()
                 .filter(Objects::nonNull)
-                .filter(q -> !q.getUseLike() && !q.getExclude())
+                .filter(q -> !q.isUseLike() && !q.isExclude())
                 .collect(Collectors.toList()));
 
         List<List<QueryCriteria>> likeExclusionQueries = groupCriteriaByQueryProperty(typeaheadQuery.getCriteria().stream()
                 .filter(Objects::nonNull)
-                .filter(q -> q.getUseLike() && q.getExclude())
+                .filter(q -> q.isUseLike() && q.isExclude())
                 .collect(Collectors.toList()));
 
         List<List<QueryCriteria>> isExclusionQueries = groupCriteriaByQueryProperty(typeaheadQuery.getCriteria().stream()
                 .filter(Objects::nonNull)
-                .filter(q -> !q.getUseLike() && q.getExclude())
+                .filter(q -> !q.isUseLike() && q.isExclude())
                 .collect(Collectors.toList()));
 
 
