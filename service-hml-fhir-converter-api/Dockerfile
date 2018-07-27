@@ -2,7 +2,7 @@ FROM java:8
 
 VOLUME /usr
 
-ADD target/service-hml-fhir-converter-api-1.1.0-SNAPSHOT.jar app.jar
+ADD target/service-hml-fhir-converter-api-2.0.0.jar app.jar
 ADD conf/kafka-configuration.yaml /usr/conf/kafka-configuration.yaml
 ADD conf/mongo-configuration.yaml /usr/conf/mongo-configuration.yaml
 

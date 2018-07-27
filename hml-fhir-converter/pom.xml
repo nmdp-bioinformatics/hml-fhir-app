@@ -7,10 +7,11 @@
     <groupId>org.nmdp</groupId>
     <artifactId>hml-fhir</artifactId>
     <packaging>jar</packaging>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.0.0</version>
     
     <properties>
-    	<swagger-codegen-version>2.2.2</swagger-codegen-version>
+    	<swagger-version>1.5.20</swagger-version>
+    	<swagger-codegen-version>2.3.1</swagger-codegen-version>
         <maven-compiler-plugin-version>3.5.1</maven-compiler-plugin-version>
         <mapstruct-core-version>1.2.0.Beta1</mapstruct-core-version>
         <maven-clean-plugin-version>2.6.1</maven-clean-plugin-version>

@@ -29,16 +29,16 @@
     <groupId>org.nmdp</groupId>
     <artifactId>hml-fhir-app</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>2.0.0</version>
 
 	<modules>
+                <module>kafka-consumer</module>
+                <module>kafka-producer</module>
 		<module>service-hml-fhir-converter-models</module>
 		<module>service-kafka-producer-model</module>
 		<module>fhir-submission</module>
 		<module>hml-fhir-converter-mongo</module>
 		<module>hml-fhir-converter</module>
-		<module>kafka-consumer</module>
-		<module>kafka-producer</module>
 		<module>process-kafka-fhir-submission-consumer</module>
 		<module>process-kafka-hml-fhir-conversion-consumer</module>
 		<module>service-hml-fhir-converter-api</module>
