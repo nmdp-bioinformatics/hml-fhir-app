@@ -248,7 +248,10 @@ public class HmlDeserializer extends Deserializer<Hml> {
         property.setDescription(jsonObject.has("description") ? jsonObject.get("description").getAsString() : null);
         property.setName(jsonObject.has("name") ? jsonObject.get("name").getAsString() : null);
         property.setValue(jsonObject.has("value") ? jsonObject.get("value").getAsString() : null);
-        property.setExtendedItems(createExtendedItems(jsonObject.has("extendedItems") ? jsonObject.get("extendedItems").getAsJsonObject() : null));
+
+        if (jsonObject.has("extendedItems") && !jsonObject.get("extendedItems").isJsonArray()) {
+            property.setExtendedItems(createExtendedItems(jsonObject.has("extendedItems") ? jsonObject.get("extendedItems").getAsJsonObject() : null));
+        }
 
         properties.add(property);
         return properties;

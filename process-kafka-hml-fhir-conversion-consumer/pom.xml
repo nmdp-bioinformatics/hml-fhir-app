@@ -6,7 +6,7 @@
     <groupId>org.nmdp</groupId>
     <artifactId>process-kafka-hml-fhir-conversion-consumer</artifactId>
     <packaging>jar</packaging>
-    <version>2.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <name>process-kafka-hml-fhir-conversion-consumer</name>
     <description>Kafka Message Consumer for Hml to Fhir Conversion</description>
@@ -15,12 +15,12 @@
         <apache-kafka-version>0.10.2.1</apache-kafka-version>
         <slf4j-version>1.7.6</slf4j-version>
         <log4j-version>1.2.17</log4j-version>
-        <nmdp-fhir-submission-version>2.0.0</nmdp-fhir-submission-version>
+        <nmdp-fhir-submission-version>1.0.0</nmdp-fhir-submission-version>
         <metrics-version>3.1.2</metrics-version>
         <java.version>1.8</java.version>
         <snake-yaml-version>1.16</snake-yaml-version>
         <jackson-xml-version>2.2.3</jackson-xml-version>
-        <nmdp-consumer-version>2.0.0</nmdp-consumer-version>
+        <nmdp-consumer-version>1.2.0</nmdp-consumer-version>
         <nmdp-models-version>2.0.0</nmdp-models-version>
         <nmdp-models-api-version>2.0.0</nmdp-models-api-version>
         <google-guice-version>4.0</google-guice-version>
@@ -34,7 +34,7 @@
         <mongodb-driver-version>3.4.0-beta1</mongodb-driver-version>
         <json-version>20160212</json-version>
         <apache-http-version>4.1.3</apache-http-version>
-        <nmdp-mongo-version>2.0.0</nmdp-mongo-version>
+        <nmdp-mongo-version>1.3.0</nmdp-mongo-version>
         <commons-lang-version>3.1</commons-lang-version>
     </properties>
 
