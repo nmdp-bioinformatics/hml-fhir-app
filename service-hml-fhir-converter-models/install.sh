@@ -26,7 +26,7 @@ fi
 
 sh build.sh -p $packages -m $model_path -b $branch -y $python_script
 
-mvn install:install-file -Dfile=target/service-hml-fhir-converter-models-2.0.0-SNAPSHOT.jar -DgeneratePom=true -DgroupId=org.nmdp -DartifactId=service-hml-fhir-converter-models -Dversion=2.0.0 -Dpackaging=jar
+mvn install:install-file -Dfile=target/service-hml-fhir-converter-models-2.0.0.jar -DgeneratePom=true -DgroupId=org.nmdp -DartifactId=service-hml-fhir-converter-models -Dversion=2.0.0 -Dpackaging=jar
 
 rm -rf $model_path
 
