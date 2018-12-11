@@ -24,6 +24,10 @@ package org.nmdp.hmlfhirconverterapi.service;
  * > http://www.opensource.org/licenses/lgpl-license.php
  */
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.apache.log4j.Logger;
 
 import org.bson.Document;
@@ -37,6 +41,7 @@ import org.nmdp.hmlfhirconvertermodels.dto.fhir.FhirMessage;
 import org.nmdp.hmlfhirmongo.config.MongoConfiguration;
 import org.nmdp.hmlfhirmongo.mongo.MongoFhirDatabase;
 
+import org.nmdp.hmlfhirmongo.mongo.MongoFhirSubmissionDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -47,6 +52,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -58,6 +64,9 @@ public class FhirServiceImpl extends MongoServiceBase implements FhirService {
     private final FhirCustomRepository customRepository;
     private final FhirRepository repository;
     private final MongoFhirDatabase fhirDatabase;
+    private final MongoFhirSubmissionDatabase fhirSubmissionDatabase;
+    private static final GsonBuilder gsonBuilder = new GsonBuilder();
+    private final Gson gson = gsonBuilder.setPrettyPrinting().create();
 
     @Autowired
     public FhirServiceImpl(@Qualifier("fhirCustomRepository") FhirCustomRepository customRepository, @Qualifier("fhirRepository") FhirRepository repository) {
@@ -78,6 +87,7 @@ public class FhirServiceImpl extends MongoServiceBase implements FhirService {
             LOG.error(ex);
         } finally {
             this.fhirDatabase = new MongoFhirDatabase(mc);
+            this.fhirSubmissionDatabase = new MongoFhirSubmissionDatabase(mc);
         }
     }
 
@@ -138,6 +148,32 @@ public class FhirServiceImpl extends MongoServiceBase implements FhirService {
             LOG.error(ex);
             return null;
         }
+    }
+
+    @Override
+    public String getJsonBundle(String id) {
+        try {
+            String json = Serializer.toJson(getBundle(id));
+            JsonObject obj = gson.fromJson(json, JsonObject.class);
+            JsonArray array = obj.getAsJsonArray("submissionResult");
+            String str = gson.toJson(array);
+
+            String newStr = str
+                    .replace("\\\"", "\"")
+                    .replace("\"{", "{")
+                    .replace("}\"", "}");
+
+            JsonArray newArray = gson.fromJson(newStr, JsonArray.class);
+
+            return gson.toJson(newArray);
+        } catch (Exception ex) {
+            LOG.error(ex);
+            return null;
+        }
+    }
+
+    private Document getBundle(String id) throws Exception {
+        return fhirSubmissionDatabase.get(id);
     }
 
     private Document getFhirFromMongo(String id) throws Exception {

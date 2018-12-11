@@ -51,7 +51,8 @@
                     <div class="row">
                       <div class="col-xs-12">
                         <button type="button" class="btn btn-success" data-ng-click="statusCtrl.downloadHmlXml(status)"><span class="glyphicon glyphicon-download button-glyphicon" />Download HML</button>
-                        <button type="button" class="btn btn-success" data-ng-click="statusCtrl.getSubmissionById(status.fhirSubmissionId)"><span class="glyphicon glyphicon-download button-glyphicon" />Download FHIR</button>
+                        <button type="button" class="btn btn-success" data-ng-click="statusCtrl.getSubmissionById(status.fhirId)"><span class="glyphicon glyphicon-download button-glyphicon" />Download FHIR</button>
+                        <button type="button" class="btn btn-success" data-ng-click="statusCtrl.getBundleById(status.fhirSubmissionId)"><span class="glyphicon glyphicon-download button-glyphicon" />Download Bundle</button>
                       </div>
                     </div>
                   </div>

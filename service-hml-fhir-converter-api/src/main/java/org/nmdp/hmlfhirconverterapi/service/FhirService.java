@@ -35,4 +35,5 @@ public interface FhirService {
     List<FhirMessage> convertStringToFhirMessages(String xml) throws Exception;
     String getXmlFhir(String id);
     String getJsonFhir(String id);
+    String getJsonBundle(String id);
 }

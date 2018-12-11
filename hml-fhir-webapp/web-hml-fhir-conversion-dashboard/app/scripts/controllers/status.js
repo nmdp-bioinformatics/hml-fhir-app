@@ -73,6 +73,12 @@
         });
     };
 
+    statusCtrl.getBundleById = function (id) {
+      downloadService.downloadBundle(id).then(function () {
+        statusCtrl.refresh();
+      });
+    };
+
     // statusCtrl.getSubmissionById = function (id) {
     //   submissionService.getSubmission(id).then(function (result) {
     //     statusCtrl.submission = {

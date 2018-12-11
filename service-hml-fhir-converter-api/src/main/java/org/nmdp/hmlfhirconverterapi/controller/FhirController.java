@@ -97,10 +97,19 @@ public class FhirController implements FhirApi {
         }
     }
 
+    @RequestMapping(path = "/bundle/{id}", produces = MediaType.MULTIPART_FORM_DATA_VALUE, method = RequestMethod.GET)
+    public @ResponseBody Callable<ResponseEntity> downloadBundle(@PathVariable String id) {
+        try {
+            return () -> new ResponseEntity(FileConverter.convertStringToBytes(fhirService.getJsonBundle(id)),
+                    getHeadersForDownload(id, "json", "application/json"), HttpStatus.OK);
+        } catch (Exception ex) {
+            LOG.error("Error downloading bundle", ex);
+            return () -> new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @RequestMapping(path = "/{id}", produces = MediaType.MULTIPART_FORM_DATA_VALUE, method = RequestMethod.GET)
-    public @ResponseBody
-    Callable<ResponseEntity> downloadJson(@PathVariable String id) {
+    public @ResponseBody Callable<ResponseEntity> downloadJson(@PathVariable String id) {
         try {
             return () -> new ResponseEntity(FileConverter.convertStringToBytes(fhirService.getJsonFhir(id)),
                     getHeadersForDownload(id, "json", "application/json"), HttpStatus.OK);

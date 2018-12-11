@@ -66,7 +66,7 @@ public class HmlController implements HmlApi {
     }
 
     @Override
-    @RequestMapping(path = "/{prefix}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PATCH)
+    @RequestMapping(path = "/{prefix}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
     public Callable<ResponseEntity<Boolean>> convert(@RequestBody String xml, @PathVariable String prefix) {
         try {
             List<Hml> hmls = hmlService.convertStringToHmls(xml, prefix);
