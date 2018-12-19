@@ -98,7 +98,7 @@ public class FhirMessageUtil {
         final String patientUrl = URL + PATIENT + QUERY_STRING;
         HmlSubmission submission = new HmlSubmission();
 
-        submission.setPatientId(String.format("%s*%s", patient.getIdentifier().getSystem(), patient.getIdentifier().getValue()));
+        submission.setPatientId(patient.getIdentifier().getSystem());
 
         try {
             FhirSubmissionResponse response = HttpResponseExtractor

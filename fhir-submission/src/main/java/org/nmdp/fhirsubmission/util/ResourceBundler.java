@@ -26,6 +26,7 @@ package org.nmdp.fhirsubmission.util;
 
 import com.google.gson.*;
 
+import io.swagger.util.Json;
 import org.apache.log4j.Logger;
 import org.nmdp.fhirsubmission.object.BundleReference;
 import org.nmdp.fhirsubmission.object.BundleSubmission;
@@ -36,6 +37,8 @@ import org.nmdp.hmlfhirconvertermodels.domain.fhir.lists.Patients;
 import org.nmdp.hmlfhirconvertermodels.domain.fhir.lists.Sequences;
 import org.nmdp.hmlfhirconvertermodels.domain.fhir.lists.Specimens;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -76,6 +79,20 @@ public class ResourceBundler {
     private static final String HAS_MEMBER_VALUE = "has-member";
     private static final String TARGET_KEY = "target";
     private static final String VALUE_STRING_KEY = "valueString";
+    private static final String COMPONENT_KEY = "component";
+    private static final String VALUE_CODEABLE_CONCEPT_KEY = "valueCodeableConcept";
+    private static final String VALUE_KEY = "value";
+    private static final String TEXT_KEY = "text";
+    private static final String WHO_REFERENCE_KEY = "whoReference";
+    private static final String RECORDED_KEY = "recorded";
+    private static final String AGENT_KEY = "agent";
+    private static final String WHAT_IDENTIFIER_KEY = "whatIdentifier";
+    private static final String EXTENSION_KEY = "extension";
+    private static final String URL_KEY = "url";
+    private static final String ROLE_KEY = "role";
+    private static final String MODEL_KEY = "model";
+    private static final String VERSION_KEY = "version";
+    private static final String NOTE_KEY = "note";
 
     private static final Logger LOG = Logger.getLogger(ResourceBundler.class);
 
@@ -203,6 +220,7 @@ public class ResourceBundler {
 
             for (String observation : observations) {
                 loopObservations(entry, OBSERVATION_RESOURCE, observationReferences, observation, gson, observationResults, sequenceObservationId);
+                loopGlStringObservations(entry, OBSERVATION_RESOURCE, sequenceReferences, specimenId, getHla(observation, gson), gson, observationResults, sequenceObservationId);
             }
 
             diagnosticReport = handleDiagnosticReport(observationResults, diagnosticReport, gson);
@@ -219,6 +237,23 @@ public class ResourceBundler {
 
         related.addProperty(TYPE_KEY, DERIVED_FROM_VALUE);
         target.addProperty(REFERENCE_KEY, sequenceObservationId);
+
+        related.add(TARGET_KEY, target);
+        json.add(RELATED_KEY, related);
+        entry.add(json);
+        idMap.put(id, json);
+    }
+
+    private void loopGlStringObservations(JsonArray entry, String resourceType, Map<String, BundleReference> references, String specimenId, String hlaType,
+                                          Gson gson, Map<String, JsonObject> idMap, String glStringObservationId) {
+        String id = String.format("%s%s", GUID_PREFIX, UUID.randomUUID().toString());
+        String data = handleGlStringObservations(hlaType, specimenId, gson);
+        JsonObject json = createJsonObject(data, gson, resourceType, id, references);
+        JsonObject related = new JsonObject();
+        JsonObject target = new JsonObject();
+
+        related.addProperty(TYPE_KEY, DERIVED_FROM_VALUE);
+        target.addProperty(REFERENCE_KEY, glStringObservationId);
 
         related.add(TARGET_KEY, target);
         json.add(RELATED_KEY, related);
@@ -257,16 +292,213 @@ public class ResourceBundler {
         }
 
         subject.addProperty(REFERENCE_KEY, patientId);
-        coding.addProperty(CODE_KEY, CODE_VALUE);
+        // coding.addProperty(CODE_KEY, CODE_VALUE);
+        coding.addProperty(TYPE_KEY, CODE_VALUE);
         coding.addProperty(SYSTEM_KEY, SYSTEM_VALUE);
         code.add(CODING_KEY, coding);
         observation.addProperty(RESOURCE_TYPE_KEY, OBSERVATION_RESOURCE);
         observation.addProperty(STATUS_KEY, STATUS_VALUE);
-        observation.add(SUBJECT_KEY, subject);
+        // observation.add(SUBJECT_KEY, subject);
         observation.add(RELATED_KEY, sequenceRefs);
         observation.add(CODE_KEY, code);
 
         return gson.toJson(observation);
+    }
+
+    private String getInstant() {
+        Date now = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-ddTHH:mm:ssZ");
+
+        return dateFormat.format(now);
+    }
+
+    private String handleDevice(Gson gson) {
+        JsonObject device = new JsonObject();
+        JsonObject deviceText = new JsonObject();
+        JsonObject deviceStatus = new JsonObject();
+        JsonObject model = new JsonObject();
+        JsonObject version = new JsonObject();
+        JsonObject note = new JsonObject();
+        JsonObject noteText = new JsonObject();
+
+        deviceStatus.addProperty(VALUE_KEY, "generated");
+        noteText.addProperty(VALUE_KEY, "converts HLA and KIR genotype report from Histoimmunogenetics Markup Language (HML) to FHIR bundle");
+        note.add(TEXT_KEY, noteText);
+        version.addProperty(VALUE_KEY, "1.0");
+        model.addProperty(VALUE_KEY, "HML2FHIR");
+        deviceText.add(STATUS_KEY, deviceStatus);
+
+        device.add(TEXT_KEY, deviceText);
+        device.add(MODEL_KEY, model);
+        device.add(VERSION_KEY, version);
+        device.add(NOTE_KEY, note);
+
+        return gson.toJson(device);
+    }
+
+    private String handleProvenance(JsonArray resources, Gson gson, String hmlRootId, String hmlExtensionId) {
+        JsonObject provenance = new JsonObject();
+        String referenceId = String.format("%s%s", GUID_PREFIX, UUID.randomUUID().toString());
+        JsonObject text = new JsonObject();
+        JsonObject status = new JsonObject();
+        JsonArray target = new JsonArray();
+        JsonObject recorded = new JsonObject();
+        JsonObject agent = new JsonObject();
+        JsonObject whoReference = new JsonObject();
+        JsonObject whoReferenceReference = new JsonObject();
+        JsonObject whoReferenceDisplay = new JsonObject();
+        JsonObject entity = new JsonObject();
+        JsonObject entityRole = new JsonObject();
+        JsonObject whatIdentifier = new JsonObject();
+        JsonObject whatIdentifierExtension = new JsonObject();
+        JsonObject extensionValueString = new JsonObject();
+        JsonObject whatIdentifierValue = new JsonObject();
+        Iterator iterator = resources.iterator();
+
+        entityRole.addProperty(VALUE_KEY, "derivation");
+        entity.add(ROLE_KEY, entityRole);
+        extensionValueString.addProperty(URL_KEY, "http://hl7.org/fhir/StructureDefinition/rendered-value");
+        extensionValueString.addProperty(VALUE_KEY, String.format("hmlid root=%s, extension=%s", hmlRootId, hmlExtensionId));
+        whatIdentifierExtension.add(VALUE_STRING_KEY, extensionValueString);
+        whatIdentifier.add(EXTENSION_KEY, whatIdentifierExtension);
+        whatIdentifierValue.addProperty(VALUE_KEY, String.format("%s^%s", hmlRootId, hmlExtensionId));
+        whatIdentifier.add(VALUE_KEY, whatIdentifierValue);
+        whoReferenceDisplay.addProperty(VALUE_KEY, "HML2FHIR");
+        whoReferenceReference.addProperty(VALUE_KEY, referenceId);
+        whoReference.add(REFERENCE_KEY, whoReferenceReference);
+        whoReference.add(DISPLAY_KEY, whoReferenceDisplay);
+        entity.add(WHAT_IDENTIFIER_KEY, whatIdentifier);
+        agent.add(WHO_REFERENCE_KEY, whoReference);
+        status.addProperty(VALUE_KEY, "generated");
+        recorded.addProperty(VALUE_KEY, getInstant());
+        provenance.add(TEXT_KEY, text);
+        provenance.add(RECORDED_KEY, recorded);
+        provenance.add(AGENT_KEY, agent);
+
+        while (iterator.hasNext()) {
+            JsonObject resource = (JsonObject) iterator.next();
+            JsonObject targetObj = new JsonObject();
+            JsonObject reference = new JsonObject();
+            JsonObject display = new JsonObject();
+
+            reference.addProperty(VALUE_KEY, getResourceId(resource));
+            display.addProperty(VALUE_KEY, getResourceType(resource));
+            targetObj.add(REFERENCE_KEY, reference);
+            targetObj.add(DISPLAY_KEY, display);
+            target.add(targetObj);
+        }
+
+        provenance.add(TARGET_KEY, target);
+
+        return gson.toJson(provenance);
+    }
+
+    private String getResourceId(JsonObject resource) {
+        return "";
+    }
+
+    private String getResourceType(JsonObject resource) {
+        return "";
+    }
+
+    private String handleGlStringObservations(String hlaType, String id, Gson gson) {
+        JsonObject observation = new JsonObject();
+        JsonArray sequenceRefs = new JsonArray();
+        JsonObject code = new JsonObject();
+        JsonObject coding = new JsonObject();
+        JsonObject subject = new JsonObject();
+        JsonArray component = new JsonArray();
+        JsonObject componentObj = new JsonObject();
+        JsonObject componentCode = new JsonObject();
+        JsonArray componentCoding = new JsonArray();
+        JsonObject componentCodingObj = new JsonObject();
+        JsonObject valueCodeableConcept = new JsonObject();
+        JsonArray valueCodeableConceptCoding = new JsonArray();
+        JsonObject valueCodeableConceptCodingObj = getValueableCodeableConceptCodingObj(hlaType);
+        JsonObject text = new JsonObject();
+        JsonObject textStatus = new JsonObject();
+
+        textStatus.addProperty(VALUE_KEY, "generated");
+        text.add(STATUS_KEY, textStatus);
+
+        valueCodeableConceptCoding.add(valueCodeableConceptCodingObj);
+        valueCodeableConcept.add(CODING_KEY, valueCodeableConceptCoding);
+
+        componentCodingObj.addProperty(SYSTEM_KEY, "http://loinc.org");
+        componentCodingObj.addProperty(CODE_KEY, "48018-6");
+        componentCodingObj.addProperty(DISPLAY_KEY, "Gene Studied");
+        componentCoding.add(componentCodingObj);
+        componentCode.add(CODING_KEY, componentCoding);
+        componentObj.add(CODE_KEY, componentCode);
+        componentObj.add(VALUE_CODEABLE_CONCEPT_KEY, valueCodeableConcept);
+        component.add(componentObj);
+
+        subject.addProperty(REFERENCE_KEY, id);
+        coding.addProperty(TYPE_KEY, CODE_VALUE);
+        coding.addProperty(SYSTEM_KEY, SYSTEM_VALUE);
+        code.add(CODING_KEY, coding);
+        observation.addProperty(RESOURCE_TYPE_KEY, OBSERVATION_RESOURCE);
+        observation.addProperty(STATUS_KEY, STATUS_VALUE);
+        observation.add(COMPONENT_KEY, component);
+        observation.add(TEXT_KEY, text);
+        observation.add(RELATED_KEY, sequenceRefs);
+        observation.add(CODE_KEY, code);
+
+        return gson.toJson(observation);
+    }
+
+    private String getHla(String input, Gson gson) {
+        JsonObject json = gson.fromJson(input, JsonObject.class);
+        String value = json.get(VALUE_STRING_KEY).getAsString();
+
+        if (value.startsWith("HLA-A")) {
+            return "HLA-A";
+        } else if (value.startsWith("HLA-B")) {
+            return "HLA-B";
+        } else if (value.startsWith("HLA-C")) {
+            return "HLA-C";
+        } else if (value.startsWith("HLA-DR")) {
+            return "HLA-DR";
+        } else if (value.startsWith("HLA-DQ")) {
+            return "HLA-DQ";
+        } else {
+            return "";
+        }
+    }
+
+    private JsonObject getValueableCodeableConceptCodingObj(String value) {
+        JsonObject obj = new JsonObject();
+        String display = "";
+        String displayCode = "";
+
+        switch (value) {
+            case "HLA-A":
+                display = "HLA-A";
+                displayCode = "HGNC:4931";
+                break;
+            case "HLA-B":
+                display = "HLA-B";
+                displayCode = "HGNC:4932";
+                break;
+            case "HLA-C":
+                display = "HLA-C";
+                displayCode = "HGNC:4933";
+                break;
+            case "HLA-DR":
+                display = "HLA-DR";
+                displayCode = "HGNC:4934";
+                break;
+            case "HLA-DQ":
+                display = "HLA-DQ";
+                displayCode = "HGNC:4935";
+                break;
+        }
+
+        obj.addProperty(SYSTEM_KEY, "http://loinc.com");
+        obj.addProperty(CODE_KEY, displayCode);
+        obj.addProperty(DISPLAY_KEY, display);
+
+        return obj;
     }
 
     private String handleDiagnosticReport(Map<String, JsonObject> observations, String diagnosticReport, Gson gson) {
@@ -284,7 +516,15 @@ public class ResourceBundler {
         JsonObject obs = new JsonObject();
         JsonObject resource = observation.get(RESOURCE).getAsJsonObject();
 
-        obs.addProperty(DISPLAY_KEY, resource.get(VALUE_STRING_KEY).getAsString());
+        if (resource.has(VALUE_STRING_KEY)) {
+            obs.addProperty(DISPLAY_KEY, resource.get(VALUE_STRING_KEY).getAsString());
+        } else {
+            JsonObject text = resource.get(TEXT_KEY).getAsJsonObject();
+            JsonObject status = text.get(STATUS_KEY).getAsJsonObject();
+            String value = status.get(VALUE_KEY).getAsString();
+            obs.addProperty(DISPLAY_KEY, value);
+        }
+
         obs.addProperty(REFERENCE_KEY, observation.get(FULL_URL).getAsString());
 
         return obs;
