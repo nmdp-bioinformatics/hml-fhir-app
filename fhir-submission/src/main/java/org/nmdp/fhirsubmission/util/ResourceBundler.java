@@ -39,6 +39,7 @@ import org.nmdp.hmlfhirconvertermodels.domain.fhir.lists.Specimens;
 import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 public class ResourceBundler {
 
@@ -113,7 +114,6 @@ public class ResourceBundler {
             String hmlIdValue = patient.getIdentifier().getValue();
             String hmlRootId = hmlIdValue.split("_")[0];
             String hmlExtensionId = hmlIdValue.split("_")[1];
-            JsonObject comined = new JsonObject();
 
             for (Specimen specimen : specimens.getSpecimens()) {
                 String centerCode = specimen.getIdentifier().getSystem();
@@ -126,6 +126,7 @@ public class ResourceBundler {
                 Observations observations = specimen.getObservations();
                 Sequences sequences = new Sequences();
                 sequences.setSequences(new ArrayList<>());
+                Gson gson = new GsonBuilder().create();
 
                 for (Observation observation : observations.getObservations()) {
                     Sequences seqs = observation.getSequences();
@@ -147,13 +148,33 @@ public class ResourceBundler {
                     bundle.addSequence(specimenId, sequenceJson);
                 }
 
-                comined = combine(bundle, hmlRootId, hmlExtensionId, sampleId, centerCode);
+                for (String hla : getAlleleTypings(observations.getObservations())) {
+                    String procedureRequest = getProcedureRequestResource(hla, "", centerCode, sampleId, gson);
+                    bundle.addProcedureRequest(specimenId, procedureRequest);
+                }
+
+                bundle.getDevices().put(specimenId, handleDevice(gson));
+                bundle.getProvenances().put(specimenId, handleProvenance(new JsonArray(), gson, hmlRootId, hmlExtensionId));
             }
 
-            patientBundle.add(comined);
+            patientBundle.add(combine(bundle, hmlRootId, hmlExtensionId));
         }
 
         return patientBundle;
+    }
+
+    private List<String> getAlleleTypings(List<Observation> observations) {
+        List<String> hlaTypes = new ArrayList<>();
+
+        for (Observation observation : observations) {
+            List<String> glStrings = observation.getGlstrings().getGlstrings()
+                    .stream()
+                    .map(gls -> gls.getValue().substring(0, 5))
+                    .collect(Collectors.toList());
+            hlaTypes.addAll(glStrings);
+        }
+
+        return hlaTypes.stream().distinct().collect(Collectors.toList());
     }
 
     private JsonObject serializeToJsonObject(Gson gson, Object obj, ExecutorService executor) {
@@ -184,13 +205,13 @@ public class ResourceBundler {
         return null;
     }
 
-    private JsonObject combine(BundleSubmission bundleSubmission, String hmlRootId, String hmlExtensionId, String sampleId, String centerCode) {
+    private JsonObject combine(BundleSubmission bundleSubmission, String hmlRootId, String hmlExtensionId) {
         JsonObject bundle = new JsonObject();
         JsonArray entry = new JsonArray();
         Gson gson = new GsonBuilder().create();
         String patientId = generateId();
 
-        handleBundle(bundleSubmission, gson, patientId, entry, hmlRootId, hmlExtensionId,  sampleId, centerCode);
+        handleBundle(bundleSubmission, gson, patientId, entry, hmlRootId, hmlExtensionId);
         bundle.addProperty(RESOURCE_TYPE_KEY, RESOURCE_TYPE_VALUE);
         bundle.addProperty(BUNDLE_TYPE_KEY, BUNDLE_TYPE_VALUE);
         bundle.add(ENTRY, entry);
@@ -198,16 +219,18 @@ public class ResourceBundler {
         return bundle;
     }
 
-    private void handleBundle(BundleSubmission bundle, Gson gson, String patientId, JsonArray entry, String hmlRootId, String hmlExtensionId, String sampleId, String centerCode) {
+    private void handleBundle(BundleSubmission bundle, Gson gson, String patientId, JsonArray entry, String hmlRootId, String hmlExtensionId) {
         for (Map.Entry<String, String> specimen : bundle.getSpecimens().entrySet()) {
             String specimenId = specimen.getKey();
             Map<String, BundleReference> specimenReferences = new HashMap<>();
             Map<String, BundleReference> diagnosticReportReferences = new HashMap<>();
             Map<String, BundleReference> observationReferences = new HashMap<>();
             Map<String, BundleReference> sequenceReferences = new HashMap<>();
+            Map<String, BundleReference> procedureRequestReferences = new HashMap<>();
+            Map<String, BundleReference> deviceReferences = new HashMap<>();
+            Map<String, BundleReference> provenanceReferences = new HashMap<>();
             String deviceId = generateId();
             String provenanceId = generateId();
-            String device = handleDevice(gson);
 
             specimenReferences.put(SUBJECT_KEY, new BundleReference(patientId));
             diagnosticReportReferences.put(SUBJECT_KEY, new BundleReference(patientId));
@@ -215,15 +238,22 @@ public class ResourceBundler {
             sequenceReferences.put(SUBJECT_KEY, new BundleReference(patientId));
             sequenceReferences.put(SPECIMEN_KEY, new BundleReference(specimenId));
             observationReferences.put(SUBJECT_KEY, new BundleReference(patientId));
+            procedureRequestReferences.put(SUBJECT_KEY, new BundleReference(specimenId));
+            deviceReferences.put(SUBJECT_KEY, new BundleReference(specimenId));
+            provenanceReferences.put(SUBJECT_KEY, new BundleReference(specimenId));
 
             entry.add(createJsonObject(bundle.getPatient(), gson, PATIENT_RESOURCE, patientId, new HashMap<>()));
             entry.add(createJsonObject(specimen.getValue(), gson, SPECIMEN_RESOURCE, specimenId, specimenReferences));
             String diagnosticReportId = generateId();
             String diagnosticReport = bundle.getDiangosticReports().getOrDefault(specimenId, null);
             List<String> observations = bundle.getObservations().getOrDefault(specimenId, new ArrayList<>());
+            List<String> procedureRequests = bundle.getProcedureRequests().getOrDefault(specimenId, new ArrayList<>());
+            String device = bundle.getDevices().getOrDefault(specimenId, "");
+            String provenance = bundle.getProvenances().getOrDefault(specimenId, "");
             List<String> sequences = bundle.getSequences().getOrDefault(specimenId, new ArrayList<>());
             Map<String, JsonObject> observationResults = new HashMap<>();
             Map<String, JsonObject> sequenceResults = new HashMap<>();
+            Map<String, JsonObject> procedureRequestResults = new HashMap<>();
 
             for (String sequence : sequences) {
                 loopRelatedResources(entry, SEQUENCE_RESOURCE, sequenceReferences, sequence, gson, sequenceResults);
@@ -234,27 +264,29 @@ public class ResourceBundler {
 
             for (String observation : observations) {
                 String hla = getHla(observation, gson);
-                loopObservations(entry, OBSERVATION_RESOURCE, observationReferences, observation, gson, observationResults, sequenceObservationId);
+                addResource(entry, OBSERVATION_RESOURCE, observationReferences, observation, gson, observationResults, sequenceObservationId);
                 loopGlStringObservations(entry, OBSERVATION_RESOURCE, sequenceReferences, specimenId, hla, gson, observationResults, sequenceObservationId);
-                entry.add(createJsonObject(getProcedureRequestResource(hla, "", centerCode, sampleId, gson), gson, generateId(), PROCEDURE_REQUEST_RESOURCE));
+            }
+
+            for (String procedureRequest : procedureRequests) {
+                addResource(entry, PROCEDURE_REQUEST_RESOURCE, procedureRequestReferences, procedureRequest, gson, procedureRequestResults, specimenId);;
             }
 
             diagnosticReport = handleDiagnosticReport(observationResults, diagnosticReport, gson);
             entry.add(createJsonObject(diagnosticReport, gson, DIAGNOSTIC_REPORT_RESOURCE, diagnosticReportId, diagnosticReportReferences));
-            entry.add(createJsonObject(device, gson, deviceId, DEVICE_RESOURCE));
-            entry.add(createJsonObject(handleProvenance(entry, gson, hmlRootId, hmlExtensionId), gson, provenanceId, PROVENANCE_RESOURCE));
+            entry.add(createJsonObject(device, gson, DEVICE_RESOURCE, deviceId, deviceReferences));
+            entry.add(createJsonObject(provenance, gson, PROVENANCE_RESOURCE, provenanceId, provenanceReferences));
         }
     }
 
-    private void loopObservations(JsonArray entry, String resourceType, Map<String, BundleReference> references, String data,
-                                  Gson gson, Map<String, JsonObject> idMap, String sequenceObservationId) {
+    private void addResource(JsonArray entry, String resourceType, Map<String, BundleReference> references, String data, Gson gson, Map<String, JsonObject> idMap, String refId) {
         String id = generateId();
         JsonObject json = createJsonObject(data, gson, resourceType, id, references);
         JsonObject related = new JsonObject();
         JsonObject target = new JsonObject();
 
         related.addProperty(TYPE_KEY, DERIVED_FROM_VALUE);
-        target.addProperty(REFERENCE_KEY, sequenceObservationId);
+        target.addProperty(REFERENCE_KEY, refId);
 
         related.add(TARGET_KEY, target);
         json.add(RELATED_KEY, related);
@@ -314,13 +346,11 @@ public class ResourceBundler {
         }
 
         subject.addProperty(REFERENCE_KEY, patientId);
-        // coding.addProperty(CODE_KEY, CODE_VALUE);
         coding.addProperty(TYPE_KEY, CODE_VALUE);
         coding.addProperty(SYSTEM_KEY, SYSTEM_VALUE);
         code.add(CODING_KEY, coding);
         observation.addProperty(RESOURCE_TYPE_KEY, OBSERVATION_RESOURCE);
         observation.addProperty(STATUS_KEY, STATUS_VALUE);
-        // observation.add(SUBJECT_KEY, subject);
         observation.add(RELATED_KEY, sequenceRefs);
         observation.add(CODE_KEY, code);
 
@@ -347,10 +377,12 @@ public class ResourceBundler {
         model.addProperty(VALUE_KEY, "HML2FHIR");
         deviceText.add(STATUS_KEY, deviceStatus);
 
+        device.addProperty(RESOURCE_TYPE_KEY, DEVICE_RESOURCE);
         device.add(TEXT_KEY, deviceText);
         device.add(MODEL_KEY, model);
         device.add(VERSION_KEY, version);
         device.add(NOTE_KEY, note);
+        device.addProperty(RESOURCE_TYPE_KEY, DEVICE_RESOURCE);
 
         return gson.toJson(device);
     }
@@ -389,10 +421,12 @@ public class ResourceBundler {
         entity.add(WHAT_IDENTIFIER_KEY, whatIdentifier);
         agent.add(WHO_REFERENCE_KEY, whoReference);
         status.addProperty(VALUE_KEY, "generated");
+        text.add(STATUS_KEY, status);
         recorded.addProperty(VALUE_KEY, getInstant());
         provenance.add(TEXT_KEY, text);
         provenance.add(RECORDED_KEY, recorded);
         provenance.add(AGENT_KEY, agent);
+        provenance.addProperty(RESOURCE_TYPE_KEY, PROVENANCE_RESOURCE);
 
         while (iterator.hasNext()) {
             JsonObject resource = (JsonObject) iterator.next();
@@ -408,6 +442,7 @@ public class ResourceBundler {
         }
 
         provenance.add(TARGET_KEY, target);
+        provenance.addProperty(RESOURCE_TYPE_KEY, PROVENANCE_RESOURCE);
 
         return gson.toJson(provenance);
     }
@@ -544,6 +579,7 @@ public class ResourceBundler {
         procedureRequest.add(INTENT_KEY, procedureRequestIntent);
         procedureRequest.add(CODE_KEY, procedureReqeustCode);
         procedureRequest.add(TEXT_KEY, text);
+        procedureRequest.addProperty(RESOURCE_TYPE_KEY, PROCEDURE_REQUEST_RESOURCE);
 
         return gson.toJson(procedureRequest);
     }
@@ -662,7 +698,7 @@ public class ResourceBundler {
         return json;
     }
 
-    private JsonObject createJsonObject(String str, Gson gson, String id, String resource) {
+    private JsonObject createJsonObject(String str, Gson gson, String id) {
         JsonObject json = new JsonObject();
         JsonObject request = new JsonObject();
 
@@ -674,7 +710,6 @@ public class ResourceBundler {
         JsonObject resourceObj = new JsonObject();
         json.add(RESOURCE, incoming);
         json.addProperty(FULL_URL, id);
-        resourceObj.addProperty(RESOURCE_TYPE_KEY, resource);
         json.add(RESOURCE, resourceObj);
         request.addProperty(REQUEST_METHOD_KEY, REQUEST_METOHD_VALUE);
         json.add(REQUEST_KEY, request);
