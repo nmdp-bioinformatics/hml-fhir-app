@@ -114,5 +114,10 @@
             <groupId>org.nmdp</groupId>
             <artifactId>hml-fhir-mongo</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ca.uhn.hapi.fhir</groupId>
+            <artifactId>hapi-fhir-base</artifactId>
+            <version>3.6.0</version>
+        </dependency>
     </dependencies>
 </project>
