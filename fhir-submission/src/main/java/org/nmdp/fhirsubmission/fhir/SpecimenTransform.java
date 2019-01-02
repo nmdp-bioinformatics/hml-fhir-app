@@ -18,16 +18,29 @@ public class SpecimenTransform {
     private static final PropertyNames PROPERTY_NAMES = new PropertyNames();
     private static final SequenceTransform SEQUENCE_TRANSFORM = new SequenceTransform();
     private static final ProcedureRequestTransform PROCEDURE_REQUEST_TRANSFORM = new ProcedureRequestTransform();
+    private static final OrganizationTransform ORGANIZATION_TRANSFORM = new OrganizationTransform();
+    private static final CenterCodeOrganizationTransform CENTER_CODE_ORGANIZATION_TRANSFORM = new CenterCodeOrganizationTransform();
+    private static final DiagnosticReportOrganizationTransform DIAGNOSTIC_REPORT_ORGANIZATION_TRANSFORM = new DiagnosticReportOrganizationTransform();
+    private static final SequenceObservationTransform SEQUENCE_OBSERVATION_TRANSFORM = new SequenceObservationTransform();
+    private static final ProcedureRequestObservationTransform PROCEDURE_REQUEST_OBSERVATION_TRANSFORM = new ProcedureRequestObservationTransform();
+    private static final DeviceTransform DEVICE_TRANSFORM = new DeviceTransform();
+    private static final DiagnosticReportTransform DIAGNOSTIC_REPORT_TRANSFORM = new DiagnosticReportTransform();
+    private static final ProvenanceTransform PROVENANCE_TRANSFORM = new ProvenanceTransform();
 
-    public PacBioFhir transform(Specimen spc) {
+    public PacBioFhir transform(Specimen spc, String hmlRootId, String supplierOrderId) {
         PacBioFhir fhir = new PacBioFhir();
         String sampleId = spc.getIdentifier().getValue();
         String centerCode = spc.getIdentifier().getSystem();
         Observations sequenceObservations = spc.getObservations();
 
         fhir.specmin = getSpecimen(centerCode, sampleId);
+        fhir.organization = ORGANIZATION_TRANSFORM.getOrganization(hmlRootId);
+        fhir.centerOrganization = CENTER_CODE_ORGANIZATION_TRANSFORM.getCenterCodeOrganization(centerCode);
+        fhir.diagnosticReportOrganization = DIAGNOSTIC_REPORT_ORGANIZATION_TRANSFORM.getDiagnosticReportOrganization();
+        fhir.device = DEVICE_TRANSFORM.getDevice();
 
         String specimenId = fhir.specmin.get(PROPERTY_NAMES.ID_KEY).getAsString();
+        String organizationId = fhir.organization.get(PROPERTY_NAMES.ID_KEY).getAsString();
 
         fhir.sequences = sequenceObservations.getObservations()
                 .stream()
@@ -40,8 +53,36 @@ public class SpecimenTransform {
                 .filter(Objects::nonNull)
                 .map(observation ->
                         PROCEDURE_REQUEST_TRANSFORM.getProcedureRequest(sampleId, centerCode,
-                                getHlaTypeFromObservation(observation), "Supplier OrderLine ID"))
+                                getHlaTypeFromObservation(observation), supplierOrderId))
                 .collect(Collectors.toList());
+        fhir.sequenceObservations = fhir.sequences
+                .stream()
+                .filter(Objects::nonNull)
+                .map(seq -> SEQUENCE_OBSERVATION_TRANSFORM.getSequenceObservation(
+                        seq,
+                        centerCode,
+                        specimenId,
+                        organizationId,
+                        getProcedureRequestIdByHla(getHla(seq), fhir.procedureRequests),
+                        getHla(seq))
+                )
+                .collect(Collectors.toList());
+        fhir.procedureRequestObservations = fhir.procedureRequests
+                .stream()
+                .filter(Objects::nonNull)
+                .map(pr -> PROCEDURE_REQUEST_OBSERVATION_TRANSFORM.getObservation(
+                    getFullGlString(sequenceObservations, getProcedureHla(pr)),
+                        getProcedureRequestIdByHla(getProcedureHla(pr), fhir.procedureRequests),
+                        getProcedureHla(pr),
+                        centerCode,
+                        organizationId,
+                        specimenId,
+                        getObservationIdsFromHla(fhir.sequenceObservations, getProcedureHla(pr)),
+                        sampleId
+                ))
+                .collect(Collectors.toList());
+        fhir.diagnosticReport = DIAGNOSTIC_REPORT_TRANSFORM.getDiagnosticReport(sampleId, centerCode, fhir);
+        fhir.provenance = PROVENANCE_TRANSFORM.getProvenance(fhir, hmlRootId, supplierOrderId);
 
         return fhir;
     }
@@ -58,6 +99,57 @@ public class SpecimenTransform {
         specimen.addProperty(PROPERTY_NAMES.ID_KEY, FhirGuid.genereateUrn());
 
         return specimen;
+    }
+
+    private String getObservationIdsFromHla(List<JsonObject> observations, String hla) {
+        return observations.stream()
+                .filter(Objects::nonNull)
+                .filter(obs -> obs.get(PROPERTY_NAMES.COMPONENT_KEY).getAsJsonArray().get(0).getAsJsonObject()
+                                    .get(PROPERTY_NAMES.VALUE_CODEABLE_CONCEPT_KEY).getAsJsonObject()
+                                    .get(PROPERTY_NAMES.CODING_KEY).getAsJsonArray().get(0).getAsJsonObject()
+                                    .get(PROPERTY_NAMES.DISPLAY_KEY).getAsString().equals(hla))
+                .collect(Collectors.toList())
+                    .stream()
+                    .map(obs -> obs.get(PROPERTY_NAMES.ID_KEY).getAsString())
+                    .collect(Collectors.joining(","));
+    }
+
+    private String getFullGlString(Observations observations, String hla) {
+        return observations.getObservations()
+                .stream()
+                .filter(Objects::nonNull)
+                .filter(obs -> obs.getGlstrings().getGlstrings().stream()
+                    .filter(Objects::nonNull)
+                    .map(gl -> gl.getValue())
+                    .collect(Collectors.toList()).get(0).startsWith(hla))
+                .findFirst().get().getGlstrings().getGlstrings().get(0).getValue();
+    }
+
+    private String getProcedureHla(JsonObject procedure) {
+        return procedure.get(PROPERTY_NAMES.CODE_KEY).getAsJsonObject()
+                .get(PROPERTY_NAMES.CODING_KEY).getAsJsonArray().get(0).getAsJsonObject()
+                .get(PROPERTY_NAMES.DISPLAY_KEY).getAsString().substring(0, 5);
+    }
+
+    private String getHla(JsonObject seq) {
+        return seq.get(PROPERTY_NAMES.REFERENCE_SEQ_KEY).getAsJsonObject()
+                .get(PROPERTY_NAMES.REFERENCE_SEQ_ID_KEY).getAsJsonObject()
+                .get(PROPERTY_NAMES.TEXT_KEY).getAsString().split("\\*")[0];
+    }
+
+    private String getProcedureRequestIdByHla(String hla, List<JsonObject> procedureRequests) {
+        JsonObject procedureRequest = procedureRequests
+                .stream()
+                .filter(Objects::nonNull)
+                .filter(pr -> pr
+                        .get(PROPERTY_NAMES.CODE_KEY).getAsJsonObject()
+                        .get(PROPERTY_NAMES.CODING_KEY).getAsJsonArray()
+                        .get(0).getAsJsonObject()
+                        .get(PROPERTY_NAMES.DISPLAY_KEY).getAsString().startsWith(hla))
+                .findFirst()
+                .get();
+
+        return procedureRequest.get(PROPERTY_NAMES.ID_KEY).getAsString();
     }
 
     private String getHlaTypeFromObservation(Observation observation) {

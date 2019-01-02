@@ -76,4 +76,11 @@ public class PropertyNames {
     public final static String WINDOW_START_KEY = "windowStart";
     public final static String _WINDOW_START_KEY = "_windowStart";
     public final static String WINDOW_END_KEY = "windowEnd";
+    public final static String BASED_ON_KEY = "basedOn";
+    public final static String CATEGORY_KEY = "category";
+    public final static String EFFECTIVE_DATE_TIME_KEY = "effectiveDateTime";
+    public final static String PERFORMER_KEY = "performer";
+    public final static String ENTITY_KEY = "entity";
+    public final static String ACTOR_KEY = "actor";
+    public final static String RESOURCE_KEY = "resource";
 }

@@ -1,7 +1,6 @@
 package org.nmdp.fhirsubmission.util;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import org.nmdp.fhirsubmission.fhir.PacBioFhir;
 import org.nmdp.fhirsubmission.fhir.SpecimenTransform;
 import org.nmdp.hmlfhirconvertermodels.domain.fhir.FhirMessage;
@@ -24,30 +23,33 @@ public class PacBioResourceBundler extends ResourceBundler {
     @Override
     public JsonArray serialize(FhirMessage fhir) {
         Patients patients = fhir.getPatients();
-        List<JsonObject> fhirPatients = patients.getPatients()
+        List<JsonArray> fhirPatients = patients.getPatients()
                 .stream()
                 .filter(Objects::nonNull)
                 .map(patient -> map(patient))
                 .collect(Collectors.toList());
-        JsonArray fhirBundle = new JsonArray();
 
-        fhirPatients.stream().forEach(patient -> fhirBundle.add(patient));
-
-        return fhirBundle;
+        return fhirPatients.get(0);
     }
 
-    private JsonObject map(Patient patient) {
+    private JsonArray map(Patient patient) {
+        String[] hmlRootIds = patient.getIdentifier().getValue().split("_");
+        JsonArray bundles = new JsonArray();
+
         List<PacBioFhir> specimens = patient.getSpecimens()
                 .getSpecimens()
                 .stream()
                 .filter(Objects::nonNull)
-                .map(specimen -> map(specimen))
+                .map(specimen -> map(specimen, hmlRootIds[0], hmlRootIds[1]))
                 .collect(Collectors.toList());
 
-        return new JsonObject();
+        specimens.stream()
+                .forEach(spec -> bundles.add(spec.bundle()));
+
+        return bundles;
     }
 
-    private PacBioFhir map(Specimen specimen) {
-        return SPECIMEN_TRANSFORM.transform(specimen);
+    private PacBioFhir map(Specimen specimen, String rootId, String supplierId) {
+        return SPECIMEN_TRANSFORM.transform(specimen, rootId, supplierId);
     }
 }
