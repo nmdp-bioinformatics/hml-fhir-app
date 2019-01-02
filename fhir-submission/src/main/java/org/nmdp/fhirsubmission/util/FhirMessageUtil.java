@@ -66,7 +66,8 @@ public class FhirMessageUtil {
     public org.nmdp.hmlfhirmongo.models.FhirSubmission submit(FhirMessage fhirMessage) throws Exception {
         org.nmdp.hmlfhirmongo.models.FhirSubmission fhirSubmission = new org.nmdp.hmlfhirmongo.models.FhirSubmission();
         final String bundleUrl = URL + BUNDLE + QUERY_STRING;
-        ResourceBundler bundler = new ResourceBundler();
+        // ResourceBundler bundler = new ResourceBundler();
+        PacBioResourceBundler bundler = new PacBioResourceBundler();
         JsonArray bundle = bundler.serialize(fhirMessage);
         List<String> jsonBundle = new ArrayList<>();
         Iterator bundleIterator = bundle.iterator();
