@@ -25,7 +25,7 @@
         <spring-framework-version>4.3.5.RELEASE</spring-framework-version>
         <nmdp-models-version>2.0.0</nmdp-models-version>
         <slf4j-version>1.7.6</slf4j-version>
-        <jackson-xml-version>2.8.4</jackson-xml-version>
+        <jackson-xml-version>[2.8.11.1,)</jackson-xml-version>
     </properties>
 
     <build>
