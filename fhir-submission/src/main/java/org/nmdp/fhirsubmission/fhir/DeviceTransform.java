@@ -15,7 +15,7 @@ public class DeviceTransform {
         JsonObject device = new JsonObject();
 
         device.addProperty(PROPERTY_NAMES.RESOURCE_TYPE_KEY, "Device");
-        device.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
+//        device.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
         device.add(PROPERTY_NAMES.TEXT_KEY, getText());
         device.addProperty(PROPERTY_NAMES.MODEL_KEY, "HML2FHIR");
         device.addProperty(PROPERTY_NAMES.VERSION_KEY, "1.0");

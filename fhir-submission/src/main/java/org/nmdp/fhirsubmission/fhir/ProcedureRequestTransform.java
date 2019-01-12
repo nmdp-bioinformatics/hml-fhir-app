@@ -15,7 +15,7 @@ public class ProcedureRequestTransform {
         JsonObject procedureRequest = new JsonObject();
 
         procedureRequest.addProperty(PROPERTY_NAMES.RESOURCE_TYPE_KEY, "ProcedureRequest");
-        procedureRequest.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
+//        procedureRequest.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
         procedureRequest.add(PROPERTY_NAMES.TEXT_KEY, getText(hla, centerCode, sampleId));
         procedureRequest.add(PROPERTY_NAMES.IDENTIFIER_KEY, getIdentifiers(supplierOrderLineId));
         procedureRequest.addProperty(PROPERTY_NAMES.STATUS_KEY, "completed");

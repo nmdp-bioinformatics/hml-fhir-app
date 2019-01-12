@@ -24,10 +24,8 @@ package org.nmdp.hmlfhirconverterapi.service;
  * > http://www.opensource.org/licenses/lgpl-license.php
  */
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
+import io.swagger.util.Json;
 import org.apache.log4j.Logger;
 
 import org.bson.Document;
@@ -47,14 +45,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.Yaml;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Service
 public class FhirServiceImpl extends MongoServiceBase implements FhirService {
@@ -151,25 +149,80 @@ public class FhirServiceImpl extends MongoServiceBase implements FhirService {
     }
 
     @Override
-    public String getJsonBundle(String id) {
+    public ByteArrayOutputStream getJsonBundle(String id) throws IOException {
         try {
             String json = Serializer.toJson(getBundle(id));
             JsonObject obj = gson.fromJson(json, JsonObject.class);
-            JsonArray array = obj.getAsJsonArray("submissionResult");
-            String str = gson.toJson(array);
+            JsonArray array = obj.get("submissionResult").getAsJsonArray();
 
-            String newStr = str
-                    .replace("\\\"", "\"")
-                    .replace("\"{", "{")
-                    .replace("}\"", "}");
-
-            JsonArray newArray = gson.fromJson(newStr, JsonArray.class);
-
-            return gson.toJson(newArray);
+            return toStream(Arrays.asList(array));
         } catch (Exception ex) {
             LOG.error(ex);
             return null;
         }
+    }
+
+    private ByteArrayOutputStream toStream(List<JsonArray> jsonArrays) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        for (JsonArray json : jsonArrays) {
+            Iterator iterator = json.iterator();
+
+            try (ZipOutputStream zipOutputStream = new ZipOutputStream(byteArrayOutputStream)) {
+                while (iterator.hasNext()) {
+                    JsonArray inner = (JsonArray) iterator.next();
+                    Iterator innerIterator = inner.iterator();
+
+                    while (innerIterator.hasNext()) {
+                        String s = innerIterator.next().toString();
+                        JsonPrimitive jsonPrimitive = gson.fromJson(s, JsonPrimitive.class);
+                        JsonObject obj = gson.fromJson(jsonPrimitive.getAsString(), JsonObject.class);
+                        String str = gson.toJson(obj);
+                        String newStr = str
+                                .replace("\\\"", "\"")
+                                .replace("\"{", "{")
+                                .replace("}\"", "}");
+                        ZipEntry zipEntry = new ZipEntry(String.format("%s.fhir.json", getFileName(obj)));
+
+                        zipOutputStream.putNextEntry(zipEntry);
+                        zipOutputStream.write(newStr.getBytes());
+                        zipOutputStream.closeEntry();
+                    }
+                }
+            }
+        }
+
+        return byteArrayOutputStream;
+    }
+
+    private String getFileName(JsonObject obj) {
+        JsonArray entry = obj.get("entry").getAsJsonArray();
+        JsonObject specimen = getSpecimen(entry);
+
+        if (specimen == null) {
+            return "file";
+        }
+
+        JsonObject resource = specimen.get("resource").getAsJsonObject();
+        JsonArray identifier = resource.get("identifier").getAsJsonArray();
+        JsonObject id = identifier.get(0).getAsJsonObject();
+
+        return id.get("value").getAsString();
+    }
+
+    private JsonObject getSpecimen(JsonArray array) {
+        Iterator iterator = array.iterator();
+
+        while (iterator.hasNext()) {
+            JsonObject obj = (JsonObject) iterator.next();
+            JsonObject resource = obj.get("resource").getAsJsonObject();
+
+            if (resource.get("resourceType").getAsString().equals("Specimen")) {
+                return obj;
+            }
+        }
+
+        return null;
     }
 
     private Document getBundle(String id) throws Exception {

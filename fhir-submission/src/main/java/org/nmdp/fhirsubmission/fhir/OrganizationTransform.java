@@ -15,7 +15,7 @@ public class OrganizationTransform {
         JsonObject organization = new JsonObject();
 
         organization.addProperty(PROPERTY_NAMES.RESOURCE_TYPE_KEY, "Organization");
-        organization.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
+//        organization.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
         organization.add(PROPERTY_NAMES.TEXT_KEY, getText(rootId));
         organization.add(PROPERTY_NAMES.IDENTIFIER_KEY, getIdentifier(rootId));
         organization.addProperty(PROPERTY_NAMES.ID_KEY, FhirGuid.genereateUrn());

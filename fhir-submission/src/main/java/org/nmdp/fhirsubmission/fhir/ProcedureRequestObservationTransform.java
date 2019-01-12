@@ -21,10 +21,10 @@ public class ProcedureRequestObservationTransform {
         String glString1 = glStrings[0];
         String glString2 = glStrings[1];
         String obs1Id = observationIds[0];
-        String obs2Id = observationIds[1];
+        String obs2Id = observationIds.length >= 2 ? observationIds[1] : null;
 
         observation.addProperty(PROPERTY_NAMES.RESOURCE_TYPE_KEY, "Observation");
-        observation.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
+//        observation.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
         observation.add(PROPERTY_NAMES.TEXT_KEY, getText(fullGlString));
         observation.add(PROPERTY_NAMES.BASED_ON_KEY, getBasedOn(procedureRequestId, hla, centerCode, sampleId));
         observation.addProperty(PROPERTY_NAMES.STATUS_KEY, "final");
@@ -189,12 +189,15 @@ public class ProcedureRequestObservationTransform {
         target1.addProperty(PROPERTY_NAMES.DISPLAY_KEY, String.format("%s allele", glString1));
         obj1.addProperty(PROPERTY_NAMES.TYPE_KEY, "derived-from");
         obj1.add(PROPERTY_NAMES.TARGET_KEY, target1);
-        target2.addProperty(PROPERTY_NAMES.REFERENCE_KEY, seq2Id);
-        target2.addProperty(PROPERTY_NAMES.DISPLAY_KEY, String.format("%s allele", glString2));
-        obj2.addProperty(PROPERTY_NAMES.TYPE_KEY, "derived-from");
-        obj2.add(PROPERTY_NAMES.TARGET_KEY, target2);
         related.add(obj1);
-        related.add(obj2);
+
+        if (glString2 != null && seq2Id != null) {
+            target2.addProperty(PROPERTY_NAMES.REFERENCE_KEY, seq2Id);
+            target2.addProperty(PROPERTY_NAMES.DISPLAY_KEY, String.format("%s allele", glString2));
+            obj2.addProperty(PROPERTY_NAMES.TYPE_KEY, "derived-from");
+            obj2.add(PROPERTY_NAMES.TARGET_KEY, target2);
+            related.add(obj2);
+        }
 
         return  related;
     }

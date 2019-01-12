@@ -15,7 +15,7 @@ public class SequenceTransform {
         JsonObject sequence = new JsonObject();
 
         sequence.addProperty(PROPERTY_NAMES.RESOURCE_TYPE_KEY, "Sequence");
-        sequence.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
+//        sequence.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
         sequence.add(PROPERTY_NAMES.TEXT_KEY, getText(glString));
         sequence.addProperty(PROPERTY_NAMES.TYPE_KEY, "dna");
         sequence.addProperty(PROPERTY_NAMES.COORDINATE_SYSTEM, 0);

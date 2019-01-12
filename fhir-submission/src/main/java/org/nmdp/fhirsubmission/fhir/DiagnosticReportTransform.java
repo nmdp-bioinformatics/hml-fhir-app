@@ -18,7 +18,7 @@ public class DiagnosticReportTransform {
         JsonObject diagnosticReport = new JsonObject();
 
         diagnosticReport.addProperty(PROPERTY_NAMES.RESOURCE_TYPE_KEY, "DiagnosticReport");
-        diagnosticReport.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
+//        diagnosticReport.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
         diagnosticReport.add(PROPERTY_NAMES.TEXT_KEY, getText(centerCode, sampleId));
         diagnosticReport.add(PROPERTY_NAMES.BASED_ON_KEY, getBasedOn(fhir.procedureRequests, sampleId, centerCode));
         diagnosticReport.addProperty(PROPERTY_NAMES.STATUS_KEY, "final");

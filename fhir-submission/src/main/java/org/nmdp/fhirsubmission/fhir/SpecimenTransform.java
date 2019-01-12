@@ -92,7 +92,7 @@ public class SpecimenTransform {
         JsonObject specimen = new JsonObject();
 
         specimen.addProperty(PROPERTY_NAMES.RESOURCE_TYPE_KEY, "Specimen");
-        specimen.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
+//        specimen.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
         specimen.add(PROPERTY_NAMES.TEXT_KEY, getText(sampleId, centerCode));
         specimen.add(PROPERTY_NAMES.IDENTIFIER_KEY, getIdentifiers(sampleId, centerCode));
         specimen.add(PROPERTY_NAMES.SUBJECT_KEY, getSubject(sampleId, centerCode));
@@ -188,6 +188,12 @@ public class SpecimenTransform {
         Map<String, Integer> map = new HashMap<>();
         Integer i = 0;
 
+        if (observation.getSequences().getSequences().size() <= 1) {
+            map.put(observation.getGlstrings().getGlstrings().get(0).getValue(), i);
+
+            return map;
+        }
+
         for (String glString : observation.getGlstrings().getGlstrings().get(0).getValue().split("\\+")) {
             map.put(glString, i);
             i++;
@@ -197,9 +203,13 @@ public class SpecimenTransform {
     }
 
     private String getDna(Observation observation, Integer index) {
-        return observation.getSequences()
-                .getSequences().get(index)
-                .getObservedSeq();
+        try {
+            return observation.getSequences()
+                    .getSequences().get(index)
+                    .getObservedSeq();
+        } catch (Exception ex) {
+            return "";
+        }
     }
 
     private JsonArray getIdentifiers(String sampleId, String centerCode) {

@@ -17,7 +17,7 @@ public class SequenceObservationTransform extends ProcedureRequestObservationTra
         String glString = getGlStringFromSequence(sequence);
 
         observation.addProperty(PROPERTY_NAMES.RESOURCE_TYPE_KEY, "Observation");
-        observation.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
+//        observation.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
         observation.add(PROPERTY_NAMES.TEXT_KEY, getText(glString));
         observation.add(PROPERTY_NAMES.BASED_ON_KEY, getBasedOn(procedureRequestId, hla, centerCode, sampleId));
         observation.addProperty(PROPERTY_NAMES.STATUS_KEY, "final");

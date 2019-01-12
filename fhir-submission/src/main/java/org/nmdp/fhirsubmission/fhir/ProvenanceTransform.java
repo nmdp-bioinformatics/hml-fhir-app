@@ -17,7 +17,7 @@ public class ProvenanceTransform {
         JsonObject provenance = new JsonObject();
 
         provenance.addProperty(PROPERTY_NAMES.RESOURCE_TYPE_KEY, "Provenance");
-        provenance.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
+//        provenance.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
         provenance.add(PROPERTY_NAMES.TARGET_KEY, getTargets(pacBioFhir));
         provenance.addProperty(PROPERTY_NAMES.RECORDED_KEY, getDateTime());;
         provenance.add(PROPERTY_NAMES.AGENT_KEY, getAgent(pacBioFhir.device));

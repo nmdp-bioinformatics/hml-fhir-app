@@ -14,7 +14,7 @@ public class DiagnosticReportOrganizationTransform extends OrganizationTransform
         JsonObject organiztion = new JsonObject();
 
         organiztion.addProperty(PROPERTY_NAMES.RESOURCE_TYPE_KEY, "Organization");
-        organiztion.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
+//        organiztion.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
         organiztion.add(PROPERTY_NAMES.TEXT_KEY, getDiagnosticReportText());
         organiztion.add(PROPERTY_NAMES.IDENTIFIER_KEY, getIdentifier("501"));
         organiztion.addProperty(PROPERTY_NAMES.ID_KEY, FhirGuid.genereateUrn());
