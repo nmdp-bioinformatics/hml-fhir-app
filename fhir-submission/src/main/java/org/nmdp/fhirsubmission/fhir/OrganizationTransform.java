@@ -44,7 +44,7 @@ public class OrganizationTransform {
         JsonObject text = new JsonObject();
 
         text.addProperty(PROPERTY_NAMES.STATUS_KEY, "generated");
-        text.addProperty(PROPERTY_NAMES.DIV_KEY, String.format("hmlid root %s", rootId));
+        text.addProperty(PROPERTY_NAMES.DIV_KEY, String.format("<div xmlns=\"http://www.w3.org/1999/xhtml\">hmlid root %s</div>", rootId));
 
         return text;
     }

@@ -11,22 +11,23 @@ public class SequenceObservationTransform extends ProcedureRequestObservationTra
 
     private static final PropertyNames PROPERTY_NAMES = new PropertyNames();
 
-    public JsonObject getSequenceObservation(JsonObject sequence, String centerCode, String specimenId, String organizationId, String procedureRequestId, String hla) {
+    public JsonObject getSequenceObservation(JsonObject sequence, String sampleId, String centerCode,
+        String specimenId, String organizationId, String procedureRequestId, String hla) {
         JsonObject observation = new JsonObject();
         String glString = getGlStringFromSequence(sequence);
 
         observation.addProperty(PROPERTY_NAMES.RESOURCE_TYPE_KEY, "Observation");
         observation.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
         observation.add(PROPERTY_NAMES.TEXT_KEY, getText(glString));
-        observation.add(PROPERTY_NAMES.BASED_ON_KEY, getBasedOn(procedureRequestId, hla, centerCode, specimenId));
+        observation.add(PROPERTY_NAMES.BASED_ON_KEY, getBasedOn(procedureRequestId, hla, centerCode, sampleId));
         observation.addProperty(PROPERTY_NAMES.STATUS_KEY, "final");
         observation.add(PROPERTY_NAMES.CODE_KEY, getCode());
-        observation.add(PROPERTY_NAMES.SUBJECT_KEY, getSubject(specimenId, centerCode));
+        observation.add(PROPERTY_NAMES.SUBJECT_KEY, getSubject(sampleId, centerCode));
         observation.addProperty(PROPERTY_NAMES.EFFECTIVE_DATE_TIME_KEY, getDateTime());
         observation.add(PROPERTY_NAMES.PERFORMER_KEY, getPerformer(organizationId));
         observation.add(PROPERTY_NAMES.VALUE_CODEABLE_CONCEPT_KEY, getValueCodeableConcept(glString));
         observation.add(PROPERTY_NAMES.METHOD_KEY, getMethod(hla));
-        observation.add(PROPERTY_NAMES.SPECIMEN_KEY, getSpecimen(specimenId, centerCode, specimenId));
+        observation.add(PROPERTY_NAMES.SPECIMEN_KEY, getSpecimen(specimenId, centerCode, sampleId));
         observation.add(PROPERTY_NAMES.RELATED_KEY, getRelated(glString, getSequenceId(sequence)));
         observation.add(PROPERTY_NAMES.COMPONENT_KEY, getComponent(hla));
         observation.addProperty(PROPERTY_NAMES.ID_KEY, FhirGuid.genereateUrn());
@@ -53,7 +54,7 @@ public class SequenceObservationTransform extends ProcedureRequestObservationTra
         _status.add(PROPERTY_NAMES._FHIR_COMMENTS_KEY, _fhirComments);
         text.addProperty(PROPERTY_NAMES.STATUS_KEY, "generated");
         text.add(PROPERTY_NAMES._STATUS_KEY, _status);
-        text.addProperty(PROPERTY_NAMES.DIV_KEY, String.format("Observation for %s allele", glString));
+        text.addProperty(PROPERTY_NAMES.DIV_KEY, String.format("<div xmlns=\"http://www.w3.org/1999/xhtml\">Observation for %s allele</div>", glString));
 
         return text;
     }

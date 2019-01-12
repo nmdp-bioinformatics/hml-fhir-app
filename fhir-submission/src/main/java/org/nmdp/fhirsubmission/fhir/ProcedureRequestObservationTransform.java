@@ -26,7 +26,7 @@ public class ProcedureRequestObservationTransform {
         observation.addProperty(PROPERTY_NAMES.RESOURCE_TYPE_KEY, "Observation");
         observation.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, getFhirComments());
         observation.add(PROPERTY_NAMES.TEXT_KEY, getText(fullGlString));
-        observation.add(PROPERTY_NAMES.BASED_ON_KEY, getBasedOn(procedureRequestId, hla, centerCode, specimenId));
+        observation.add(PROPERTY_NAMES.BASED_ON_KEY, getBasedOn(procedureRequestId, hla, centerCode, sampleId));
         observation.addProperty(PROPERTY_NAMES.STATUS_KEY, "final");
         observation.add(PROPERTY_NAMES.CATEGORY_KEY, getCategory());
         observation.add(PROPERTY_NAMES.CODE_KEY, getCode(hla));
@@ -52,7 +52,7 @@ public class ProcedureRequestObservationTransform {
         _status.add(PROPERTY_NAMES._FHIR_COMMENTS_KEY, _fhirComments);
         text.addProperty(PROPERTY_NAMES.STATUS_KEY, "generated");
         text.add(PROPERTY_NAMES._STATUS_KEY, _status);
-        text.addProperty(PROPERTY_NAMES.DIV_KEY, glString);
+        text.addProperty(PROPERTY_NAMES.DIV_KEY, String.format("<div xmlns=\"http://www.w3.org/1999/xhtml\">%s</div>", glString));
 
         return text;
     }
@@ -252,9 +252,9 @@ public class ProcedureRequestObservationTransform {
             case "HLA-A":
                 return "84413-4";
             case "HLA-B":
-                return "84413-5";
+                return "84413-4";
             case "HLA-C":
-                return "84413-6";
+                return "84413-4";
             case "HLA-DR":
                 return "84413-7";
             case "HLA-DQ":

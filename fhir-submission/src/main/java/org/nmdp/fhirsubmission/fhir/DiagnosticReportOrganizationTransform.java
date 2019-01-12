@@ -26,7 +26,7 @@ public class DiagnosticReportOrganizationTransform extends OrganizationTransform
         JsonObject text = new JsonObject();
 
         text.addProperty(PROPERTY_NAMES.STATUS_KEY, "generated");
-        text.addProperty(PROPERTY_NAMES.DIV_KEY, "reporting-center-id 501");
+        text.addProperty(PROPERTY_NAMES.DIV_KEY, "<div xmlns=\"http://www.w3.org/1999/xhtml\">reporting-center-id 501</div>");
 
         return text;
     }

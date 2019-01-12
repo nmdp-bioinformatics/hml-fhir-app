@@ -2,7 +2,6 @@ package org.nmdp.fhirsubmission.fhir;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import io.swagger.util.Json;
 
 /**
  * hml-fhir-app
@@ -47,7 +46,7 @@ public class DeviceTransform {
         JsonObject text = new JsonObject();
 
         text.addProperty(PROPERTY_NAMES.STATUS_KEY, "generated");
-        text.addProperty(PROPERTY_NAMES.DIV_KEY, "software device: HML2FHIR");
+        text.addProperty(PROPERTY_NAMES.DIV_KEY, "<div xmlns=\"http://www.w3.org/1999/xhtml\">software device: HML2FHIR</div>");
 
         return text;
     }

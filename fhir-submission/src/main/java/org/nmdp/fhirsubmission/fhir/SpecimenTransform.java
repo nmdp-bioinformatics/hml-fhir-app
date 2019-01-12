@@ -60,6 +60,7 @@ public class SpecimenTransform {
                 .filter(Objects::nonNull)
                 .map(seq -> SEQUENCE_OBSERVATION_TRANSFORM.getSequenceObservation(
                         seq,
+                        sampleId,
                         centerCode,
                         specimenId,
                         organizationId,
@@ -263,7 +264,7 @@ public class SpecimenTransform {
         JsonObject text = new JsonObject();
 
         text.addProperty(PROPERTY_NAMES.STATUS_KEY, "generated");
-        text.addProperty(PROPERTY_NAMES.DIV_KEY, String.format("buccal swab: %s-%s", centerCode, sampleId));
+        text.addProperty(PROPERTY_NAMES.DIV_KEY, String.format("<div xmlns=\"http://www.w3.org/1999/xhtml\">buccal swab: %s^%s</div>", centerCode, sampleId));
 
         return text;
     }

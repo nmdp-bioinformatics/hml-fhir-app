@@ -54,10 +54,30 @@ public class PacBioFhir {
         return bundle;
     }
 
+    private String getId(JsonObject resource) {
+        String id = resource.get(PROPERTY_NAMES.ID_KEY).getAsString();
+
+        return id;
+    }
+
+    private JsonObject createRequest(String resource) {
+        JsonObject request = new JsonObject();
+
+        request.addProperty(PROPERTY_NAMES.METHOD_KEY, "POST");
+        request.addProperty(PROPERTY_NAMES.URL_KEY, resource);
+
+        return request;
+    }
+
     private JsonObject createResource(JsonObject json) {
         JsonObject resource = new JsonObject();
+        String id = getId(json);
+        String resourceType = json.get(PROPERTY_NAMES.RESOURCE_TYPE_KEY).getAsString();
 
         resource.add(PROPERTY_NAMES.RESOURCE_KEY, json);
+        resource.add(PROPERTY_NAMES.REQUEST_KEY, createRequest(resourceType));
+        resource.addProperty(PROPERTY_NAMES.FULL_URL, id);
+        resource.remove(PROPERTY_NAMES.ID_KEY);
 
         return resource;
     }

@@ -26,7 +26,7 @@ public class CenterCodeOrganizationTransform extends OrganizationTransform {
         JsonObject text = new JsonObject();
 
         text.addProperty(PROPERTY_NAMES.STATUS_KEY, "generated");
-        text.addProperty(PROPERTY_NAMES.DIV_KEY, String.format("sample center-code %s", centerCode));
+        text.addProperty(PROPERTY_NAMES.DIV_KEY, String.format("<div xmlns=\"http://www.w3.org/1999/xhtml\">sample center-code %s</div>", centerCode));
 
         return text;
     }

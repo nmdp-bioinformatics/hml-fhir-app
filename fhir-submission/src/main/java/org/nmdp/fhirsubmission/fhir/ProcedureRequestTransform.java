@@ -48,7 +48,7 @@ public class ProcedureRequestTransform {
         JsonObject text = new JsonObject();
 
         text.addProperty(PROPERTY_NAMES.STATUS_KEY, "generated");
-        text.addProperty(PROPERTY_NAMES.DIV_KEY, String.format("%s typing for sample: %s-%s", hla, centerCode, sampleId));
+        text.addProperty(PROPERTY_NAMES.DIV_KEY, String.format("<div xmlns=\"http://www.w3.org/1999/xhtml\">%s typing for sample: %s-%s</div>", hla, centerCode, sampleId));
 
         return text;
     }
@@ -82,7 +82,13 @@ public class ProcedureRequestTransform {
 
         obj.addProperty(PROPERTY_NAMES.SYSTEM_KEY, "http://loinc.org");
         obj.addProperty(PROPERTY_NAMES.CODE_KEY, getHlaCode(hla));
-        obj.addProperty(PROPERTY_NAMES.DISPLAY_KEY, String.format("%s [Type] by High Resolution", hla));
+
+        if (!hla.equals("HLA-C")) {
+            obj.addProperty(PROPERTY_NAMES.DISPLAY_KEY, String.format("%s [Type] by High Resolution", hla));
+        } else {
+            obj.addProperty(PROPERTY_NAMES.DISPLAY_KEY, String.format("%s [Type] by High resolution typing", hla));
+        }
+
         coding.add(obj);
         code.add(PROPERTY_NAMES.CODING_KEY, coding);
 
@@ -94,9 +100,9 @@ public class ProcedureRequestTransform {
             case "HLA-A":
                 return "57290-9";
             case "HLA-B":
-                return "57290-8";
+                return "57291-7";
             case "HLA-C":
-                return "57290-7";
+                return "77636-9";
         }
 
         return "";

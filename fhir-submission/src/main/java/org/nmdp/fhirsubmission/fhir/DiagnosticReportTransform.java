@@ -106,7 +106,7 @@ public class DiagnosticReportTransform {
         JsonArray coding = new JsonArray();
         JsonObject obj = new JsonObject();
 
-        obj.addProperty(PROPERTY_NAMES.SYSTEM_KEY, "http://hl7.org/fhir/v2/9974");
+        obj.addProperty(PROPERTY_NAMES.SYSTEM_KEY, "http://hl7.org/fhir/v2/0074");
         obj.addProperty(PROPERTY_NAMES.CODE_KEY, "GE");
         obj.addProperty(PROPERTY_NAMES.DISPLAY_KEY, "Genetics");
         coding.add(obj);
@@ -124,7 +124,7 @@ public class DiagnosticReportTransform {
         _status.add(PROPERTY_NAMES._FHIR_COMMENTS_KEY, _fhirComments);
         text.addProperty(PROPERTY_NAMES.STATUS_KEY, "generated");
         text.add(PROPERTY_NAMES._STATUS_KEY, _status);
-        text.addProperty(PROPERTY_NAMES.DIV_KEY, String.format("HLA-A,-B,-C genotyping report for sample id=%s center-code=%s", sampleId, centerCode));
+        text.addProperty(PROPERTY_NAMES.DIV_KEY, String.format("<div xmlns=\"http://www.w3.org/1999/xhtml\">HLA-A,-B,-C genotyping report for sample id=%s center-code=%s</div>", sampleId, centerCode));
 
         return text;
     }
