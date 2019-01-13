@@ -1,6 +1,7 @@
 package org.nmdp.fhirsubmission.fhir;
 
 import com.google.gson.JsonObject;
+import org.nmdp.fhirsubmission.util.StringEncoding;
 
 /**
  * hml-fhir-app
@@ -26,7 +27,7 @@ public class DiagnosticReportOrganizationTransform extends OrganizationTransform
         JsonObject text = new JsonObject();
 
         text.addProperty(PROPERTY_NAMES.STATUS_KEY, "generated");
-        text.addProperty(PROPERTY_NAMES.DIV_KEY, "<div xmlns=\"http://www.w3.org/1999/xhtml\">reporting-center-id 501</div>");
+        text.addProperty(PROPERTY_NAMES.DIV_KEY, StringEncoding.encodeHtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">reporting-center-id 501</div>"));
 
         return text;
     }

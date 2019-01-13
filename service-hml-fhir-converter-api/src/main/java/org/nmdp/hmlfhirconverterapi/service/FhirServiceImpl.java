@@ -50,6 +50,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -64,7 +66,7 @@ public class FhirServiceImpl extends MongoServiceBase implements FhirService {
     private final MongoFhirDatabase fhirDatabase;
     private final MongoFhirSubmissionDatabase fhirSubmissionDatabase;
     private static final GsonBuilder gsonBuilder = new GsonBuilder();
-    private final Gson gson = gsonBuilder.setPrettyPrinting().create();
+    private final Gson gson = gsonBuilder.setPrettyPrinting().disableHtmlEscaping().create();
 
     @Autowired
     public FhirServiceImpl(@Qualifier("fhirCustomRepository") FhirCustomRepository customRepository, @Qualifier("fhirRepository") FhirRepository repository) {
@@ -181,11 +183,14 @@ public class FhirServiceImpl extends MongoServiceBase implements FhirService {
                         String newStr = str
                                 .replace("\\\"", "\"")
                                 .replace("\"{", "{")
-                                .replace("}\"", "}");
+                                .replace("}\"", "}")
+                                .replace("\\\\\"", "\\\"")
+                                .replace("<0x00>", "");
                         ZipEntry zipEntry = new ZipEntry(String.format("%s.fhir.json", getFileName(obj)));
+                        ByteBuffer buffer = StandardCharsets.UTF_8.encode(newStr);
 
                         zipOutputStream.putNextEntry(zipEntry);
-                        zipOutputStream.write(newStr.getBytes());
+                        zipOutputStream.write(buffer.array());
                         zipOutputStream.closeEntry();
                     }
                 }

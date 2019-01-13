@@ -2,6 +2,7 @@ package org.nmdp.fhirsubmission.fhir;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import org.nmdp.fhirsubmission.util.StringEncoding;
 
 /**
  * hml-fhir-app
@@ -54,7 +55,8 @@ public class SequenceObservationTransform extends ProcedureRequestObservationTra
         _status.add(PROPERTY_NAMES._FHIR_COMMENTS_KEY, _fhirComments);
         text.addProperty(PROPERTY_NAMES.STATUS_KEY, "generated");
         text.add(PROPERTY_NAMES._STATUS_KEY, _status);
-        text.addProperty(PROPERTY_NAMES.DIV_KEY, String.format("<div xmlns=\"http://www.w3.org/1999/xhtml\">Observation for %s allele</div>", glString));
+        text.addProperty(PROPERTY_NAMES.DIV_KEY, StringEncoding.encodeHtml(
+                String.format("<div xmlns=\"http://www.w3.org/1999/xhtml\">Observation for %s allele</div>", glString)));
 
         return text;
     }
