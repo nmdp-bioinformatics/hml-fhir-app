@@ -25,7 +25,6 @@ package org.nmdp.hmlfhirconverterapi.service;
  */
 
 import com.google.gson.*;
-import io.swagger.util.Json;
 import org.apache.log4j.Logger;
 
 import org.bson.Document;
@@ -45,13 +44,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.Yaml;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -170,7 +164,7 @@ public class FhirServiceImpl extends MongoServiceBase implements FhirService {
         for (JsonArray json : jsonArrays) {
             Iterator iterator = json.iterator();
 
-            try (ZipOutputStream zipOutputStream = new ZipOutputStream(byteArrayOutputStream)) {
+            try (final ZipOutputStream zipOutputStream = new ZipOutputStream(byteArrayOutputStream)) {
                 while (iterator.hasNext()) {
                     JsonArray inner = (JsonArray) iterator.next();
                     Iterator innerIterator = inner.iterator();
@@ -184,13 +178,12 @@ public class FhirServiceImpl extends MongoServiceBase implements FhirService {
                                 .replace("\\\"", "\"")
                                 .replace("\"{", "{")
                                 .replace("}\"", "}")
-                                .replace("\\\\\"", "\\\"")
-                                .replace("<0x00>", "");
+                                .replace("\\\\\"", "\\\"");
                         ZipEntry zipEntry = new ZipEntry(String.format("%s.fhir.json", getFileName(obj)));
-                        ByteBuffer buffer = StandardCharsets.UTF_8.encode(newStr);
 
                         zipOutputStream.putNextEntry(zipEntry);
-                        zipOutputStream.write(buffer.array());
+                        zipOutputStream.write(newStr.getBytes());
+                        zipOutputStream.flush();
                         zipOutputStream.closeEntry();
                     }
                 }

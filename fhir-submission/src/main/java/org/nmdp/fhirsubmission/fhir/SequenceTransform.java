@@ -42,7 +42,7 @@ public class SequenceTransform {
 
         referenceSeq.add(PROPERTY_NAMES.REFERENCE_SEQ_ID_KEY, referenceSeqId);
         referenceSeq.addProperty(PROPERTY_NAMES.WINDOW_START_KEY, 0);
-        referenceSeq.add(PROPERTY_NAMES._WINDOW_START_KEY, _windowStart);
+//        referenceSeq.add(PROPERTY_NAMES._WINDOW_START_KEY, _windowStart);
         referenceSeq.addProperty(PROPERTY_NAMES.WINDOW_END_KEY, 0);
 
         return referenceSeq;
@@ -77,7 +77,7 @@ public class SequenceTransform {
         _fhirComments.add("from reference-sequence.name");
         _status.add(PROPERTY_NAMES._FHIR_COMMENTS_KEY, _fhirComments);
         text.addProperty(PROPERTY_NAMES.STATUS_KEY, "generated");
-        text.add(PROPERTY_NAMES._STATUS_KEY, _status);
+//        text.add(PROPERTY_NAMES._STATUS_KEY, _status);
         text.addProperty(PROPERTY_NAMES.DIV_KEY, StringEncoding.encodeHtml(
                 String.format("<div xmlns=\"http://www.w3.org/1999/xhtml\">%s</div>", glString)));
 

@@ -98,7 +98,7 @@ public class FhirController implements FhirApi {
         }
     }
 
-    @RequestMapping(path = "/bundle/{id}", produces = MediaType.MULTIPART_FORM_DATA_VALUE, method = RequestMethod.GET)
+    @RequestMapping(path = "/bundle/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, method = RequestMethod.GET)
     public @ResponseBody Callable<ResponseEntity> downloadBundle(@PathVariable String id) {
         try {
             ByteArrayOutputStream stream = fhirService.getJsonBundle(id);

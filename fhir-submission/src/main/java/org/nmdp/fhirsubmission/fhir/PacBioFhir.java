@@ -74,10 +74,10 @@ public class PacBioFhir {
         String id = getId(json);
         String resourceType = json.get(PROPERTY_NAMES.RESOURCE_TYPE_KEY).getAsString();
 
+        json.remove(PROPERTY_NAMES.ID_KEY);
         resource.add(PROPERTY_NAMES.RESOURCE_KEY, json);
         resource.add(PROPERTY_NAMES.REQUEST_KEY, createRequest(resourceType));
         resource.addProperty(PROPERTY_NAMES.FULL_URL, id);
-        resource.remove(PROPERTY_NAMES.ID_KEY);
 
         return resource;
     }
