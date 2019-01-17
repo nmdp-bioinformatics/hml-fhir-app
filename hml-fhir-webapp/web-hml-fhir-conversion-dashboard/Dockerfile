@@ -10,7 +10,7 @@ FROM starefossen/ruby-node
 RUN npm install --g bower
 RUN npm install --g grunt grunt-cli
 
-EXPOSE 9002
+EXPOSE 9005
 
 WORKDIR /usr/src
 
