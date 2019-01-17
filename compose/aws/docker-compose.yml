@@ -3,10 +3,7 @@ services:
   gui:
     image: 682793961433.dkr.ecr.us-east-1.amazonaws.com/web-hml-fhir:latest
     ports:
-      - target: 9005
-        published: 9005
-        protocol: tcp
-        mode: host
+      - "9005:9005/tcp"
   serviceconversion:
     image: 682793961433.dkr.ecr.us-east-1.amazonaws.com/service-hml-fhir:latest
     ports:
