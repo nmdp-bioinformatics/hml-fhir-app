@@ -4,6 +4,8 @@ services:
     image: 682793961433.dkr.ecr.us-east-1.amazonaws.com/web-hml-fhir:latest
     ports:
       - "9005:9005"
+    expose:
+      - "9005"
   serviceconversion:
     image: 682793961433.dkr.ecr.us-east-1.amazonaws.com/service-hml-fhir:latest
     ports:
