@@ -83,4 +83,6 @@ public class KafkaMessage extends Message implements Serializable {
 
         return result;
     }
+
+
 }

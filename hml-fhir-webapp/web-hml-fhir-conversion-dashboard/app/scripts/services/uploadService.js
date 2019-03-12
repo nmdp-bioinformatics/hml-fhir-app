@@ -27,7 +27,7 @@
                     headers = headerFactory.conversionServiceHeaders();
 
                 $http({
-                    method: 'POST',
+                    method: 'PUT',
                     url: url,
                     data: text,
                     headers: headers

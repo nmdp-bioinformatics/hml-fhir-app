@@ -4,8 +4,8 @@ package org.nmdp.hmlfhirconverterapi.config;
  * hml-fhir-app
  */
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +13,7 @@ import java.util.Properties;
 
 public class ApplicationProperties {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ApplicationProperties.class);
+    private static final Logger LOG = Logger.getLogger(ApplicationProperties.class);
 
     private static final String KAFKA_CONFIGURATION_PATH_KEY = "kafka.configuration.path";
     private static final String MONGO_CONFIGURATION_PATH_KEY = "mongo.configuration.path";

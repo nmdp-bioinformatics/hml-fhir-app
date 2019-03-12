@@ -248,7 +248,7 @@ public class HmlDeserializer extends Deserializer<Hml> {
         property.setDescription(jsonObject.has("description") ? jsonObject.get("description").getAsString() : null);
         property.setName(jsonObject.has("name") ? jsonObject.get("name").getAsString() : null);
         property.setValue(jsonObject.has("value") ? jsonObject.get("value").getAsString() : null);
-        property.setExtendedItems(createExtendedItems(jsonObject.has("extendedItems") ? jsonObject.get("extendedItems").getAsJsonObject() : null));
+        property.setExtendedItems(handleExtendedItems(jsonObject.has("extendedItems") ? jsonObject.get("extendedItems") : null));
 
         properties.add(property);
         return properties;
@@ -320,6 +320,36 @@ public class HmlDeserializer extends Deserializer<Hml> {
 
         typingTestNames.add(typingTestName);
         return typingTestNames;
+    }
+
+    private List<ExtendedItem> handleExtendedItems(Object object) {
+        List<ExtendedItem> extendedItems = new ArrayList<>();
+
+        if (object == null) {
+            return extendedItems;
+        }
+
+        if (object instanceof JsonObject) {
+            extendedItems = createExtendedItems((JsonObject) object);
+        } else if (object instanceof JsonArray) {
+            extendedItems = createExtendedItems((JsonArray) object);
+        }
+
+        return extendedItems;
+    }
+
+    private List<ExtendedItem> createExtendedItems(JsonArray jsonArray) {
+        List<ExtendedItem> extendedItems = new ArrayList<>();
+
+        if (jsonArray == null) {
+            return extendedItems;
+        }
+
+        for (int i = 0; i < jsonArray.size(); i++) {
+            extendedItems.addAll(createExtendedItems((JsonObject)jsonArray.get(i)));
+        }
+
+        return extendedItems;
     }
 
     private List<ExtendedItem> createExtendedItems(JsonObject jsonObject) {

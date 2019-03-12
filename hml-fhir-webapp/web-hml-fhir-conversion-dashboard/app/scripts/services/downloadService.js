@@ -25,6 +25,21 @@
             return defer.promise;
           },
 
+          downloadBundle: function (id) {
+            var defer = $q.defer(),
+                url = appConfig.conversion_server_url + 'fhir/bundle/' + id;
+
+            $timeout(function () {
+               $window.location = url;
+            }, 1000).then(function () {
+                defer.resolve('success');
+            }, function () {
+                defer.reject('error');
+            });
+
+            return defer.promise;
+          },
+
           downloadHml: function (id, xml) {
             var defer = $q.defer(),
               url = appConfig.conversion_server_url + 'hml/' + id;

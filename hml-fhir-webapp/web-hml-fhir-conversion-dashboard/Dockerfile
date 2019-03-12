@@ -1,16 +1,16 @@
-FROM centos
+FROM starefossen/ruby-node
 
-RUN useradd -ms /bin/bash bower
-RUN yum install -y gcc-c++ make
-RUN curl --silent --location https://rpm.nodesource.com/setup_6.x | bash -
-RUN yum install -y nodejs
-RUN yum install -y gcc ruby-devel rubygems
-RUN yum install -y git
+#RUN useradd -ms /bin/bash bower
+#RUN yum install -y gcc-c++ make
+#RUN curl --silent --location https://rpm.nodesource.com/setup_8.x | bash -
+#RUN yum install -y nodejs
+#RUN yum install -y gcc ruby-devel rubygems
+#RUN yum install -y git
 
 RUN npm install --g bower
 RUN npm install --g grunt grunt-cli
 
-EXPOSE 9002
+EXPOSE 9005
 
 WORKDIR /usr/src
 

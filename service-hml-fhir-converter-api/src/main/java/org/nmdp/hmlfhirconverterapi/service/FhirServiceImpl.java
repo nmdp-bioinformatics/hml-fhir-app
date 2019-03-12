@@ -24,6 +24,7 @@ package org.nmdp.hmlfhirconverterapi.service;
  * > http://www.opensource.org/licenses/lgpl-license.php
  */
 
+import com.google.gson.*;
 import org.apache.log4j.Logger;
 
 import org.bson.Document;
@@ -37,18 +38,17 @@ import org.nmdp.hmlfhirconvertermodels.dto.fhir.FhirMessage;
 import org.nmdp.hmlfhirmongo.config.MongoConfiguration;
 import org.nmdp.hmlfhirmongo.mongo.MongoFhirDatabase;
 
+import org.nmdp.hmlfhirmongo.mongo.MongoFhirSubmissionDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.Yaml;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Service
 public class FhirServiceImpl extends MongoServiceBase implements FhirService {
@@ -58,6 +58,9 @@ public class FhirServiceImpl extends MongoServiceBase implements FhirService {
     private final FhirCustomRepository customRepository;
     private final FhirRepository repository;
     private final MongoFhirDatabase fhirDatabase;
+    private final MongoFhirSubmissionDatabase fhirSubmissionDatabase;
+    private static final GsonBuilder gsonBuilder = new GsonBuilder();
+    private final Gson gson = gsonBuilder.setPrettyPrinting().disableHtmlEscaping().create();
 
     @Autowired
     public FhirServiceImpl(@Qualifier("fhirCustomRepository") FhirCustomRepository customRepository, @Qualifier("fhirRepository") FhirRepository repository) {
@@ -78,6 +81,7 @@ public class FhirServiceImpl extends MongoServiceBase implements FhirService {
             LOG.error(ex);
         } finally {
             this.fhirDatabase = new MongoFhirDatabase(mc);
+            this.fhirSubmissionDatabase = new MongoFhirSubmissionDatabase(mc);
         }
     }
 
@@ -138,6 +142,89 @@ public class FhirServiceImpl extends MongoServiceBase implements FhirService {
             LOG.error(ex);
             return null;
         }
+    }
+
+    @Override
+    public ByteArrayOutputStream getJsonBundle(String id) throws IOException {
+        try {
+            String json = Serializer.toJson(getBundle(id));
+            JsonObject obj = gson.fromJson(json, JsonObject.class);
+            JsonArray array = obj.get("submissionResult").getAsJsonArray();
+
+            return toStream(Arrays.asList(array));
+        } catch (Exception ex) {
+            LOG.error(ex);
+            return null;
+        }
+    }
+
+    private ByteArrayOutputStream toStream(List<JsonArray> jsonArrays) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        for (JsonArray json : jsonArrays) {
+            Iterator iterator = json.iterator();
+
+            try (final ZipOutputStream zipOutputStream = new ZipOutputStream(byteArrayOutputStream)) {
+                while (iterator.hasNext()) {
+                    JsonArray inner = (JsonArray) iterator.next();
+                    Iterator innerIterator = inner.iterator();
+
+                    while (innerIterator.hasNext()) {
+                        String s = innerIterator.next().toString();
+                        JsonPrimitive jsonPrimitive = gson.fromJson(s, JsonPrimitive.class);
+                        JsonObject obj = gson.fromJson(jsonPrimitive.getAsString(), JsonObject.class);
+                        String str = gson.toJson(obj);
+                        String newStr = str
+                                .replace("\\\"", "\"")
+                                .replace("\"{", "{")
+                                .replace("}\"", "}")
+                                .replace("\\\\\"", "\\\"");
+                        ZipEntry zipEntry = new ZipEntry(String.format("%s.fhir.json", getFileName(obj)));
+
+                        zipOutputStream.putNextEntry(zipEntry);
+                        zipOutputStream.write(newStr.getBytes());
+                        zipOutputStream.flush();
+                        zipOutputStream.closeEntry();
+                    }
+                }
+            }
+        }
+
+        return byteArrayOutputStream;
+    }
+
+    private String getFileName(JsonObject obj) {
+        JsonArray entry = obj.get("entry").getAsJsonArray();
+        JsonObject specimen = getSpecimen(entry);
+
+        if (specimen == null) {
+            return "file";
+        }
+
+        JsonObject resource = specimen.get("resource").getAsJsonObject();
+        JsonArray identifier = resource.get("identifier").getAsJsonArray();
+        JsonObject id = identifier.get(0).getAsJsonObject();
+
+        return id.get("value").getAsString();
+    }
+
+    private JsonObject getSpecimen(JsonArray array) {
+        Iterator iterator = array.iterator();
+
+        while (iterator.hasNext()) {
+            JsonObject obj = (JsonObject) iterator.next();
+            JsonObject resource = obj.get("resource").getAsJsonObject();
+
+            if (resource.get("resourceType").getAsString().equals("Specimen")) {
+                return obj;
+            }
+        }
+
+        return null;
+    }
+
+    private Document getBundle(String id) throws Exception {
+        return fhirSubmissionDatabase.get(id);
     }
 
     private Document getFhirFromMongo(String id) throws Exception {

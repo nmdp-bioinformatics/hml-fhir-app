@@ -156,10 +156,13 @@ public class ConvertHmlToFhirImpl extends Convert implements ConvertHmlToFhir {
             JsonParser parser = new JsonParser();
             Gson gson = getGsonConverter();
 
-            if (prefix != null) {
-                jsonObj = mutatePropertyNames(jsonObj, prefix);
+            LOG.info(String.format("Modifying XML with Prefix remova, prefix: %s", prefix));
+
+            if (prefix == null) {
+                prefix = "";
             }
 
+            jsonObj = mutatePropertyNames(jsonObj, prefix);
             Object obj = parser.parse(jsonObj.toString());
             JsonObject json = (JsonObject) obj;
             org.nmdp.hmlfhirconvertermodels.dto.hml.Hml javaHml =
@@ -185,6 +188,7 @@ public class ConvertHmlToFhirImpl extends Convert implements ConvertHmlToFhir {
     @Override
     public org.nmdp.hmlfhirconvertermodels.dto.hml.Hml convertToDto(JsonObject hml) throws Exception {
         try {
+            LOG.info(String.format("Converting hml json to java object\n%s", hml.toString()));
             Gson gson = getGsonConverter();
             return gson.fromJson(hml, org.nmdp.hmlfhirconvertermodels.dto.hml.Hml.class);
         } catch (Exception ex) {
