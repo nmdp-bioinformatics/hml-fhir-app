@@ -50,7 +50,7 @@ public class ProcedureRequestTransform {
 
         text.addProperty(PROPERTY_NAMES.STATUS_KEY, "generated");
         text.addProperty(PROPERTY_NAMES.DIV_KEY, StringEncoding.encodeHtml(
-                String.format("<div xmlns=\"http://www.w3.org/1999/xhtml\">%s typing for sample: %s-%s</div>", hla, centerCode, sampleId)));
+                String.format("<div xmlns=\"http://www.w3.org/1999/xhtml\">%s typing for sample: %s^%s</div>", hla, centerCode, sampleId)));
 
         return text;
     }

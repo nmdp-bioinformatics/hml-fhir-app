@@ -69,7 +69,7 @@ public class DiagnosticReportTransform {
         JsonObject obj = new JsonObject();
 
         obj.addProperty(PROPERTY_NAMES.REFERENCE_KEY, getResourceId(spc));
-        obj.addProperty(PROPERTY_NAMES.DISPLAY_KEY, String.format("buccal swab: %s-%s", centerCode, sampleId));
+        obj.addProperty(PROPERTY_NAMES.DISPLAY_KEY, String.format("buccal swab: %s^%s", centerCode, sampleId));
         specimen.add(obj);
 
         return specimen;
@@ -146,7 +146,7 @@ public class DiagnosticReportTransform {
         JsonObject obj = new JsonObject();
 
         obj.addProperty(PROPERTY_NAMES.REFERENCE_KEY, getResourceId(json));
-        obj.addProperty(PROPERTY_NAMES.DISPLAY_KEY, String.format("%s typing for sample %s-%s", getHlaFromProcedure(json), centerId, sampleId));
+        obj.addProperty(PROPERTY_NAMES.DISPLAY_KEY, String.format("%s typing for sample %s^%s", getHlaFromProcedure(json), centerId, sampleId));
 
         return obj;
     }

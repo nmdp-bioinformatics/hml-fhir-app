@@ -84,7 +84,7 @@ public class ProcedureRequestObservationTransform {
         fhirComments.add("R3");
         obj.add(PROPERTY_NAMES.FHIR_COMMENTS_KEY, fhirComments);
         obj.addProperty(PROPERTY_NAMES.REFERENCE_KEY, procedureRequestId);
-        obj.addProperty(PROPERTY_NAMES.DISPLAY_KEY, String.format("%s typing for sample %s-%s", hla, centerCode, sampleId));
+        obj.addProperty(PROPERTY_NAMES.DISPLAY_KEY, String.format("%s typing for sample %s^%s", hla, centerCode, sampleId));
         basedOn.add(obj);
 
         return basedOn;
@@ -175,7 +175,7 @@ public class ProcedureRequestObservationTransform {
         JsonObject specimen = new JsonObject();
 
         specimen.addProperty(PROPERTY_NAMES.REFERENCE_KEY, specimenId);
-        specimen.addProperty(PROPERTY_NAMES.DISPLAY_KEY, String.format("buccal swab: %s-%s", centerCode, sampleId));
+        specimen.addProperty(PROPERTY_NAMES.DISPLAY_KEY, String.format("buccal swab: %s^%s", centerCode, sampleId));
 
         return specimen;
     }

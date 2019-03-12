@@ -3,6 +3,8 @@ package org.nmdp.fhirsubmission.fhir;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.nmdp.fhirsubmission.util.StringEncoding;
+import org.nmdp.hmlfhirconvertermodels.domain.fhir.Sequence;
+import java.util.List;
 
 /**
  * hml-fhir-app
@@ -64,7 +66,7 @@ public class SequenceTransform {
         JsonObject specimen = new JsonObject();
 
         specimen.addProperty(PROPERTY_NAMES.REFERENCE_KEY, specimenId);
-        specimen.addProperty(PROPERTY_NAMES.DISPLAY_KEY, String.format("buccal swab: %s-%s", centerCode, sampleId));
+        specimen.addProperty(PROPERTY_NAMES.DISPLAY_KEY, String.format("buccal swab: %s^%s", centerCode, sampleId));
 
         return specimen;
     }
