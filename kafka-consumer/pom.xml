@@ -18,7 +18,7 @@
         <metrics-version>3.1.2</metrics-version>
         <java.version>1.8</java.version>
         <snake-yaml-version>1.16</snake-yaml-version>
-        <jackson-xml-version>2.2.3</jackson-xml-version>
+        <jackson-xml-version>[2.8.11.1,)</jackson-xml-version>
     </properties>
 
     <build>
