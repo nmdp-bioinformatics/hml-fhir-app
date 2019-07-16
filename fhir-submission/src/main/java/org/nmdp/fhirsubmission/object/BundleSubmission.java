@@ -35,12 +35,18 @@ public class BundleSubmission {
     private Map<String, String> diangosticReports;
     private Map<String, List<String>> observations;
     private Map<String, List<String>> sequences;
+    private Map<String, List<String>> procedureRequests;
+    private Map<String, String> devices;
+    private Map<String, String> provenances;
 
     public BundleSubmission() {
         this.specimens = new HashMap<>();
         this.diangosticReports = new HashMap<>();
         this.observations = new HashMap<>();
         this.sequences = new HashMap<>();
+        this.procedureRequests = new HashMap<>();
+        this.devices = new HashMap<>();
+        this.provenances = new HashMap<>();
     }
 
     public String getPatient() {
@@ -103,5 +109,35 @@ public class BundleSubmission {
         List<String> values = this.sequences.get(key);
         values.add(value);
         this.sequences.put(key, values);
+    }
+
+    public Map<String, List<String>> getProcedureRequests() {
+        return procedureRequests;
+    }
+
+    public void setProcedureRequests(Map<String, List<String>> procedureRequests) {
+        this.procedureRequests = procedureRequests;
+    }
+
+    public void addProcedureRequest(String key, String value) {
+        List<String> values = this.sequences.get(key);
+        values.add(value);
+        this.procedureRequests.put(key, values);
+    }
+
+    public Map<String, String> getDevices() {
+        return devices;
+    }
+
+    public void setDevices(Map<String, String> devices) {
+        this.devices = devices;
+    }
+
+    public Map<String, String> getProvenances() {
+        return provenances;
+    }
+
+    public void setProvenances(Map<String, String> provenances) {
+        this.provenances = provenances;
     }
 }

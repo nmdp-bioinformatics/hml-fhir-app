@@ -45,6 +45,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -97,11 +98,12 @@ public class FhirController implements FhirApi {
         }
     }
 
-    @RequestMapping(path = "/bundle/{id}", produces = MediaType.MULTIPART_FORM_DATA_VALUE, method = RequestMethod.GET)
+    @RequestMapping(path = "/bundle/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, method = RequestMethod.GET)
     public @ResponseBody Callable<ResponseEntity> downloadBundle(@PathVariable String id) {
         try {
-            return () -> new ResponseEntity(FileConverter.convertStringToBytes(fhirService.getJsonBundle(id)),
-                    getHeadersForDownload(id, "json", "application/json"), HttpStatus.OK);
+            ByteArrayOutputStream stream = fhirService.getJsonBundle(id);
+            return () -> new ResponseEntity(stream.toByteArray(),
+                    getHeadersForDownload(id, "zip", "application/json"), HttpStatus.OK);
         } catch (Exception ex) {
             LOG.error("Error downloading bundle", ex);
             return () -> new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

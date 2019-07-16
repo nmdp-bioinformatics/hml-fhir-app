@@ -26,6 +26,8 @@ package org.nmdp.hmlfhirconverterapi.service;
 
 import org.nmdp.hmlfhirconvertermodels.dto.fhir.FhirMessage;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -35,5 +37,5 @@ public interface FhirService {
     List<FhirMessage> convertStringToFhirMessages(String xml) throws Exception;
     String getXmlFhir(String id);
     String getJsonFhir(String id);
-    String getJsonBundle(String id);
+    ByteArrayOutputStream getJsonBundle(String id) throws IOException;
 }

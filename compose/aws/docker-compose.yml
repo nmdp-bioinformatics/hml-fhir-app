@@ -1,15 +1,11 @@
 version: '3'
 services:
   gui:
-    image: web-hml-fhir:latest
+    image: 682793961433.dkr.ecr.us-east-1.amazonaws.com/web-hml-fhir:latest
     ports:
       - "9005:9005"
-    links:
-      - serviceconversion
-    depends_on:
-      - serviceconversion
   serviceconversion:
-    image: service-hml-fhir:latest
+    image: 682793961433.dkr.ecr.us-east-1.amazonaws.com/service-hml-fhir:latest
     ports:
       - "8099:8099"
     links:
@@ -36,7 +32,7 @@ services:
       - "9092"
       - "2181"
   fhirconsumer:
-    image: fhir-submission-consumer:latest
+    image: 682793961433.dkr.ecr.us-east-1.amazonaws.com/fhir-submission-consumer:latest
     links:
       - kafka
       - serviceconversion
@@ -46,7 +42,7 @@ services:
       - serviceconversion
       - mongodb
   hmlconsumer:
-    image: hml-fhir-consumer:latest
+    image: 682793961433.dkr.ecr.us-east-1.amazonaws.com/hml-fhir-consumer:latest
     links:
       - kafka
       - serviceconversion
