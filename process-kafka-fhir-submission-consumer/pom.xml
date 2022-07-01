@@ -12,7 +12,7 @@
     <description>Kafka Message Consumer for Submit FHIR to Conformance Server</description>
 
     <properties>
-        <apache-kafka-version>0.10.2.1</apache-kafka-version>
+        <apache-kafka-version>0.10.2.2</apache-kafka-version>
         <slf4j-version>1.7.6</slf4j-version>
         <log4j-version>1.2.17</log4j-version>
         <metrics-version>3.1.2</metrics-version>
