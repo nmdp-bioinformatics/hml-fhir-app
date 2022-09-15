@@ -37,7 +37,7 @@
         <nmdp-conversion-version>2.0.0</nmdp-conversion-version>
         <nmdp-mongo-version>2.0.0</nmdp-mongo-version>
         <nmdp-fhir-submission-version>2.0.0</nmdp-fhir-submission-version>
-        <snake-yaml-version>1.16</snake-yaml-version>
+        <snake-yaml-version>1.31</snake-yaml-version>
         <json-version>20160212</json-version>
         <model-mapper-version>0.7.5</model-mapper-version>
         <apache-commons-fileupload-version>1.2.1</apache-commons-fileupload-version>
