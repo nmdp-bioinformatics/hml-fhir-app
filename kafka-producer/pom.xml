@@ -22,7 +22,7 @@
         <kafka-message-model-version>2.0.0</kafka-message-model-version>
         <spring-boot-parent-version>1.4.0.RELEASE</spring-boot-parent-version>
         <spring-boot-version>1.4.3.RELEASE</spring-boot-version>
-        <spring-framework-version>4.3.5.RELEASE</spring-framework-version>
+        <spring-framework-version>5.2.20.RELEASE</spring-framework-version>
         <nmdp-models-version>2.0.0</nmdp-models-version>
         <slf4j-version>1.7.6</slf4j-version>
         <jackson-xml-version>[2.8.11.1,)</jackson-xml-version>
