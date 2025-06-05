@@ -1,3 +1,5 @@
+## NOTE: This project has been archived and is no longer supported.
+
 # hml-fhir-app
 HML to FHIR Conversion Application
 
